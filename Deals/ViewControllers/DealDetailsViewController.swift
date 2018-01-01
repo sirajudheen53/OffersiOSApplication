@@ -448,8 +448,16 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
     }
     
     @IBAction func buyNowButtonClicked(_ sender: UIButton) {
-        initiatePayment()
-
+        if let _ = User.getProfile()?.token {
+            guard let userPhoneNumber = User.getProfile()?.phoneNumber, userPhoneNumber != "" else {
+                self.performSegue(withIdentifier: "showPhoneNumberInput", sender: nil)
+                return
+            }
+            initiatePayment()
+        }
+        else {
+                self.performSegue(withIdentifier: "showLoginPopup", sender: nil)
+            }
 
     }
     

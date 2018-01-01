@@ -46,7 +46,7 @@ class BaseWebservice: NSObject {
         let urlString = base_servive_url + function.rawValue
         
         if requestMethod == WebserviceMethod.get {
-            Alamofire.request(urlString, method: .get, parameters: params, headers: headers).responseJSON {
+            Alamofire.request(urlString, method: .get, parameters: params, encoding: URLEncoding(arrayEncoding: .noBrackets), headers: headers).responseJSON {
                 response in
                 switch response.result {
                 case .success:

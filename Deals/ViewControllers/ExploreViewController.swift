@@ -39,9 +39,13 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
         
         
         self.dealsListingTableView.contentInset = UIEdgeInsets(top: 5.0, left: 0, bottom: 0, right: 0)
-//        if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
-//            self.fetchAllDealsFromServerAndUpdateUI(location: selectedLocation)
-//        }
+
+        if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
+            numberOfPages = 1
+            nextPageToLoad = 1
+            searchDealsFromServer(location: selectedLocation, _searchString: searchString)
+        }
+        
         self.navigationController?.navigationBar.isHidden = true
         let dealListingCellNib = UINib(nibName: "DealsListingTableViewCell", bundle: nil)
         self.dealsListingTableView.register(dealListingCellNib, forCellReuseIdentifier: "dealListingCell")
@@ -67,6 +71,8 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
         let selectedCategories = notification.object as! [FilterCategories]
         self.filterCategories = selectedCategories
         if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
+            numberOfPages = 1
+            nextPageToLoad = 1
             searchDealsFromServer(location: selectedLocation, _searchString: searchString)
         }
         self.filterNumberLabel.text = "\(self.filterCategories.count)"
@@ -266,13 +272,9 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
                                 if self.nextPageToLoad == 1 && self.searchString == _searchString {
                                     self.availableDeals = Deal.dealObjectsFromProperties(properties: allDeals)
                                     self.dealsListingTableView.reloadData()
-                                    let indexPath = IndexPath(item: 0, section: 0)
-                                    self.dealsListingTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-                                    self.lastLoadedSearchString = _searchString
                                 } else if self.lastLoadedSearchString == _searchString {
                                     self.availableDeals.append(contentsOf: Deal.dealObjectsFromProperties(properties: allDeals))
                                     self.dealsListingTableView.reloadData()
-                                    self.lastLoadedSearchString = _searchString
                                 }
                             }
 
@@ -288,7 +290,6 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
                             self.lastLoadedSearchString = _searchString
 
                         } else {
-                            print(response)
 
                             self.noDealsContentView.isHidden = false
                             self.dealsListingTableView.isHidden = true
@@ -297,7 +298,6 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
 
                         }
                     } else {
-                        print(response)
                         self.noDealsContentView.isHidden = false
                         self.dealsListingTableView.isHidden = true
                         UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
