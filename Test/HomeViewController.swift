@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 import GoogleSignIn
 import FBSDKCoreKit
 import FBSDKLoginKit
@@ -52,10 +53,5 @@ class HomeViewController: UIViewController, GIDSignInUIDelegate {
             // ...
         }
     }
-    
-    
-}
-
-
 }
 
