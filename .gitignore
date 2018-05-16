@@ -1,0 +1,6 @@
+Podfile.lock
+Pods/
+Test.xcworkspace/
+Test.xcodeproj/xcuserdata/*
+
+
