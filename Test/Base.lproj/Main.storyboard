@@ -155,16 +155,24 @@
                                     <constraint firstAttribute="height" constant="150" id="tga-DB-PLT"/>
                                 </constraints>
                             </imageView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="37I-Ib-rdi">
-                                <rect key="frame" x="0.0" y="170" width="375" height="29"/>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="qV8-ca-c0x">
+                                <rect key="frame" x="16" y="178" width="343" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
-                                    <segment title="Details"/>
-                                    <segment title="Conditions"/>
-                                    <segment title=""/>
-                                    <segment title=""/>
+                                    <segment title="First"/>
+                                    <segment title="Second"/>
                                 </segments>
                             </segmentedControl>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ycn-k9-tne">
+                                <rect key="frame" x="16" y="207" width="343" height="387"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0056815127329999998" green="1" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0FG-pH-1Il">
+                                <rect key="frame" x="16" y="207" width="343" height="387"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.096581625329585141" blue="0.081660129419005578" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
