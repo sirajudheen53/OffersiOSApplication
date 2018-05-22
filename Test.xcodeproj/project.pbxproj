@@ -18,6 +18,7 @@
 		0B9E123320B2900100C66129 /* ConditionsListingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E123220B2900100C66129 /* ConditionsListingTableViewCell.swift */; };
 		0B9E123520B290A400C66129 /* DealDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E123420B290A400C66129 /* DealDetailsViewController.swift */; };
 		0B9E123720B29D4000C66129 /* MyOrdersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E123620B29D4000C66129 /* MyOrdersViewController.swift */; };
+		0B9E123920B2B6E800C66129 /* FAQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E123820B2B6E800C66129 /* FAQViewController.swift */; };
 		5D0E9126E06DC7828FEDEB22 /* Pods_TestTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EEC5E0EA7DDBCB203FB2943 /* Pods_TestTests.framework */; };
 		98CECD2161DA0DA83FA85DA2 /* Pods_Test.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A117B12BE3DFE390A1A7FCB0 /* Pods_Test.framework */; };
 		A66597ED14843279AE23D75B /* Pods_TestUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02917333E0BB871C762B13F3 /* Pods_TestUITests.framework */; };
@@ -60,6 +61,7 @@
 		0B9E123220B2900100C66129 /* ConditionsListingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionsListingTableViewCell.swift; sourceTree = "<group>"; };
 		0B9E123420B290A400C66129 /* DealDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealDetailsViewController.swift; sourceTree = "<group>"; };
 		0B9E123620B29D4000C66129 /* MyOrdersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrdersViewController.swift; sourceTree = "<group>"; };
+		0B9E123820B2B6E800C66129 /* FAQViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQViewController.swift; sourceTree = "<group>"; };
 		3F82ABA086AE586B62D4753B /* Pods-TestUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TestUITests/Pods-TestUITests.release.xcconfig"; sourceTree = "<group>"; };
 		6EEC5E0EA7DDBCB203FB2943 /* Pods_TestTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EBB38EF85E38997C062E4C2 /* Pods-Test.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Test.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Test/Pods-Test.debug.xcconfig"; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 				0B9E123220B2900100C66129 /* ConditionsListingTableViewCell.swift */,
 				0B9E123420B290A400C66129 /* DealDetailsViewController.swift */,
 				0B9E123620B29D4000C66129 /* MyOrdersViewController.swift */,
+				0B9E123820B2B6E800C66129 /* FAQViewController.swift */,
 				0B67D0A220AAA6D000FC39E5 /* Main.storyboard */,
 				0B67D0A520AAA6D000FC39E5 /* Assets.xcassets */,
 				0B67D0A720AAA6D000FC39E5 /* LaunchScreen.storyboard */,
@@ -493,6 +496,7 @@
 				0B9E123720B29D4000C66129 /* MyOrdersViewController.swift in Sources */,
 				0B67D09F20AAA6D000FC39E5 /* AppDelegate.swift in Sources */,
 				0B9E123320B2900100C66129 /* ConditionsListingTableViewCell.swift in Sources */,
+				0B9E123920B2B6E800C66129 /* FAQViewController.swift in Sources */,
 				0B06479E20AC419100AE8496 /* HomeViewController.swift in Sources */,
 				0B9E123520B290A400C66129 /* DealDetailsViewController.swift in Sources */,
 			);
