@@ -19,7 +19,7 @@ class DealDetailsViewController: UIViewController, UITableViewDataSource, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.title = "Details"
     }
 
     override func didReceiveMemoryWarning() {

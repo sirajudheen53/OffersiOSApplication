@@ -13,7 +13,7 @@ class FAQViewController: UIViewController, UITableViewDataSource, UITableViewDel
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.title = "FAQ"
     }
 
     override func didReceiveMemoryWarning() {

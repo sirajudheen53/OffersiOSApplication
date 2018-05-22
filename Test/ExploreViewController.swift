@@ -1,35 +1,35 @@
 //
-//  MyOrdersViewController.swift
+//  ExploreViewController.swift
 //  Test
 //
-//  Created by qbuser on 21/05/18.
+//  Created by qbuser on 22/05/18.
 //  Copyright © 2018 qbuser. All rights reserved.
 //
 
 import UIKit
 
-class MyOrdersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ExploreViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.title = "Your Orders"
+        self.title = "Explore"
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: - Navigation
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "myOrdersListingCell", for: indexPath)
-        return cell
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 10
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "searchListingCell", for: indexPath)
+        return cell;
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
