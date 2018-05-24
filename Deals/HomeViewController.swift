@@ -12,6 +12,8 @@ import Firebase
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, GIDSignInUIDelegate {
 
+    var availableDeals : [Any]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         GIDSignIn.sharedInstance().uiDelegate = self
@@ -23,7 +25,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 if error != nil {
                     
                 } else {
-                    print(deals)
+                    FirebaseController.addDocumentToCollection("Purchase", document: ["userId" : Auth.auth().currentUser!.uid, "dealId" : deals!.first!.documentID], onCompletion: { (documentReference, error) in
+                        print("deal purchased")
+                    })
                 }
             })
         } else {

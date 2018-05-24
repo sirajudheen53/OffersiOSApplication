@@ -19,12 +19,12 @@ class FirebaseController: NSObject {
         return db
     }
     
-    class func fetchAllContentsFromCollection(_ collectionName : String, onCompletion : @escaping ((NSArray?, Error?)->())) {
+    class func fetchAllContentsFromCollection(_ collectionName : String, onCompletion : @escaping (([QueryDocumentSnapshot]?, Error?)->())) {
         FirebaseController.firebaseDB().collection(collectionName).getDocuments() { (querySnapshot, err) in
             if let err = err {
                 onCompletion(nil, err)
             } else {
-                onCompletion(querySnapshot!.documents as NSArray, nil)
+                onCompletion(querySnapshot!.documents, nil)
             }
         }
     }
