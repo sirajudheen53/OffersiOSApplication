@@ -8,8 +8,8 @@ target 'Deals' do
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
 pod 'GoogleSignIn'
-pod 'FBSDKLoginKit'
-pod 'Firebase/Database'
+pod 'Firebase/Firestore'
+
 
   # Pods for Test
 

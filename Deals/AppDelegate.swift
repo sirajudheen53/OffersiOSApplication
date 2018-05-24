@@ -9,7 +9,6 @@
 import UIKit
 import Firebase
 import GoogleSignIn
-import FBSDKLoginKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
@@ -50,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             }
             // User is signed in
             // ...
-            print(user.profile.givenName)
+            
         }
         // ...
     }

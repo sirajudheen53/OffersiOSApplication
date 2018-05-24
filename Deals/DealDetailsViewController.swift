@@ -65,6 +65,7 @@ class DealDetailsViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     
+
     /*
     // MARK: - Navigation
 

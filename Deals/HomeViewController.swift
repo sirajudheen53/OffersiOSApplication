@@ -7,13 +7,28 @@
 //
 
 import UIKit
+import GoogleSignIn
+import Firebase
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, GIDSignInUIDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        GIDSignIn.sharedInstance().uiDelegate = self
 
         self.title = "Home"
+    
+        if Auth.auth().currentUser?.uid != nil {
+            FirebaseController.fetchAllContentsFromCollection("Deal", onCompletion: { (deals, error) in
+                if error != nil {
+                    
+                } else {
+                    print(deals)
+                }
+            })
+        } else {
+            GIDSignIn.sharedInstance().signIn()
+        }
     }
 
     override func didReceiveMemoryWarning() {

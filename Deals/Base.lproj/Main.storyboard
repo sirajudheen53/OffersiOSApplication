@@ -14,7 +14,7 @@
         <!--Home View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="HomeViewController" customModule="Test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="HomeViewController" customModule="Deals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -147,7 +147,7 @@
         <!--My Orders View Controller-->
         <scene sceneID="cNY-GW-VF8">
             <objects>
-                <viewController id="LOw-6w-djO" customClass="MyOrdersViewController" customModule="Test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="LOw-6w-djO" customClass="MyOrdersViewController" customModule="Deals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LKr-4M-HgH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -260,7 +260,7 @@
         <!--Item-->
         <scene sceneID="Tpc-IE-fyw">
             <objects>
-                <viewController id="wsw-En-rJQ" customClass="DealDetailsViewController" customModule="Test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="wsw-En-rJQ" customClass="DealDetailsViewController" customModule="Deals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Sm0-8F-9g6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -297,7 +297,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="345" height="242"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="conditionsListCell" id="jze-Pz-Kqh" customClass="ConditionsListingTableViewCell" customModule="Test" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="conditionsListCell" id="jze-Pz-Kqh" customClass="ConditionsListingTableViewCell" customModule="Deals" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="345" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jze-Pz-Kqh" id="eGg-IN-E86">
@@ -551,12 +551,12 @@
         <!--Home View Controller-->
         <scene sceneID="acO-1K-dAA">
             <objects>
-                <viewController id="pVn-Jg-Pcn" customClass="HomeViewController" customModule="Test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="pVn-Jg-Pcn" customClass="HomeViewController" customModule="Deals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QCc-m7-l3K">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xJI-OL-9ea" customClass="FBSDKLoginButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xJI-OL-9ea">
                                 <rect key="frame" x="40" y="320" width="295" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="g84-h4-tOg"/>
@@ -762,7 +762,7 @@
         <!--View Controller-->
         <scene sceneID="A9a-gU-kRE">
             <objects>
-                <viewController id="fAu-5j-Klw" customClass="FAQViewController" customModule="Test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="fAu-5j-Klw" customClass="FAQViewController" customModule="Deals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sWF-HA-C4h">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -838,7 +838,7 @@
         <!--Explore View Controller-->
         <scene sceneID="Vxt-Hf-Foz">
             <objects>
-                <viewController id="QdU-Wb-EPU" customClass="ExploreViewController" customModule="Test" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="QdU-Wb-EPU" customClass="ExploreViewController" customModule="Deals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TCu-i7-d5v">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1117,7 +1117,7 @@
         <image name="restaurent" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="uix-C6-Uhp"/>
+        <segue reference="Kwg-01-gCJ"/>
         <segue reference="t1z-nx-uLz"/>
     </inferredMetricsTieBreakers>
 </document>
