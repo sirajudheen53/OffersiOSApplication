@@ -1,6 +1,5 @@
 Podfile.lock
 Pods/
-Deals.xcodeproj/xcshareddata/
 Deals.xcworkspace/
 Deals.xcodeproj/xcuserdata/qbuser.xcuserdatad/xcschemes/xcschememanagement.plist
-
+Deals.xcodeproj/xcuserdata/**/xcschemes/*

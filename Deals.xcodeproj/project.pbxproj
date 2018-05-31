@@ -25,7 +25,6 @@
 		5D0E9126E06DC7828FEDEB22 /* Pods_TestTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EEC5E0EA7DDBCB203FB2943 /* Pods_TestTests.framework */; };
 		91F8362234765FC693A1FC50 /* Pods_DealsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08CFD44055D14123C98A65A8 /* Pods_DealsUITests.framework */; };
 		94CA4C3EE0A170AE49DBCD07 /* Pods_Deals.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D8FF93B8C5235AA444D6F /* Pods_Deals.framework */; };
-		98CECD2161DA0DA83FA85DA2 /* Pods_Test.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A117B12BE3DFE390A1A7FCB0 /* Pods_Test.framework */; };
 		A66597ED14843279AE23D75B /* Pods_TestUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02917333E0BB871C762B13F3 /* Pods_TestUITests.framework */; };
 		A7D9F25A20AB56B6005B08BE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A7D9F25920AB56B6005B08BE /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
@@ -94,7 +93,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				98CECD2161DA0DA83FA85DA2 /* Pods_Test.framework in Frameworks */,
 				94CA4C3EE0A170AE49DBCD07 /* Pods_Deals.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -244,8 +242,6 @@
 				0B67D0AB20AAA6D000FC39E5 /* Sources */,
 				0B67D0AC20AAA6D000FC39E5 /* Frameworks */,
 				0B67D0AD20AAA6D000FC39E5 /* Resources */,
-				0730430F3CEC6FA1724BB6F1 /* [CP] Embed Pods Frameworks */,
-				501E410056922D56B6B2C66F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -265,8 +261,6 @@
 				0B67D0B620AAA6D000FC39E5 /* Sources */,
 				0B67D0B720AAA6D000FC39E5 /* Frameworks */,
 				0B67D0B820AAA6D000FC39E5 /* Resources */,
-				43CB8C4AA4F185055A27B142 /* [CP] Embed Pods Frameworks */,
-				0089B26D4A01CAB1ED49CC4F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -353,36 +347,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0089B26D4A01CAB1ED49CC4F /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DealsUITests/Pods-DealsUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		0730430F3CEC6FA1724BB6F1 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DealsTests/Pods-DealsTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		2533FCE6DF7B3CB1C9A41E34 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -455,36 +419,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		43CB8C4AA4F185055A27B142 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DealsUITests/Pods-DealsUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		501E410056922D56B6B2C66F /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DealsTests/Pods-DealsTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		87B614786645C21757E3C028 /* [CP] Copy Pods Resources */ = {
@@ -708,7 +642,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 73RP75H5FH;
-				INFOPLIST_FILE = /Users/qbuser/Desktop/Test/Deals/Info.plist;
+				INFOPLIST_FILE = "$(PROJECT_DIR)/Deals/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.qburst.Test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -725,7 +659,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 73RP75H5FH;
-				INFOPLIST_FILE = /Users/qbuser/Desktop/Test/Deals/Info.plist;
+				INFOPLIST_FILE = "$(PROJECT_DIR)/Deals/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.qburst.Test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
