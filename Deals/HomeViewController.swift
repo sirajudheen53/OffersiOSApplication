@@ -8,31 +8,19 @@
 
 import UIKit
 import GoogleSignIn
-import Firebase
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, GIDSignInUIDelegate {
 
-    var availableDeals : [Any]?
+    var availableDeals : [Deal]?
     
+    @IBOutlet weak var dealsListingTableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
         GIDSignIn.sharedInstance().uiDelegate = self
 
         self.title = "Home"
     
-        if Auth.auth().currentUser?.uid != nil {
-            FirebaseController.fetchAllContentsFromCollection("Deal", onCompletion: { (deals, error) in
-                if error != nil {
-                    
-                } else {
-                    FirebaseController.addDocumentToCollection("Purchase", document: ["userId" : Auth.auth().currentUser!.uid, "dealId" : deals!.first!.documentID], onCompletion: { (documentReference, error) in
-                        print("deal purchased")
-                    })
-                }
-            })
-        } else {
-            GIDSignIn.sharedInstance().signIn()
-        }
+        self.fetchAllDealsFromServerAndUpdateUI()
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,30 +29,60 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "showDetailsView" {
+            if let detailsView = segue.destination as? DealDetailsViewController {
+                detailsView.deal = sender as? Deal
+            }
+        }
     }
-    */
     
     // MARK: - TableView Delegates
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10;
+        if let availableDeals = self.availableDeals {
+            return availableDeals.count;
+        } else {
+            return 0;
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "dealListingCell", for: indexPath);
+        let cell = tableView.dequeueReusableCell(withIdentifier: "dealListingCell", for: indexPath) as! DealsListingTableViewCell;
+        cell.customizeCell(deal: availableDeals![indexPath.row])
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "showDetailsView", sender: nil)
+        self.performSegue(withIdentifier: "showDetailsView", sender: self.availableDeals![indexPath.row])
     }
-
-
+    
+    // MARK: - Private Methods
+    
+    func fetchAllDealsFromServerAndUpdateUI() {
+        BaseWebservice.performRequest(function: WebserviceFunction.fetchDealsList, requestMethod: .get, params: nil, headers: nil) { (response, error) in
+            if let response = response as? [String : Any] {
+                if let status = response["status"] as? String {
+                    if status=="success" {
+                        if let dealsProperties = response["data"] as? [[String : Any]] {
+                            self.availableDeals = Deal.dealObjectsFromProperties(properties: dealsProperties)
+                            self.dealsListingTableView.reloadData()
+                        } else {
+                            //Handle Error condition
+                        }
+                    } else {
+                        //Handle Error condition
+                    }
+                } else {
+                    //Handle Error condition
+                }
+            } else {
+                //Handle Error condition
+            }
+            
+        }
+    }
 }
