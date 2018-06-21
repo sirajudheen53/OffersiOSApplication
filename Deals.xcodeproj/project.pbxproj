@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0B06479E20AC419100AE8496 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B06479D20AC419100AE8496 /* HomeViewController.swift */; };
-		0B4C485F20B6849B00DA77C4 /* FirebaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4C485E20B6849B00DA77C4 /* FirebaseController.swift */; };
+		0B1F18CF20DBA3630075C1FA /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1F18CE20DBA3630075C1FA /* ProfileViewController.swift */; };
 		0B67D09F20AAA6D000FC39E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B67D09E20AAA6D000FC39E5 /* AppDelegate.swift */; };
 		0B67D0A120AAA6D000FC39E5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B67D0A020AAA6D000FC39E5 /* LoginViewController.swift */; };
 		0B67D0A420AAA6D000FC39E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B67D0A220AAA6D000FC39E5 /* Main.storyboard */; };
@@ -26,7 +26,28 @@
 		91F8362234765FC693A1FC50 /* Pods_DealsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08CFD44055D14123C98A65A8 /* Pods_DealsUITests.framework */; };
 		94CA4C3EE0A170AE49DBCD07 /* Pods_Deals.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D8FF93B8C5235AA444D6F /* Pods_Deals.framework */; };
 		A66597ED14843279AE23D75B /* Pods_TestUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02917333E0BB871C762B13F3 /* Pods_TestUITests.framework */; };
+		A786578C20DABFBC00649410 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A786578B20DABFBC00649410 /* Constants.swift */; };
+		A786578E20DAC8A300649410 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A786578D20DAC8A200649410 /* CoreLocation.framework */; };
+		A786579120DAD0E200649410 /* HotDealCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A786578F20DAD0E100649410 /* HotDealCollectionViewCell.swift */; };
+		A786579220DAD0E200649410 /* HotDealCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A786579020DAD0E100649410 /* HotDealCollectionViewCell.xib */; };
+		A786579720DADB5C00649410 /* HotDealTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A786579520DADB5C00649410 /* HotDealTableViewCell.swift */; };
+		A786579820DADB5C00649410 /* HotDealTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A786579620DADB5C00649410 /* HotDealTableViewCell.xib */; };
+		A786579D20DAE82000649410 /* SF-Pro-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A786579A20DAE81700649410 /* SF-Pro-Display-Bold.otf */; };
+		A786579E20DAE82000649410 /* SF-Pro-Display-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = A786579B20DAE81C00649410 /* SF-Pro-Display-Medium.otf */; };
+		A786579F20DAE82000649410 /* SF-Pro-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = A786579C20DAE81E00649410 /* SF-Pro-Display-Light.otf */; };
 		A7D9F25A20AB56B6005B08BE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A7D9F25920AB56B6005B08BE /* GoogleService-Info.plist */; };
+		A7F7501220D4FF040012FE47 /* BaseWebservice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F7501120D4FF040012FE47 /* BaseWebservice.swift */; };
+		A7F7501420D638E80012FE47 /* Deal.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F7501320D638E80012FE47 /* Deal.swift */; };
+		A7F7501620D639290012FE47 /* Vendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F7501520D639290012FE47 /* Vendor.swift */; };
+		A7F7501820D639320012FE47 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F7501720D639320012FE47 /* Category.swift */; };
+		A7F7501A20D650D70012FE47 /* DealsListingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F7501920D650D70012FE47 /* DealsListingTableViewCell.swift */; };
+		A7F7501C20D6C33F0012FE47 /* ExploreFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F7501B20D6C33F0012FE47 /* ExploreFilterViewController.swift */; };
+		A7F7502120D954D00012FE47 /* SFCompactText-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = A7F7502020D954CF0012FE47 /* SFCompactText-Regular.otf */; };
+		A7F7502820D9559B0012FE47 /* SF-Pro-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = A7F7502520D955970012FE47 /* SF-Pro-Text-Light.otf */; };
+		A7F7502920D9559B0012FE47 /* SF-Pro-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = A7F7502620D955980012FE47 /* SF-Pro-Text-Medium.otf */; };
+		A7F7502A20D9559B0012FE47 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = A7F7502720D955990012FE47 /* SF-Pro-Text-Regular.otf */; };
+		A7F7502C20D970FF0012FE47 /* UIView+RoundCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F7502B20D970FE0012FE47 /* UIView+RoundCorner.swift */; };
+		A7F7502E20D971220012FE47 /* RoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F7502D20D971220012FE47 /* RoundedView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +71,7 @@
 		02917333E0BB871C762B13F3 /* Pods_TestUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		08CFD44055D14123C98A65A8 /* Pods_DealsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DealsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B06479D20AC419100AE8496 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		0B4C485E20B6849B00DA77C4 /* FirebaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseController.swift; sourceTree = "<group>"; };
+		0B1F18CE20DBA3630075C1FA /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		0B67D09B20AAA6D000FC39E5 /* Deals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Deals.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B67D09E20AAA6D000FC39E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0B67D0A020AAA6D000FC39E5 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -79,7 +100,30 @@
 		9A2C270CE3B52C24AFC9AB65 /* Pods-Deals.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Deals.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Deals/Pods-Deals.debug.xcconfig"; sourceTree = "<group>"; };
 		9A69D81B249A0F68CEC001BD /* Pods-DealsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DealsUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DealsUITests/Pods-DealsUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A117B12BE3DFE390A1A7FCB0 /* Pods_Test.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Test.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A786578B20DABFBC00649410 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		A786578D20DAC8A200649410 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		A786578F20DAD0E100649410 /* HotDealCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotDealCollectionViewCell.swift; sourceTree = "<group>"; };
+		A786579020DAD0E100649410 /* HotDealCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HotDealCollectionViewCell.xib; sourceTree = "<group>"; };
+		A786579420DAD7EA00649410 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-Pro-Text-Bold.otf"; path = "../../Desktop/SF Pro/SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
+		A786579520DADB5C00649410 /* HotDealTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotDealTableViewCell.swift; sourceTree = "<group>"; };
+		A786579620DADB5C00649410 /* HotDealTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HotDealTableViewCell.xib; sourceTree = "<group>"; };
+		A786579A20DAE81700649410 /* SF-Pro-Display-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Bold.otf"; sourceTree = "<group>"; };
+		A786579B20DAE81C00649410 /* SF-Pro-Display-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Medium.otf"; sourceTree = "<group>"; };
+		A786579C20DAE81E00649410 /* SF-Pro-Display-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Light.otf"; sourceTree = "<group>"; };
 		A7D9F25920AB56B6005B08BE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		A7F7501120D4FF040012FE47 /* BaseWebservice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseWebservice.swift; sourceTree = "<group>"; };
+		A7F7501320D638E80012FE47 /* Deal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deal.swift; sourceTree = "<group>"; };
+		A7F7501520D639290012FE47 /* Vendor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vendor.swift; sourceTree = "<group>"; };
+		A7F7501720D639320012FE47 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		A7F7501920D650D70012FE47 /* DealsListingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealsListingTableViewCell.swift; sourceTree = "<group>"; };
+		A7F7501B20D6C33F0012FE47 /* ExploreFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreFilterViewController.swift; sourceTree = "<group>"; };
+		A7F7502020D954CF0012FE47 /* SFCompactText-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SFCompactText-Regular.otf"; path = "SF Compact/SFCompactText-Regular.otf"; sourceTree = SOURCE_ROOT; };
+		A7F7502220D955210012FE47 /* SF-Pro-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.otf"; sourceTree = "<group>"; };
+		A7F7502520D955970012FE47 /* SF-Pro-Text-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Light.otf"; sourceTree = "<group>"; };
+		A7F7502620D955980012FE47 /* SF-Pro-Text-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Medium.otf"; sourceTree = "<group>"; };
+		A7F7502720D955990012FE47 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
+		A7F7502B20D970FE0012FE47 /* UIView+RoundCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+RoundCorner.swift"; sourceTree = "<group>"; };
+		A7F7502D20D971220012FE47 /* RoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedView.swift; sourceTree = "<group>"; };
 		BDC3F225C35034B28A04DD0C /* Pods_DealsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DealsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDF0751CA2A535F0D5512D1D /* Pods-TestTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TestTests/Pods-TestTests.release.xcconfig"; sourceTree = "<group>"; };
 		CE7D8FF93B8C5235AA444D6F /* Pods_Deals.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Deals.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -93,6 +137,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A786578E20DAC8A300649410 /* CoreLocation.framework in Frameworks */,
 				94CA4C3EE0A170AE49DBCD07 /* Pods_Deals.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -140,6 +185,7 @@
 		0B67D09220AAA6D000FC39E5 = {
 			isa = PBXGroup;
 			children = (
+				A7F7501F20D9547A0012FE47 /* Fonts */,
 				0B67D09D20AAA6D000FC39E5 /* Deals */,
 				0B67D0B220AAA6D000FC39E5 /* DealsTests */,
 				0B67D0BD20AAA6D000FC39E5 /* DealsUITests */,
@@ -162,16 +208,26 @@
 		0B67D09D20AAA6D000FC39E5 /* Deals */ = {
 			isa = PBXGroup;
 			children = (
+				A786579320DAD0F400649410 /* Custom Cells */,
 				A7D9F25920AB56B6005B08BE /* GoogleService-Info.plist */,
 				0B67D09E20AAA6D000FC39E5 /* AppDelegate.swift */,
+				A7F7502B20D970FE0012FE47 /* UIView+RoundCorner.swift */,
+				A7F7502D20D971220012FE47 /* RoundedView.swift */,
+				A7F7501120D4FF040012FE47 /* BaseWebservice.swift */,
 				0B67D0A020AAA6D000FC39E5 /* LoginViewController.swift */,
 				0B06479D20AC419100AE8496 /* HomeViewController.swift */,
+				A786578B20DABFBC00649410 /* Constants.swift */,
+				A7F7501320D638E80012FE47 /* Deal.swift */,
+				A7F7501520D639290012FE47 /* Vendor.swift */,
+				A7F7501720D639320012FE47 /* Category.swift */,
 				0B9E123220B2900100C66129 /* ConditionsListingTableViewCell.swift */,
+				A7F7501920D650D70012FE47 /* DealsListingTableViewCell.swift */,
 				0B9E123420B290A400C66129 /* DealDetailsViewController.swift */,
 				0B9E123620B29D4000C66129 /* MyOrdersViewController.swift */,
 				0B9E123820B2B6E800C66129 /* FAQViewController.swift */,
+				A7F7501B20D6C33F0012FE47 /* ExploreFilterViewController.swift */,
 				0B9E123A20B3D44100C66129 /* ExploreViewController.swift */,
-				0B4C485E20B6849B00DA77C4 /* FirebaseController.swift */,
+				0B1F18CE20DBA3630075C1FA /* ProfileViewController.swift */,
 				0B67D0A220AAA6D000FC39E5 /* Main.storyboard */,
 				0B67D0A520AAA6D000FC39E5 /* Assets.xcassets */,
 				0B67D0A720AAA6D000FC39E5 /* LaunchScreen.storyboard */,
@@ -201,6 +257,7 @@
 		932C96E66A5759E860C5A5F5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A786578D20DAC8A200649410 /* CoreLocation.framework */,
 				A117B12BE3DFE390A1A7FCB0 /* Pods_Test.framework */,
 				6EEC5E0EA7DDBCB203FB2943 /* Pods_TestTests.framework */,
 				02917333E0BB871C762B13F3 /* Pods_TestUITests.framework */,
@@ -209,6 +266,33 @@
 				08CFD44055D14123C98A65A8 /* Pods_DealsUITests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A786579320DAD0F400649410 /* Custom Cells */ = {
+			isa = PBXGroup;
+			children = (
+				A786578F20DAD0E100649410 /* HotDealCollectionViewCell.swift */,
+				A786579020DAD0E100649410 /* HotDealCollectionViewCell.xib */,
+				A786579520DADB5C00649410 /* HotDealTableViewCell.swift */,
+				A786579620DADB5C00649410 /* HotDealTableViewCell.xib */,
+			);
+			path = "Custom Cells";
+			sourceTree = "<group>";
+		};
+		A7F7501F20D9547A0012FE47 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				A7F7502020D954CF0012FE47 /* SFCompactText-Regular.otf */,
+				A7F7502220D955210012FE47 /* SF-Pro-Text-Semibold.otf */,
+				A7F7502520D955970012FE47 /* SF-Pro-Text-Light.otf */,
+				A7F7502620D955980012FE47 /* SF-Pro-Text-Medium.otf */,
+				A786579420DAD7EA00649410 /* SF-Pro-Text-Bold.otf */,
+				A7F7502720D955990012FE47 /* SF-Pro-Text-Regular.otf */,
+				A786579A20DAE81700649410 /* SF-Pro-Display-Bold.otf */,
+				A786579C20DAE81E00649410 /* SF-Pro-Display-Light.otf */,
+				A786579B20DAE81C00649410 /* SF-Pro-Display-Medium.otf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -323,10 +407,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A786579E20DAE82000649410 /* SF-Pro-Display-Medium.otf in Resources */,
+				A7F7502120D954D00012FE47 /* SFCompactText-Regular.otf in Resources */,
 				0B67D0A920AAA6D000FC39E5 /* LaunchScreen.storyboard in Resources */,
+				A7F7502820D9559B0012FE47 /* SF-Pro-Text-Light.otf in Resources */,
+				A786579F20DAE82000649410 /* SF-Pro-Display-Light.otf in Resources */,
 				A7D9F25A20AB56B6005B08BE /* GoogleService-Info.plist in Resources */,
 				0B67D0A620AAA6D000FC39E5 /* Assets.xcassets in Resources */,
+				A7F7502920D9559B0012FE47 /* SF-Pro-Text-Medium.otf in Resources */,
+				A7F7502A20D9559B0012FE47 /* SF-Pro-Text-Regular.otf in Resources */,
+				A786579820DADB5C00649410 /* HotDealTableViewCell.xib in Resources */,
 				0B67D0A420AAA6D000FC39E5 /* Main.storyboard in Resources */,
+				A786579220DAD0E200649410 /* HotDealCollectionViewCell.xib in Resources */,
+				A786579D20DAE82000649410 /* SF-Pro-Display-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,31 +465,19 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Deals/Pods-Deals-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
+				"${BUILT_PRODUCTS_DIR}/AFDateHelper/AFDateHelper.framework",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
-				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-RxLibrary/RxLibrary.framework",
-				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFDateHelper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxLibrary.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -464,15 +545,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B4C485F20B6849B00DA77C4 /* FirebaseController.swift in Sources */,
 				0B67D0A120AAA6D000FC39E5 /* LoginViewController.swift in Sources */,
+				A786578C20DABFBC00649410 /* Constants.swift in Sources */,
+				0B1F18CF20DBA3630075C1FA /* ProfileViewController.swift in Sources */,
+				A786579120DAD0E200649410 /* HotDealCollectionViewCell.swift in Sources */,
 				0B9E123720B29D4000C66129 /* MyOrdersViewController.swift in Sources */,
+				A786579720DADB5C00649410 /* HotDealTableViewCell.swift in Sources */,
 				0B67D09F20AAA6D000FC39E5 /* AppDelegate.swift in Sources */,
 				0B9E123320B2900100C66129 /* ConditionsListingTableViewCell.swift in Sources */,
+				A7F7502C20D970FF0012FE47 /* UIView+RoundCorner.swift in Sources */,
 				0B9E123B20B3D44100C66129 /* ExploreViewController.swift in Sources */,
 				0B9E123920B2B6E800C66129 /* FAQViewController.swift in Sources */,
 				0B06479E20AC419100AE8496 /* HomeViewController.swift in Sources */,
+				A7F7502E20D971220012FE47 /* RoundedView.swift in Sources */,
+				A7F7501620D639290012FE47 /* Vendor.swift in Sources */,
+				A7F7501420D638E80012FE47 /* Deal.swift in Sources */,
 				0B9E123520B290A400C66129 /* DealDetailsViewController.swift in Sources */,
+				A7F7501220D4FF040012FE47 /* BaseWebservice.swift in Sources */,
+				A7F7501A20D650D70012FE47 /* DealsListingTableViewCell.swift in Sources */,
+				A7F7501C20D6C33F0012FE47 /* ExploreFilterViewController.swift in Sources */,
+				A7F7501820D639320012FE47 /* Category.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -642,9 +734,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 73RP75H5FH;
-				INFOPLIST_FILE = "$(PROJECT_DIR)/Deals/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Deals/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.qburst.Test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.firewheels.qdeals;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -659,9 +751,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 73RP75H5FH;
-				INFOPLIST_FILE = "$(PROJECT_DIR)/Deals/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Deals/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.qburst.Test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.firewheels.qdeals;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
