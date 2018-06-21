@@ -18,7 +18,7 @@ enum WebserviceMethod {
     case get
 }
 
-let base_servive_url : String = "http://192.168.43.54:8000/"
+let base_servive_url : String = "http://127.0.0.1:8000/"
 
 class BaseWebservice: NSObject {
     class func performRequest(function : WebserviceFunction, requestMethod : WebserviceMethod, params : [String : AnyObject]?, headers : [String : String]?, onCompletion completionBlock : @escaping ((_ response : Any?, _ error : Error?)->())) {
@@ -33,6 +33,7 @@ class BaseWebservice: NSObject {
                     completionBlock(response.value, nil)
                     break
                 case .failure(let error):
+                    print("Error - \(error.localizedDescription)")
                     completionBlock(nil, error)
                 }
             }
@@ -44,6 +45,7 @@ class BaseWebservice: NSObject {
                     completionBlock(response.value, nil)
                     break
                 case .failure(let error):
+                    print("Error - \(error.localizedDescription)")
                     completionBlock(nil, error)
                 }
             }
