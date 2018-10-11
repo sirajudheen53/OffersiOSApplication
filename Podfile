@@ -6,9 +6,13 @@ target 'Deals' do
   use_frameworks!
 
 pod 'GoogleSignIn'
-    pod 'Alamofire', '~> 4.7'
+pod 'Alamofire', '~> 4.7'
+pod 'AlamofireImage', '~> 3.3'
 pod 'AFDateHelper'
-
+pod 'SVProgressHUD'
+pod 'FacebookCore'
+pod 'FacebookLogin'
+pod 'FacebookShare'
   # Pods for Test
 
   target 'DealsTests' do

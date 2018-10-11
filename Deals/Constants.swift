@@ -20,6 +20,8 @@ class Constants: NSObject {
     static let redColor = UIColor(displayP3Red: 248/255.0, green: 37/255.0, blue: 74/255.0, alpha: 1)
     static let dimGrey = UIColor(displayP3Red: 109/255.0, green: 109/255.0, blue: 109/255.0, alpha: 1)
     static let onyxColor = UIColor(displayP3Red: 20/255.0, green: 20/255.0, blue: 20/255.0, alpha: 1)
+    static let mountainMedow = UIColor(displayP3Red: 41.0/255.0, green: 204.0/255.0, blue: 150.0/255.0, alpha: 1)
+    static let taupeyGrey = UIColor(displayP3Red: 146.0/255.0, green: 146.0/255.0, blue: 146.0/255.0, alpha: 1)
     
     class func mediumFontWithSize(size : CGFloat) -> UIFont {
         return UIFont(name: "SFProText-Medium", size: size)!
@@ -44,4 +46,15 @@ class Constants: NSObject {
     class func boldProDisplayWithSize(size : CGFloat) -> UIFont {
         return UIFont(name: "SFProDisplay-Bold", size: size)!
     }
+}
+
+enum FilterCategories {
+    case Restaurent
+    case Travel
+    case Health
+    case Beauty
+    case CarCare
+    case Retail
+    case Entertainment
+    case Services
 }

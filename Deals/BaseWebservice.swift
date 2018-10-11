@@ -12,6 +12,9 @@ import Alamofire
 enum WebserviceFunction : String {
     case fetchDealsList = "deals/all_deals"
     case login = "accounts/login"
+    case fetchUserProfile = "accounts/profile"
+    case makeFavourite = "deals/wishlist"
+    case makePurchase = "deals/purchase"
 }
 
 enum WebserviceMethod {
@@ -19,7 +22,11 @@ enum WebserviceMethod {
     case get
 }
 
-let base_servive_url : String = "http://localhost:8000/"
+//let base_servive_url : String = "http://127.0.0.1:8000/"
+//let image_service_url : String = "http://127.0.0.1:8000/"
+
+let image_service_url : String = "https://q-deals.herokuapp.com/"
+let base_servive_url : String = "https://q-deals.herokuapp.com/"
 
 class BaseWebservice: NSObject {
     class func performRequest(function : WebserviceFunction, requestMethod : WebserviceMethod, params : [String : AnyObject]?, headers : [String : String]?, onCompletion completionBlock : @escaping ((_ response : Any?, _ error : Error?)->())) {

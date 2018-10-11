@@ -8,42 +8,78 @@
 
 import UIKit
 import GoogleSignIn
+import CoreLocation
+import FBSDKCoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
     var window: UIWindow?
+    var currentUserLocation : CLLocation?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         GIDSignIn.sharedInstance().clientID = "575363958117-8tm13saonriclsrvmithkb3fhvrtk9s7.apps.googleusercontent.com"
         GIDSignIn.sharedInstance().delegate = self
+       
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+
+        
+        UITabBar.appearance().barTintColor = UIColor(red: 248.0/255.0, green: 248.0/255.0, blue: 248.0/255.0, alpha: 0.82)
+        UINavigationBar.appearance().backgroundColor = UIColor.red
+        UINavigationBar.appearance().isTranslucent = false
         return true
     }
-  
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        return GIDSignIn.sharedInstance().handle(url, sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String, annotation: options[UIApplicationOpenURLOptionsKey.annotation])
+    
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
+        let sourceApplication =  options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String
+        let annotation = options[UIApplicationOpenURLOptionsKey.annotation]
+        
+        let googleHandler = GIDSignIn.sharedInstance().handle(
+            url,
+            sourceApplication: sourceApplication,
+            annotation: annotation )
+        
+        let facebookHandler = FBSDKApplicationDelegate.sharedInstance().application (
+            app,
+            open: url,
+            sourceApplication: sourceApplication,
+            annotation: annotation )
+        
+        return googleHandler || facebookHandler
     }
+
+   
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!,
               withError error: Error!) {
         if let error = error {
+            //Handle Error
             print("\(error.localizedDescription)")
         } else {
-            // Perform any operations on signed in user here.
-            let userId = user.userID                  // For client-side use only!
-            let idToken = user.authentication.idToken // Safe to send to the server
-            let fullName = user.profile.name
-            let givenName = user.profile.givenName
-            let familyName = user.profile.familyName
-            let email = user.profile.email
-            // ...
-            print(user.profile.name)
-            let params = ["access_token" : user.authentication.idToken, "provider" : "google", "fullname" : user.profile.name, "email" : user.profile.email]
+            print(user.authentication.idToken)
             
-            BaseWebservice.performRequest(function: WebserviceFunction.login, requestMethod: .post, params: ["access_token" : user.authentication.idToken as AnyObject, "provider" : "google" as AnyObject], headers: nil) { (response, error) in
-                print(response)
+            BaseWebservice.performRequest(function: WebserviceFunction.login, requestMethod: .post, params: ["id_token" : user.authentication.idToken as AnyObject, "provider" : "google" as AnyObject], headers: nil) { (response, error) in
+                if let response = response as? [String : Any] {
+                    if let status = response["status"] as? String {
+                        if status == "success" {
+                            if let userProperties = response["user"] as? [String : Any] {
+                                let userObject = User.userObjectWithProperties(properties: userProperties)
+                                userObject.saveToUserDefaults()
+                                NotificationCenter.default.post(name: NSNotification.Name("userLoggedIn"), object: userProperties)
+                            } else {
+                                //Handle Error
+                            }
+                        } else {
+                            //Handle Error
+                        }
+                    } else {
+                        //Handle Error
+                    }
+                } else {
+                    //Handle Error
+                }
             }
-            
         }
     }
 
