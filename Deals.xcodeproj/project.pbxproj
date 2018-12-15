@@ -30,6 +30,7 @@
 		A717A32520EF42770036A32E /* DealsListingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A717A32320EF42770036A32E /* DealsListingTableViewCell.xib */; };
 		A73E8FBC2100E8E000008CD3 /* PurchaseDealsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73E8FBA2100E8E000008CD3 /* PurchaseDealsCollectionViewCell.swift */; };
 		A73E8FBD2100E8E000008CD3 /* PurchaseDealsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A73E8FBB2100E8E000008CD3 /* PurchaseDealsCollectionViewCell.xib */; };
+		A74EC1A321C4E1B700605A8A /* LocationSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74EC1A221C4E1B700605A8A /* LocationSelectionViewController.swift */; };
 		A7521A4A211CAE9700E870B8 /* FavouritesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7521A49211CAE9700E870B8 /* FavouritesListViewController.swift */; };
 		A7521A4C211DB66F00E870B8 /* Purchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7521A4B211DB66F00E870B8 /* Purchase.swift */; };
 		A7521A4E211DBAD400E870B8 /* PurchasesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7521A4D211DBAD400E870B8 /* PurchasesListViewController.swift */; };
@@ -50,9 +51,11 @@
 		A786579E20DAE82000649410 /* SF-Pro-Display-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = A786579B20DAE81C00649410 /* SF-Pro-Display-Medium.otf */; };
 		A786579F20DAE82000649410 /* SF-Pro-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = A786579C20DAE81E00649410 /* SF-Pro-Display-Light.otf */; };
 		A78D194F214CDE2B00E9F6BF /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A78D194E214CDE2B00E9F6BF /* SF-Pro-Text-Bold.otf */; };
+		A79CA1A11FF9B47600713DE3 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79CA1A01FF9B47600713DE3 /* Date+Extension.swift */; };
 		A7AFE6BD2102FC9F00D3322E /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AFE6BC2102FC9F00D3322E /* UserProfile.swift */; };
 		A7C28A0120FE46A30071FC59 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C28A0020FE46A30071FC59 /* User.swift */; };
 		A7D9F25A20AB56B6005B08BE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A7D9F25920AB56B6005B08BE /* GoogleService-Info.plist */; };
+		A7E6B71221C3834D00FA943B /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E6B71121C3834D00FA943B /* UIView+Extension.swift */; };
 		A7F7501220D4FF040012FE47 /* BaseWebservice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F7501120D4FF040012FE47 /* BaseWebservice.swift */; };
 		A7F7501420D638E80012FE47 /* Deal.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F7501320D638E80012FE47 /* Deal.swift */; };
 		A7F7501620D639290012FE47 /* Vendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F7501520D639290012FE47 /* Vendor.swift */; };
@@ -120,6 +123,7 @@
 		A717A32320EF42770036A32E /* DealsListingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DealsListingTableViewCell.xib; sourceTree = "<group>"; };
 		A73E8FBA2100E8E000008CD3 /* PurchaseDealsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseDealsCollectionViewCell.swift; sourceTree = "<group>"; };
 		A73E8FBB2100E8E000008CD3 /* PurchaseDealsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PurchaseDealsCollectionViewCell.xib; sourceTree = "<group>"; };
+		A74EC1A221C4E1B700605A8A /* LocationSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectionViewController.swift; sourceTree = "<group>"; };
 		A7521A49211CAE9700E870B8 /* FavouritesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesListViewController.swift; sourceTree = "<group>"; };
 		A7521A4B211DB66F00E870B8 /* Purchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Purchase.swift; sourceTree = "<group>"; };
 		A7521A4D211DBAD400E870B8 /* PurchasesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasesListViewController.swift; sourceTree = "<group>"; };
@@ -140,9 +144,11 @@
 		A786579B20DAE81C00649410 /* SF-Pro-Display-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Medium.otf"; sourceTree = "<group>"; };
 		A786579C20DAE81E00649410 /* SF-Pro-Display-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Light.otf"; sourceTree = "<group>"; };
 		A78D194E214CDE2B00E9F6BF /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
+		A79CA1A01FF9B47600713DE3 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Date+Extension.swift"; path = "Extensions/Date+Extension.swift"; sourceTree = "<group>"; };
 		A7AFE6BC2102FC9F00D3322E /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		A7C28A0020FE46A30071FC59 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A7D9F25920AB56B6005B08BE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		A7E6B71121C3834D00FA943B /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIView+Extension.swift"; path = "Extensions/UIView+Extension.swift"; sourceTree = "<group>"; };
 		A7F7501120D4FF040012FE47 /* BaseWebservice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseWebservice.swift; sourceTree = "<group>"; };
 		A7F7501320D638E80012FE47 /* Deal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deal.swift; sourceTree = "<group>"; };
 		A7F7501520D639290012FE47 /* Vendor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vendor.swift; sourceTree = "<group>"; };
@@ -251,6 +257,8 @@
 				0B67D0A520AAA6D000FC39E5 /* Assets.xcassets */,
 				0B67D0A720AAA6D000FC39E5 /* LaunchScreen.storyboard */,
 				0B67D0AA20AAA6D000FC39E5 /* Info.plist */,
+				A79CA1A01FF9B47600713DE3 /* Date+Extension.swift */,
+				A7E6B71121C3834D00FA943B /* UIView+Extension.swift */,
 			);
 			path = Deals;
 			sourceTree = "<group>";
@@ -313,6 +321,7 @@
 				0B67D0A020AAA6D000FC39E5 /* LoginViewController.swift */,
 				0B06479D20AC419100AE8496 /* HomeViewController.swift */,
 				0B9E123420B290A400C66129 /* DealDetailsViewController.swift */,
+				A74EC1A221C4E1B700605A8A /* LocationSelectionViewController.swift */,
 				0B9E123620B29D4000C66129 /* MyOrdersViewController.swift */,
 				0B9E123820B2B6E800C66129 /* FAQViewController.swift */,
 				A7F7501B20D6C33F0012FE47 /* ExploreFilterViewController.swift */,
@@ -684,6 +693,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7E6B71221C3834D00FA943B /* UIView+Extension.swift in Sources */,
 				A7521A50211DDFA400E870B8 /* UIImage+Noir.swift in Sources */,
 				A717A32420EF42770036A32E /* DealsListingTableViewCell.swift in Sources */,
 				0B67D0A120AAA6D000FC39E5 /* LoginViewController.swift in Sources */,
@@ -705,6 +715,7 @@
 				0B9E123920B2B6E800C66129 /* FAQViewController.swift in Sources */,
 				A7AFE6BD2102FC9F00D3322E /* UserProfile.swift in Sources */,
 				0B06479E20AC419100AE8496 /* HomeViewController.swift in Sources */,
+				A79CA1A11FF9B47600713DE3 /* Date+Extension.swift in Sources */,
 				A7F7502E20D971220012FE47 /* RoundedView.swift in Sources */,
 				A7521A4A211CAE9700E870B8 /* FavouritesListViewController.swift in Sources */,
 				A7F7501620D639290012FE47 /* Vendor.swift in Sources */,
@@ -714,6 +725,7 @@
 				A7F7501C20D6C33F0012FE47 /* ExploreFilterViewController.swift in Sources */,
 				A7521A4E211DBAD400E870B8 /* PurchasesListViewController.swift in Sources */,
 				A757D17D20EFDD1C00E4A282 /* HomeExploreCollectionViewCell.swift in Sources */,
+				A74EC1A321C4E1B700605A8A /* LocationSelectionViewController.swift in Sources */,
 				A7F7501820D639320012FE47 /* Category.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -83,9 +83,9 @@ class ExploreViewController: UIViewController, UITableViewDataSource, UITableVie
         } else {
             return deals.filter {(deal) -> Bool in
                 if deal.category!.name!.lowercased().contains(term.lowercased()) ||
-                    deal.title!.lowercased().contains(term.lowercased()) ||
+                    deal.title.lowercased().contains(term.lowercased()) ||
                     deal.vendor!.name!.lowercased().contains(term.lowercased()) ||
-                    deal.dealDescription!.lowercased().contains(term.lowercased()) {
+                    deal.dealDescription.lowercased().contains(term.lowercased()) {
                     return true
                 } else {
                     return false

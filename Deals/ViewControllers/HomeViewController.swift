@@ -13,6 +13,7 @@ import CoreLocation
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, GIDSignInUIDelegate, CLLocationManagerDelegate {
 
     var availableDeals : [Deal]?
+    var hotDeals : [Deal]?
     let locationManager = CLLocationManager()
 
     @IBOutlet weak var test: UIView!
@@ -23,7 +24,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet weak var locationSelectionView: UIView!
     @IBOutlet weak var dealsListingTableView: UITableView!
-    
+
     var currentLocation : CLLocation?
     
     override func viewDidLoad() {
@@ -170,6 +171,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
+    
     func hotDealCellSelectionActionBlock() -> ((_ deal : Deal) -> ()) {
         return {(deal) in
             DispatchQueue.main.async {
@@ -182,7 +184,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         if let serverToken = User.getProfile()?.token {
             let userProfileFetchHeader = ["Authorization" : "Token \(serverToken)"]
             return {(deal) in
-                BaseWebservice.performRequest(function: .makeFavourite, requestMethod: .post, params: ["deal_id" : deal.dealId! as AnyObject], headers: userProfileFetchHeader, onCompletion: { (response, error) in
+                BaseWebservice.performRequest(function: .makeFavourite, requestMethod: .post, params: ["deal_id" : deal.dealId as AnyObject], headers: userProfileFetchHeader, onCompletion: { (response, error) in
                     if let error = error {
                         //Handle Error
                     } else if let response = response as? [String : Any?] {
@@ -287,25 +289,86 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // MARK: - Private Methods
     
+    func parseAllDealsResponseAndReloadView(allDealsResponse : [String : Any]) {
+        if let hotDealsResponse = allDealsResponse["deals"] as? [[String : Any]] {
+            hotDeals = Deal.dealObjectsFromProperties(properties: hotDealsResponse)
+        }
+        
+        if let allDeals = allDealsResponse["deals"] as? [[String : Any]] {
+            self.availableDeals = Deal.dealObjectsFromProperties(properties: allDeals)
+            var favourites = [Deal]()
+            var purchases = [Deal]()
+            if let allFavoritedDeals = allDealsResponse["wishlist"] as? [[String : Any]] {
+                favourites = Deal.dealObjectsFromProperties(properties: allFavoritedDeals)
+            }
+            if let allPurchased = allDealsResponse["purchases"] as? [[String : Any]] {
+                for dealProperty in allPurchased {
+                    if let singleDeal = dealProperty["deal"] as? [String : Any] {
+                        let deal = Deal.dealObjectFromProperty(property: singleDeal)
+                        if let purchaseDate = dealProperty["purchase_date"] as? Double {
+                            deal.purchasedDate = Date(timeIntervalSince1970: purchaseDate)
+                        }
+                        if let purchaseExpiry = dealProperty["expiry_date"] as? Double {
+                            deal.purchaseExpiry = Date(timeIntervalSince1970: purchaseExpiry)
+                        }
+                        if let code = dealProperty["code"] as? String {
+                            deal.purchaseCode = code
+                        }
+                        if let isRedeemed = dealProperty["isRedeemed"] as? Bool {
+                            deal.isRedeemed = isRedeemed
+                        }
+                        purchases.append(deal)
+                    }
+                }
+            }
+            _ = favourites.map({ (deal) -> Deal in
+                let correspondingDeal = self.availableDeals?.filter({ $0.dealId == deal.dealId}).first
+                correspondingDeal?.isFavourited = true
+                return deal
+            })
+            
+            _ = purchases.map({ (deal) -> Deal in
+                if let correspondingDeal = self.availableDeals?.filter({ $0.dealId == deal.dealId}).first {
+                    correspondingDeal.numberOfPurchases += 1
+                    if let correspondingDealPurchseDate =  correspondingDeal.purchasedDate,
+                        let dealPurchaseDate = deal.purchasedDate,
+                        correspondingDealPurchseDate.timeIntervalSince1970 < dealPurchaseDate.timeIntervalSince1970 {
+                        correspondingDeal.purchasedDate = dealPurchaseDate
+                        correspondingDeal.purchaseCode = deal.purchaseCode
+                        correspondingDeal.purchaseExpiry = deal.purchaseExpiry
+                    } else if correspondingDeal.purchasedDate == nil {
+                        correspondingDeal.purchasedDate = deal.purchasedDate
+                        correspondingDeal.purchaseCode = deal.purchaseCode
+                        correspondingDeal.purchaseExpiry = deal.purchaseExpiry
+                    }
+                }
+                return deal
+            })
+            
+            self.dealsListingTableView.reloadData()
+            if self.availableDeals?.count == 0 {
+                self.noDealsContentView.isHidden = false
+                self.dealsListingTableView.isHidden = true
+            } else {
+                self.noDealsContentView.isHidden = true
+                self.dealsListingTableView.isHidden = false
+            }
+        } else {
+            //Handle Error condition
+        }
+    }
+    
     func fetchAllDealsFromServerAndUpdateUI() {
         var tokenHeader = [String : String]()
         if let token = User.getProfile()?.token {
             tokenHeader = ["Authorization" : "Token \(token)"]
         }
-        BaseWebservice.performRequest(function: WebserviceFunction.fetchDealsList, requestMethod: .get, params: nil, headers: tokenHeader) { (response, error) in
+        BaseWebservice.performRequest(function: WebserviceFunction.fetchDealsList, requestMethod: .get, params: ["location" : "Cochin" as AnyObject], headers: tokenHeader) { (response, error) in
             if let response = response as? [String : Any] {
                 if let status = response["status"] as? String {
                     if status=="success" {
                         if let allDealsProperties = response["data"] as? [String : Any] {
-                            if let allDeals = allDealsProperties["deals"] as? [[String : Any]] {
-                                self.availableDeals = Deal.dealObjectsFromProperties(properties: allDeals)
-                                self.dealsListingTableView.reloadData()
-                                if self.availableDeals?.count == 0 {
-                                    self.noDealsContentView.isHidden = true
-                                }
-                            } else {
-                                //Handle Error condition
-                            }
+                            self.parseAllDealsResponseAndReloadView(allDealsResponse: allDealsProperties)
                         } else {
                             //Handle Error condition
                         }

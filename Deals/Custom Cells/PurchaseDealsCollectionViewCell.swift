@@ -26,20 +26,27 @@ class PurchaseDealsCollectionViewCell: UICollectionViewCell {
     }
     
     func customizeCell(deal : Deal) {
+        self.dealImageView.image = UIImage(named: "logo_small")
+        dealImageView.contentMode = UIViewContentMode.center
+        
         if let vendorName = deal.vendor?.name {
             self.vendorNameLabel.text = vendorName
         }
         if let purchasedDate = deal.purchasedDate {
             self.purchasedDateLabel.text = purchasedDate.toString()
         }
-        if let purchasedPrice = deal.dealPrice {
-            self.purchasedPriceLabel.text = "Purchased for \(purchasedPrice)"
-        }
-        if let originalPrice = deal.originalPrice {
-            self.originalPriceLabel.text = "\(originalPrice)"
-        }
+            self.purchasedPriceLabel.text = "Purchased for \(deal.dealPrice)"
+            self.originalPriceLabel.text = "\(deal.originalPrice)"
         if let images = deal.images {
-            self.dealImageView?.af_setImage(withURL: URL(string: image_service_url + images.first!)!)
+            self.dealImageView.af_setImage(withURL: URL(string: image_service_url + images.first!)!,
+                                           placeholderImage: UIImage(named: "logo_small"),
+                                           filter: nil,
+                                           progress: nil,
+                                           progressQueue: DispatchQueue.main,
+                                           imageTransition: UIImageView.ImageTransition.noTransition,
+                                           runImageTransitionIfCached: false) { (data) in
+                                            self.dealImageView?.contentMode = UIViewContentMode.scaleAspectFill
+            }
         }
     }
 

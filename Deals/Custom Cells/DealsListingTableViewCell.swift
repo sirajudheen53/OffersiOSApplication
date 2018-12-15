@@ -45,7 +45,6 @@ class DealsListingTableViewCell: UITableViewCell {
         self.dealImageContentView.layer.cornerRadius = 6.0
         self.dealImageContentView.clipsToBounds = true
         
-
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -54,39 +53,39 @@ class DealsListingTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    override func prepareForReuse() {
+        dealImageView.contentMode = UIViewContentMode.center
+        self.dealImageView.image = UIImage(named: "logo_small")
+    }
+    
     func customizeCell(deal : Deal) {
         self.deal = deal
         if let vendor = deal.vendor {
             self.vendorNameValueLabel.text = vendor.name!
         }
-        if let dealDescription = deal.dealDescription {
-            self.offerDescriptionValueLabel.attributedText = self.dealDescriptionAttributeText(title: dealDescription)
-        }
-        if let originalPrice = deal.originalPrice {
-            var originalPriceString = "\(originalPrice)"
-            if let currencySymbol = deal.currencySymbol {
-                originalPriceString = currencySymbol + " " + originalPriceString
-            }
+            self.offerDescriptionValueLabel.attributedText = self.dealDescriptionAttributeText(title: deal.dealDescription)
+            var originalPriceString = "\(deal.originalPrice)"
+                originalPriceString = deal.currencySymbol + " " + originalPriceString
             self.originalPriceValueLabel.attributedText = self.originalPriceAttributedText(value: originalPriceString)
-        }
-        if let offerPrice = deal.dealPrice {
-            var offerPriceString = "\(offerPrice)"
-            if let currencySymbol = deal.currencySymbol {
-                offerPriceString = currencySymbol + " " + offerPriceString
-            }
+            var offerPriceString = "\(deal.dealPrice)"
+                offerPriceString = deal.currencySymbol + " " + offerPriceString
             self.offerPriceValueLabel.text = offerPriceString
-        }
-        if let originalPrice = deal.originalPrice, let offerPrice = deal.dealPrice {
-            self.offerPercentValueLabel.text = "\(Int((Float(offerPrice)/Float(originalPrice))*100))% off"
+        if deal.originalPrice > 0 {
+            self.offerPercentValueLabel.text = "\(Int((Float(deal.dealPrice)/Float(deal.originalPrice))*100))% off"
         }
         if let images = deal.images {
-            self.dealImageView?.af_setImage(withURL: URL(string: image_service_url + images.first!)!)
+            self.dealImageView.af_setImage(withURL: URL(string: image_service_url + images.first!)!,
+                                           placeholderImage: UIImage(named: "logo_small"),
+                                           filter: nil,
+                                           progress: nil,
+                                           progressQueue: DispatchQueue.main,
+                                           imageTransition: UIImageView.ImageTransition.noTransition,
+                                           runImageTransitionIfCached: false) { (data) in
+                                            self.dealImageView?.contentMode = UIViewContentMode.scaleAspectFill
+            }
         }
-        if let isFavourited = deal.isFavourited {
-            self.favouriteButton.setBackgroundImage(UIImage(named: isFavourited ? "make_favourite" : "makeFavouriteTransparent"), for: UIControlState.normal)
-        } else {
-            self.favouriteButton.setBackgroundImage(UIImage(named: "makeFavouriteTransparent"), for: UIControlState.normal)
-        }
+            self.favouriteButton.setBackgroundImage(UIImage(named: deal.isFavourited ? "make_favourite" : "makeFavouriteTransparent"), for: UIControlState.normal)
+    
         if let vendorLat = self.deal?.vendor?.locationLat, let vendorLong = self.deal?.vendor?.locationLong, let currentUserLocation = self.currentUserLocation {
             print("User location calculated")
             let vendorLocation = CLLocation(latitude: vendorLat, longitude: vendorLong)
@@ -103,9 +102,6 @@ class DealsListingTableViewCell: UITableViewCell {
                 }
             }
         } else {
-            print("Current lcation \(self.currentUserLocation)")
-            print("vendor lat \(self.deal?.vendor?.locationLat)")
-            print("vendor lon \(self.deal?.vendor?.locationLong)")
 
         }
     }

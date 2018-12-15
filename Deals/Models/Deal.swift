@@ -10,39 +10,45 @@ import UIKit
 import AFDateHelper
 
 class Deal: NSObject {
-    var dealId : Int?
-    var title : String?
-    var dealPrice : Int?
-    var originalPrice : Int?
-    var numberOfPeopleBought : Int?
-    var numberOfPeopleViewed : Int?
-    var startDate : Date?
+    var dealId : Int = 0
+    var title : String = ""
+    var dealPrice : Int = 0
+    var originalPrice : Int = 0
+    var numberOfPeopleBought : Int = 0
+    var numberOfPeopleViewed : Int = 0
+    var startDate : Date = Date()
     var purchasedDate : Date?
-    var endDate : Date?
-    var dealDescription: String?
+    var endDate : Date = Date()
+    var dealDescription: String = ""
     var vendor : Vendor?
     var category : Category?
     var images : [String]?
-    var isFavourited : Bool?
-    var currencySymbol : String?
+    var isFavourited : Bool = false
+    var currencySymbol : String = ""
+    var purchaseCode : String = ""
+    var purchaseExpiry : Date = Date()
+    var numberOfPurchases : Int = 0
+    var isRedeemed : Bool = false
+    var allowedSimultaneous : Int = 1
     
     static func dealObjectFromProperty(property : [String : Any]) -> Deal {
         let requiredDeal = Deal()
-        requiredDeal.title = property["title"] as? String
-        requiredDeal.dealId = property["id"] as? Int
-        requiredDeal.dealPrice = property["deal_price"] as? Int
-        requiredDeal.originalPrice = property["original_price"] as? Int
+        requiredDeal.title = property["title"] as? String ?? ""
+        requiredDeal.dealId = property["id"] as? Int ?? 0
+        requiredDeal.dealPrice = property["deal_price"] as? Int ?? 0
+        requiredDeal.originalPrice = property["original_price"] as? Int ?? 0
         if let purchasedDate = property["purchased_date"] as? String {
-            requiredDeal.purchasedDate = Date(fromString: purchasedDate, format: DateFormatType.isoDateTime)
+            requiredDeal.purchasedDate = Date(fromString: purchasedDate, format: DateFormatType.isoDateTime) ?? Date()
         }
-        requiredDeal.numberOfPeopleBought = property["nubmer_of_peoples_bought"] as? Int
-        requiredDeal.numberOfPeopleViewed = property["number_of_peoples_viewed"] as? Int
-        requiredDeal.dealDescription = property["description"] as? String
-        if let startDate = property["start_date"] as? String {
-            requiredDeal.startDate = Date(fromString: startDate, format: DateFormatType.isoDateTime)
+        requiredDeal.numberOfPeopleBought = property["nubmer_of_peoples_bought"] as? Int ?? 0
+        requiredDeal.numberOfPeopleViewed = property["number_of_peoples_viewed"] as? Int ?? 0
+        requiredDeal.allowedSimultaneous = property["number_of_simultaneous_purchase"] as? Int ?? 1
+        requiredDeal.dealDescription = property["description"] as? String ?? ""
+        if let startDate = property["start_date"] as? Double {
+            requiredDeal.startDate = Date(timeIntervalSince1970: startDate)
         }
-        if let endDate = property["end_date"] as? String {
-            requiredDeal.endDate = Date(fromString: endDate, format: DateFormatType.isoDateTime)
+        if let endDate = property["end_date"] as? Double {
+            requiredDeal.endDate = Date(timeIntervalSince1970: endDate)
         }
         if let vendor = property["vendor"] as? [String : Any] {
             requiredDeal.vendor = Vendor.vendorObjectFromProperty(property: vendor)

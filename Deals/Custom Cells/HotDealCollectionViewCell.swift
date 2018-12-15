@@ -71,39 +71,38 @@ class HotDealCollectionViewCell: UICollectionViewCell {
     
     func customizeCell(deal : Deal) {
         self.deal = deal
+        self.dealImageView.image = UIImage(named: "logo_small")
+        dealImageView.contentMode = UIViewContentMode.center
         if let images = deal.images, images.count > 0 {
-            self.dealImageView?.af_setImage(withURL: URL(string: image_service_url + images.first!)!)
+            self.dealImageView.af_setImage(withURL: URL(string: image_service_url + images.first!)!,
+                                           placeholderImage: UIImage(named: "logo_small"),
+                                           filter: nil,
+                                           progress: nil,
+                                           progressQueue: DispatchQueue.main,
+                                           imageTransition: UIImageView.ImageTransition.noTransition,
+                                           runImageTransitionIfCached: false) { (data) in
+                                            self.dealImageView?.contentMode = UIViewContentMode.scaleAspectFill
+            }
         }
         self.vendorNameLabel.text = deal.vendor!.name!
 //        self.originalPriceLabel.attributedText = self.originalPriceAttributedText(value: "\(deal.originalPrice!)")
 //        self.offerPriceLabel.text = "\(deal.dealPrice!)"
         
-        if let originalPrice = deal.originalPrice {
-            var originalPriceString = "\(originalPrice)"
-            if let currencySymbol = deal.currencySymbol {
-                originalPriceString = currencySymbol + " " + originalPriceString
-            }
+            var originalPriceString = "\(deal.originalPrice)"
+            originalPriceString = deal.currencySymbol + " " + originalPriceString
             self.originalPriceLabel.attributedText = self.originalPriceAttributedText(value: originalPriceString)
-        }
-        if let offerPrice = deal.dealPrice {
-            var offerPriceString = "\(offerPrice)"
-            if let currencySymbol = deal.currencySymbol {
-                offerPriceString = currencySymbol + " " + offerPriceString
-            }
+            var offerPriceString = "\(deal.dealPrice)"
+            offerPriceString = deal.currencySymbol + " " + offerPriceString
             self.offerPriceLabel.text = offerPriceString
-        }
         
         
         self.distanceValueLabel.text = "2 kms away"
-        self.descriptionLabel.attributedText = self.dealTitleAttributedText(title: deal.dealDescription!)
-        if let originalPrice = deal.originalPrice, let offerPrice = deal.dealPrice {
-            self.offerTagValueLabel.text = "\(Int((Float(offerPrice)/Float(originalPrice))*100))% off"
+        self.descriptionLabel.attributedText = self.dealTitleAttributedText(title: deal.dealDescription)
+        if deal.originalPrice > 0 {
+            self.offerTagValueLabel.text = "\(Int((Float(deal.dealPrice)/Float(deal.originalPrice))*100))% off"
         }
-        if let favourite = deal.isFavourited {
-            self.favouriteButton.setBackgroundImage(UIImage(named: favourite ? "make_favourite" : "makeFavouriteTransparent"), for: UIControlState.normal)
-        } else {
-            self.favouriteButton.setBackgroundImage(UIImage(named: "makeFavouriteTransparent"), for: UIControlState.normal)
-        }
+            self.favouriteButton.setBackgroundImage(UIImage(named: deal.isFavourited ? "make_favourite" : "makeFavouriteTransparent"), for: UIControlState.normal)
+
         if let vendorLat = self.deal?.vendor?.locationLat, let vendorLong = self.deal?.vendor?.locationLong, let currentUserLocation = self.currentUserLocation {
             let vendorLocation = CLLocation(latitude: vendorLat, longitude: vendorLong)
             let distance = vendorLocation.distance(from: currentUserLocation)
