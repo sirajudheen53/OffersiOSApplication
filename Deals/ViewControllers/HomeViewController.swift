@@ -20,7 +20,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var locationNameLabel: UILabel!
     
     @IBOutlet weak var noDealsContentView: UIView!
-    @IBOutlet weak var landmarkValueLabel: UILabel!
     
     @IBOutlet weak var locationSelectionView: UIView!
     @IBOutlet weak var dealsListingTableView: UITableView!
@@ -29,6 +28,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(locationUpdated), name: NSNotification.Name(rawValue: "locationUpdated"), object: nil)
+        
         GIDSignIn.sharedInstance().uiDelegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.userLoggedIn(notification:)), name: NSNotification.Name("userLoggedIn"), object: nil)
@@ -43,8 +44,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let exploreCellNib = UINib(nibName: "HomeExploreTableViewCell", bundle: nil)
         self.dealsListingTableView.register(exploreCellNib, forCellReuseIdentifier: "exploreTableViewCell")
         
-        self.getUserLocationAndUpdateUI()
-        self.fetchAllDealsFromServerAndUpdateUI()
+        if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
+            locationNameLabel.text = selectedLocation
+           self.fetchAllDealsFromServerAndUpdateUI(location: selectedLocation)
+        } else {
+            self.performSegue(withIdentifier: "showLocationSelection", sender: nil)
+        }
         
         self.navigationController?.navigationBar.isHidden = true
     }
@@ -59,83 +64,40 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         manager.stopUpdatingLocation()
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        print("User loation got")
         DispatchQueue.main.async {
             self.currentLocation = CLLocation(latitude: locValue.latitude, longitude: locValue.longitude)
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             appDelegate.currentUserLocation = self.currentLocation
             self.dealsListingTableView.reloadData()
         }
-        self.getAddressFromLatLon(lat: locValue.latitude, withLongitude: locValue.longitude)
+    }
+    
+    @objc func locationUpdated() {
+        if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
+            locationNameLabel.text = selectedLocation
+            self.fetchAllDealsFromServerAndUpdateUI(location: selectedLocation)
+        }
     }
     
     // MARK: - IBAction Methods
 
     @IBAction func getUserLocationButtonClicked(_ sender: Any) {
-        self.getUserLocationAndUpdateUI()
+        self.performSegue(withIdentifier: "showLocationSelection", sender: nil)
     }
     
     
     // MARK: - Private Methods
     
     @objc func userLoggedIn(notification : Notification) {
-        self.fetchAllDealsFromServerAndUpdateUI()
-    }
-    
-    @objc func userLoggedOut(notification : Notification) {
-        self.fetchAllDealsFromServerAndUpdateUI()
-    }
-    
-    @objc func handleSelectLocationViewTap(sender: UITapGestureRecognizer? = nil) {
-        
-    }
-    
-    func getUserLocationAndUpdateUI() {
-        // Ask for Authorisation from the User.
-        self.locationManager.requestAlwaysAuthorization()
-        
-        // For use in foreground
-        self.locationManager.requestWhenInUseAuthorization()
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-            locationManager.startUpdatingLocation()
-        } else {
-            DispatchQueue.main.async {
-                self.locationNameLabel.attributedText = self.locationAddressValueAttributedText(address: "Lulu Cyber Tower 2")
-                self.landmarkValueLabel.attributedText = self.locationLandmarkValueAttributedText(address: "Plot 2, Infopark")
-            }
+        if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
+            self.fetchAllDealsFromServerAndUpdateUI(location: selectedLocation)
         }
     }
     
-    func getAddressFromLatLon(lat: Double, withLongitude long: Double) {
-        var center : CLLocationCoordinate2D = CLLocationCoordinate2D()
-        let ceo: CLGeocoder = CLGeocoder()
-        center.latitude = lat
-        center.longitude = long
-        
-        let loc: CLLocation = CLLocation(latitude:center.latitude, longitude: center.longitude)
-        
-        
-        ceo.reverseGeocodeLocation(loc, completionHandler:
-            {(placemarks, error) in
-                if (error != nil)
-                {
-                    print("reverse geodcode fail: \(error!.localizedDescription)")
-                }
-                let pm = placemarks! as [CLPlacemark]
-                
-                if pm.count > 0 {
-                    let pm = placemarks![0]
-                    if let locality = pm.locality {
-                        self.locationNameLabel.attributedText = self.locationAddressValueAttributedText(address: locality)
-                    }
-                    if let sublocality = pm.subLocality {
-                        self.landmarkValueLabel.attributedText = self.locationLandmarkValueAttributedText(address: sublocality)
-                    }
-                }
-        })
-        
+    @objc func userLoggedOut(notification : Notification) {
+        if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
+            self.fetchAllDealsFromServerAndUpdateUI(location: selectedLocation)
+        }
     }
     
     func locationAddressValueAttributedText(address : String) -> NSAttributedString {
@@ -180,6 +142,32 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
+    func makeFavoriteDealBlock(deal : Deal) -> (()->()) {
+        if let serverToken = User.getProfile()?.token {
+            let userProfileFetchHeader = ["Authorization" : "Token \(serverToken)"]
+            return {() in
+                BaseWebservice.performRequest(function: .makeFavourite, requestMethod: .post, params: ["deal_id" : deal.dealId as AnyObject], headers: userProfileFetchHeader, onCompletion: { (response, error) in
+                    if let error = error {
+                        //Handle Error
+                    } else if let response = response as? [String : Any?] {
+                        if response["status"] as? String == "success" {
+                            deal.isFavourited = true
+                            NotificationCenter.default.post(Notification.init(name: Notification.Name("userProfileUpdated")))
+                        } else {
+                            //Handle Error
+                        }
+                    } else {
+                        //Handle Error
+                    }
+                })
+            }
+        } else {
+            return {() in
+                self.performSegue(withIdentifier: "showLoginPopup", sender: deal)
+            }
+        }
+    }
+    
     func makeFavouriteActionBlock() -> ((_ deal : Deal)->()) {
         if let serverToken = User.getProfile()?.token {
             let userProfileFetchHeader = ["Authorization" : "Token \(serverToken)"]
@@ -202,10 +190,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         } else {
             //Handle Error for no token found
             return {(deal) in
-                
+                self.performSegue(withIdentifier: "showLoginPopup", sender: deal)
             }
         }
-        
     }
     
     // MARK: - Navigation
@@ -215,6 +202,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         if segue.identifier == "showDetailsView" {
             if let detailsView = segue.destination as? DealDetailsViewController {
                 detailsView.deal = sender as? Deal
+            }
+        } else if segue.identifier == "showLoginPopup" {
+            if let popupView = segue.destination as? PopupViewController {
+                if let deal = sender as? Deal {
+                    popupView.actionBlock = self.makeFavoriteDealBlock(deal: deal)
+                }
             }
         }
     }
@@ -358,12 +351,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    func fetchAllDealsFromServerAndUpdateUI() {
+    func fetchAllDealsFromServerAndUpdateUI(location : String) {
         var tokenHeader = [String : String]()
         if let token = User.getProfile()?.token {
             tokenHeader = ["Authorization" : "Token \(token)"]
         }
-        BaseWebservice.performRequest(function: WebserviceFunction.fetchDealsList, requestMethod: .get, params: ["location" : "Cochin" as AnyObject], headers: tokenHeader) { (response, error) in
+        BaseWebservice.performRequest(function: WebserviceFunction.fetchDealsList, requestMethod: .get, params: ["location" : location as AnyObject], headers: tokenHeader) { (response, error) in
             if let response = response as? [String : Any] {
                 if let status = response["status"] as? String {
                     if status=="success" {

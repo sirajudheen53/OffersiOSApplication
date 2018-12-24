@@ -21,6 +21,7 @@
 		0B9E123720B29D4000C66129 /* MyOrdersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E123620B29D4000C66129 /* MyOrdersViewController.swift */; };
 		0B9E123920B2B6E800C66129 /* FAQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E123820B2B6E800C66129 /* FAQViewController.swift */; };
 		0B9E123B20B3D44100C66129 /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E123A20B3D44100C66129 /* ExploreViewController.swift */; };
+		0BB77F3121D1027C00BD925D /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB77F3021D1027C00BD925D /* PopupViewController.swift */; };
 		3F54C225E8FD3F0F3AF71CDF /* Pods_DealsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDC3F225C35034B28A04DD0C /* Pods_DealsTests.framework */; };
 		5D0E9126E06DC7828FEDEB22 /* Pods_TestTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EEC5E0EA7DDBCB203FB2943 /* Pods_TestTests.framework */; };
 		91F8362234765FC693A1FC50 /* Pods_DealsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08CFD44055D14123C98A65A8 /* Pods_DealsUITests.framework */; };
@@ -109,6 +110,7 @@
 		0B9E123620B29D4000C66129 /* MyOrdersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrdersViewController.swift; sourceTree = "<group>"; };
 		0B9E123820B2B6E800C66129 /* FAQViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQViewController.swift; sourceTree = "<group>"; };
 		0B9E123A20B3D44100C66129 /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
+		0BB77F3021D1027C00BD925D /* PopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
 		1595C26B8A0DA6C9704FFE3F /* Pods-DealsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DealsUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DealsUITests/Pods-DealsUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		3F82ABA086AE586B62D4753B /* Pods-TestUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TestUITests/Pods-TestUITests.release.xcconfig"; sourceTree = "<group>"; };
 		417C4184F1DBE1B897A147E4 /* Pods-DealsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DealsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DealsTests/Pods-DealsTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 				0B1F18CE20DBA3630075C1FA /* ProfileViewController.swift */,
 				A7521A49211CAE9700E870B8 /* FavouritesListViewController.swift */,
 				A7521A4D211DBAD400E870B8 /* PurchasesListViewController.swift */,
+				0BB77F3021D1027C00BD925D /* PopupViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -405,8 +408,6 @@
 				0B67D0AB20AAA6D000FC39E5 /* Sources */,
 				0B67D0AC20AAA6D000FC39E5 /* Frameworks */,
 				0B67D0AD20AAA6D000FC39E5 /* Resources */,
-				6DB2BC0C463FFCA5F3926708 /* [CP] Embed Pods Frameworks */,
-				B54DB5A5D8F0CDD620870D21 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -426,8 +427,6 @@
 				0B67D0B620AAA6D000FC39E5 /* Sources */,
 				0B67D0B720AAA6D000FC39E5 /* Frameworks */,
 				0B67D0B820AAA6D000FC39E5 /* Resources */,
-				B185CB72DBC0029CDC43B07E /* [CP] Embed Pods Frameworks */,
-				CE3B92506A197FECFB88E67C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -543,7 +542,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		2F3964BFCE7ACF6AE0B5FCCB /* [CP] Embed Pods Frameworks */ = {
@@ -555,17 +554,35 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Deals/Pods-Deals-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AFDateHelper/AFDateHelper.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
+				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookCore/FacebookCore.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookLogin/FacebookLogin.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookShare/FacebookShare.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFDateHelper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookLogin.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookShare.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -587,22 +604,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		6DB2BC0C463FFCA5F3926708 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DealsTests/Pods-DealsTests-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		87B614786645C21757E3C028 /* [CP] Copy Pods Resources */ = {
@@ -623,51 +625,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Deals/Pods-Deals-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B185CB72DBC0029CDC43B07E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DealsUITests/Pods-DealsUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B54DB5A5D8F0CDD620870D21 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DealsTests/Pods-DealsTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CE3B92506A197FECFB88E67C /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DealsUITests/Pods-DealsUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		D338B8603394F1A4E9E1FAF5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -683,7 +640,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -713,6 +670,7 @@
 				0B9E123B20B3D44100C66129 /* ExploreViewController.swift in Sources */,
 				A73E8FBC2100E8E000008CD3 /* PurchaseDealsCollectionViewCell.swift in Sources */,
 				0B9E123920B2B6E800C66129 /* FAQViewController.swift in Sources */,
+				0BB77F3121D1027C00BD925D /* PopupViewController.swift in Sources */,
 				A7AFE6BD2102FC9F00D3322E /* UserProfile.swift in Sources */,
 				0B06479E20AC419100AE8496 /* HomeViewController.swift in Sources */,
 				A79CA1A11FF9B47600713DE3 /* Date+Extension.swift in Sources */,

@@ -10,12 +10,26 @@ import UIKit
 
 class LocationSelectionViewController: UIViewController {
     
-    var selectedLocation = ""
-    
+    @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak var trivandrumLocation: UIButton!
+    @IBOutlet weak var cochiLocation: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        if let currentSelectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
+            if currentSelectedLocation == "Cochin" {
+                cochiLocation.isSelected = true
+                trivandrumLocation.isSelected = false
+            } else {
+                cochiLocation.isSelected = false
+                trivandrumLocation.isSelected = true
+            }
+            
+        } else {
+            cochiLocation.isSelected = true
+            trivandrumLocation.isSelected = false
+            UserDefaults.standard.set("Cochin", forKey: "SelectedLocation")
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -23,7 +37,23 @@ class LocationSelectionViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func trivandrumSelected(_ sender: UIButton) {
+        cochiLocation.isSelected = false
+        trivandrumLocation.isSelected = true
+        UserDefaults.standard.set("Trivandrum", forKey: "SelectedLocation")
 
+    }
+    @IBAction func cochiSelected(_ sender: UIButton) {
+        cochiLocation.isSelected = true
+        trivandrumLocation.isSelected = false
+        UserDefaults.standard.set("Cochin", forKey: "SelectedLocation")
+
+    }
+    
+    @IBAction func closeButtonClicked(_ sender: Any) {
+        NotificationCenter.default.post(Notification.init(name: Notification.Name(rawValue: "locationUpdated")))
+        self.dismiss(animated: true, completion: nil)
+    }
     /*
     // MARK: - Navigation
 

@@ -29,7 +29,9 @@ class ExploreViewController: UIViewController, UITableViewDataSource, UITableVie
         
         
         self.dealsListingTableView.contentInset = UIEdgeInsets(top: 5.0, left: 0, bottom: 0, right: 0)
-        self.fetchAllDealsFromServerAndUpdateUI()
+        if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
+            self.fetchAllDealsFromServerAndUpdateUI(location: selectedLocation)
+        }
         self.navigationController?.navigationBar.isHidden = true
         let dealListingCellNib = UINib(nibName: "DealsListingTableViewCell", bundle: nil)
         self.dealsListingTableView.register(dealListingCellNib, forCellReuseIdentifier: "dealListingCell")
@@ -129,11 +131,15 @@ class ExploreViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     @objc func userLoggedIn(notification : Notification) {
-        self.fetchAllDealsFromServerAndUpdateUI()
+        if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
+            self.fetchAllDealsFromServerAndUpdateUI(location: selectedLocation)
+        }
     }
     
     @objc func userLoggedOut(notification : Notification) {
-        self.fetchAllDealsFromServerAndUpdateUI()
+        if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
+            self.fetchAllDealsFromServerAndUpdateUI(location: selectedLocation)
+        }
     }
     
     
@@ -185,7 +191,7 @@ class ExploreViewController: UIViewController, UITableViewDataSource, UITableVie
     
     // MARK: - Private
 
-    func fetchAllDealsFromServerAndUpdateUI() {
+    func fetchAllDealsFromServerAndUpdateUI(location : String) {
         var tokenHeader = [String : String]()
         if let token = User.getProfile()?.token {
             tokenHeader = ["Authorization" : "Token \(token)"]

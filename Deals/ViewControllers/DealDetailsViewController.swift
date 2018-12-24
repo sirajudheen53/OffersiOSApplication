@@ -293,8 +293,8 @@ class DealDetailsViewController: UIViewController {
     // MARK: - IBAction Methods
     
     @IBAction func buyNowButtonClicked(_ sender: UIButton) {
-        SVProgressHUD.show()
         if let serverToken = User.getProfile()?.token {
+            SVProgressHUD.show()
             let userProfileFetchHeader = ["Authorization" : "Token \(serverToken)"]
                 BaseWebservice.performRequest(function: .makePurchase, requestMethod: .post, params: ["deal_id" : deal!.dealId as AnyObject], headers: userProfileFetchHeader, onCompletion: { (response, error) in
                     SVProgressHUD.dismiss()
@@ -327,8 +327,7 @@ class DealDetailsViewController: UIViewController {
                     }
                 })
         } else {
-            //Handle Error for no token found
-            SVProgressHUD.dismiss()
+            self.performSegue(withIdentifier: "showLoginPopup", sender: nil)
         }
     }
     
