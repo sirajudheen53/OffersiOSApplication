@@ -75,8 +75,12 @@ class ExploreViewController: UIViewController, UITableViewDataSource, UITableVie
         let categoryFilteredDeals = self.selectedCategoryFilteredDeals()
         if let currentText = searchTextField.text {
             self.filteredDeals = self.searchDealsWithTerm(term: currentText, deals: categoryFilteredDeals)
+            if self.filteredDeals?.count == 0 {
+                
+            } else {
+                self.dealsListingTableView.reloadData()
+            }
         }
-        self.dealsListingTableView.reloadData()
     }
     
     func searchDealsWithTerm(term : String, deals : [Deal]) -> [Deal] {
@@ -99,10 +103,14 @@ class ExploreViewController: UIViewController, UITableViewDataSource, UITableVie
     func selectedCategoryFilteredDeals() -> [Deal] {
         let selectedCategoryNames = self.filterCategories.map { appropriateCategoryName(category: $0)}
         if self.filterCategories.count == 0 {
-            return self.availableDeals!
+            return self.availableDeals ?? [Deal]()
         } else {
-            return self.availableDeals!.filter {
-                selectedCategoryNames.contains($0.category!.name!)
+            if let availableDeals = self.availableDeals {
+                return availableDeals.filter {
+                    selectedCategoryNames.contains($0.category!.name!)
+                }
+            } else {
+                return [Deal]()
             }
         }
     }
