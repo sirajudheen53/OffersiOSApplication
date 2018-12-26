@@ -146,7 +146,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         if let serverToken = User.getProfile()?.token {
             let userProfileFetchHeader = ["Authorization" : "Token \(serverToken)"]
             return {() in
-                BaseWebservice.performRequest(function: .makeFavourite, requestMethod: .post, params: ["deal_id" : deal.dealId as AnyObject], headers: userProfileFetchHeader, onCompletion: { (response, error) in
+                let flag = deal.isFavourited ? "false" : "true"
+                BaseWebservice.performRequest(function: .makeFavourite, requestMethod: .post, params: ["deal_id" : deal.dealId as AnyObject, "flag" : flag as AnyObject], headers: userProfileFetchHeader, onCompletion: { (response, error) in
                     if let error = error {
                         //Handle Error
                     } else if let response = response as? [String : Any?] {
@@ -172,7 +173,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         if let serverToken = User.getProfile()?.token {
             let userProfileFetchHeader = ["Authorization" : "Token \(serverToken)"]
             return {(deal) in
-                BaseWebservice.performRequest(function: .makeFavourite, requestMethod: .post, params: ["deal_id" : deal.dealId as AnyObject], headers: userProfileFetchHeader, onCompletion: { (response, error) in
+                let flag = deal.isFavourited ? "false" : "true"
+                BaseWebservice.performRequest(function: .makeFavourite, requestMethod: .post, params: ["deal_id" : deal.dealId as AnyObject, "flag" : flag as AnyObject], headers: userProfileFetchHeader, onCompletion: { (response, error) in
                     if let error = error {
                         //Handle Error
                     } else if let response = response as? [String : Any?] {

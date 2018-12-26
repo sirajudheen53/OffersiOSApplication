@@ -30,6 +30,7 @@ class Deal: NSObject {
     var numberOfPurchases : Int = 0
     var isRedeemed : Bool = false
     var allowedSimultaneous : Int = 1
+    var conditons = [String]()
     
     static func dealObjectFromProperty(property : [String : Any]) -> Deal {
         let requiredDeal = Deal()
@@ -65,6 +66,9 @@ class Deal: NSObject {
         }
         if let currencySymbol = property["currency_symbol"] as? String {
             requiredDeal.currencySymbol = currencySymbol
+        }
+        if let conditions = property["conditions"] as? [String] {
+            requiredDeal.conditons = conditions
         }
         return requiredDeal
     }

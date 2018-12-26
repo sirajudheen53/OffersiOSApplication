@@ -51,6 +51,7 @@ class PopupViewController: UIViewController, GIDSignInUIDelegate {
     @objc func userLoggedIn(notification : Notification) {
         if let actionBlock = actionBlock {
             actionBlock()
+            dismiss(animated: false, completion: nil)
         }
     }
     

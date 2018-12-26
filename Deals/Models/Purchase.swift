@@ -10,10 +10,6 @@ import UIKit
 
 class Purchase: NSObject {
     var deal : Deal?
-    var purchaseDate : Date?
-    var expiryDate : Date?
-    var isRedeemed : Bool?
-    var code : String?
     
     class func purchaseObjectFromProperties(properties : [String : Any]) -> Purchase {
         let requiredPurchaseObject = Purchase()
@@ -21,16 +17,16 @@ class Purchase: NSObject {
             requiredPurchaseObject.deal = Deal.dealObjectFromProperty(property: dealProperties)
         }
         if let purchaseDate = properties["purchase_date"] as? Double {
-            requiredPurchaseObject.purchaseDate = Date(timeIntervalSince1970: purchaseDate)
+            requiredPurchaseObject.deal?.purchasedDate = Date(timeIntervalSince1970: purchaseDate)
         }
         if let expiryDate = properties["expiry_date"] as? Double {
-            requiredPurchaseObject.expiryDate = Date(timeIntervalSince1970: expiryDate)
+            requiredPurchaseObject.deal?.purchaseExpiry = Date(timeIntervalSince1970: expiryDate)
         }
         if let isRedeemed = properties["isRedeemed"] as? Bool {
-            requiredPurchaseObject.isRedeemed = isRedeemed
+            requiredPurchaseObject.deal?.isRedeemed = isRedeemed
         }
         if let code = properties["code"] as? String {
-            requiredPurchaseObject.code = code
+            requiredPurchaseObject.deal?.purchaseCode = code
         }
         return requiredPurchaseObject
     }

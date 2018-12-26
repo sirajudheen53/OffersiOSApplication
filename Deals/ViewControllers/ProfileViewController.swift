@@ -22,12 +22,14 @@ class ProfileViewController: UIViewController, GIDSignInUIDelegate, UICollection
     @IBOutlet weak var profileContentView: UIView!
     @IBOutlet weak var purchaseHistoryCollectionView: UICollectionView!
     
+    @IBOutlet weak var profileInfoView: UIView!
     @IBOutlet weak var favouritesItemsCountLabel: UILabel!
 
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var phoneNumberLabel: UILabel!
     
+    @IBOutlet weak var purchaseHistoryView: UIView!
     @IBOutlet weak var feedbackContentView: UIView!
     @IBOutlet weak var faqContentView: UIView!
     @IBOutlet weak var favouritesContentView: UIView!
@@ -39,6 +41,7 @@ class ProfileViewController: UIViewController, GIDSignInUIDelegate, UICollection
 
         profileImageBackground.layer.borderWidth = 2.0
         profileImageBackground.layer.borderColor = UIColor(displayP3Red: 41.0/255.0, green: 204.0/255.0, blue: 150.0/255.0, alpha: 1).cgColor
+        profileInfoView.roundCorners([.bottomLeft, .bottomRight], radius: view.frame.size.width/2.5)
         
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.userLoggedIn(notification:)), name: NSNotification.Name("userLoggedIn"), object: nil)
@@ -121,8 +124,11 @@ class ProfileViewController: UIViewController, GIDSignInUIDelegate, UICollection
             }
             self.favouritesItemsCountLabel.text = "\(profileData.wishList!.count)"
             if profileData.purchases!.count > 0 {
+                purchaseHistoryView.isHidden = false
                 self.numberOfPurchases.text = "View All (\(profileData.purchases!.count))"
                 self.purchaseHistoryCollectionView.reloadData()
+            } else {
+                purchaseHistoryView.isHidden = true
             }
         }
     }
@@ -188,6 +194,11 @@ class ProfileViewController: UIViewController, GIDSignInUIDelegate, UICollection
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let deal = self.userProfile!.purchases![indexPath.row].deal!
+        performSegue(withIdentifier: "showDetailsView", sender: deal)
+    }
+    
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -197,6 +208,11 @@ class ProfileViewController: UIViewController, GIDSignInUIDelegate, UICollection
         } else if segue.identifier == "showPurchasesList" {
             let purchasesListViewController = segue.destination as! PurchasesListViewController
             purchasesListViewController.purchasesList = self.userProfile!.purchases
+        } else if segue.identifier == "showDetailsView" {
+            let detailsView = segue.destination as! DealDetailsViewController
+            if let deal = sender as? Deal {
+                detailsView.deal = deal
+            }
         }
     }
 

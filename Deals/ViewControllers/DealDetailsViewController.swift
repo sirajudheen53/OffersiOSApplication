@@ -181,6 +181,7 @@ class DealDetailsViewController: UIViewController {
     func configureUIElements() {
         if let deal = self.deal {
             if let vendor = deal.vendor {
+                makeFavouriteButton.isSelected = deal.isFavourited
                 self.vendorNameLabel.text = vendor.name ?? "-"
                 if let currencySymbol = self.deal?.currencySymbol, let offerPrice = self.deal?.dealPrice {
                     self.offerPriceValueLabel.text = currencySymbol + " \(offerPrice)"
@@ -335,16 +336,48 @@ class DealDetailsViewController: UIViewController {
     }
     
     @IBAction func contactButtonClicked(_ sender: Any) {
+        if let vendorPhone = deal?.vendor?.phoneNumber, let url = URL(string: "telprompt://\(vendorPhone)") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
     
     @IBAction func shareButtonClicked(_ sender: Any) {
     }
     
-    @IBAction func makeFavouriteButtonClicked(_ sender: Any) {
+    @IBAction func makeFavouriteButtonClicked(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        if let serverToken = User.getProfile()?.token {
+            let userProfileFetchHeader = ["Authorization" : "Token \(serverToken)"]
+            if let deal = deal {
+                let flag = deal.isFavourited ? "false" : "true"
+                BaseWebservice.performRequest(function: .makeFavourite, requestMethod: .post, params: ["deal_id" : deal.dealId as AnyObject, "flag" : flag as AnyObject], headers: userProfileFetchHeader, onCompletion: { (response, error) in
+                    if let error = error {
+                        //Handle Error
+                    } else if let response = response as? [String : Any?] {
+                        if response["status"] as? String == "success" {
+                            deal.isFavourited = true
+                            NotificationCenter.default.post(Notification.init(name: Notification.Name("userProfileUpdated")))
+                        } else {
+                            //Handle Error
+                        }
+                    } else {
+                        //Handle Error
+                    }
+                })
+            }
+        }
     }
     
     
     @IBAction func closeButtonClicked(_ sender: Any) {
         self.dismiss(animated: false, completion: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destinationView = segue.destination as? MoreDetailsViewController, segue.identifier == "showMoreDetailsView" {
+            if let deal = deal {
+                destinationView.conditions = deal.conditons
+            }
+        }
     }
 }

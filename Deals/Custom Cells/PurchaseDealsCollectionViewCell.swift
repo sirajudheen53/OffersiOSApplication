@@ -33,10 +33,23 @@ class PurchaseDealsCollectionViewCell: UICollectionViewCell {
             self.vendorNameLabel.text = vendorName
         }
         if let purchasedDate = deal.purchasedDate {
-            self.purchasedDateLabel.text = purchasedDate.toString()
+            self.purchasedDateLabel.text = purchasedDate.toString(format: DateFormatType.custom("dd MMM yyy"))
         }
-            self.purchasedPriceLabel.text = "Purchased for \(deal.dealPrice)"
-            self.originalPriceLabel.text = "\(deal.originalPrice)"
+        
+        if deal.purchaseExpiry < Date() {
+            purchasedPriceLabel.text = "Coupon Expired"
+            purchasedPriceLabel.textColor = UIColor(red: 248.0/255.0, green: 37.0/255.0, blue: 74.0/255.0, alpha: 1.0)
+        } else {
+            let date2: Date = Date() // Same you did before with timeNow variable
+            
+            let calender:Calendar = Calendar.current
+            let components: DateComponents = calender.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date2, to: deal.purchaseExpiry)
+            if let hour = components.hour, let minuites = components.minute {
+                self.purchasedPriceLabel.text = "Expires in \(hour) h \(minuites) m"
+                purchasedPriceLabel.textColor = UIColor(red: 248.0/255.0, green: 37.0/255.0, blue: 74.0/255.0, alpha: 1.0)
+            }
+        }
+        self.originalPriceLabel.text = "\(deal.currencySymbol) "+"\(deal.originalPrice)"
         if let images = deal.images {
             self.dealImageView.af_setImage(withURL: URL(string: image_service_url + images.first!)!,
                                            placeholderImage: UIImage(named: "logo_small"),

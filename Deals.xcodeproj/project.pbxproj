@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0B06479E20AC419100AE8496 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B06479D20AC419100AE8496 /* HomeViewController.swift */; };
 		0B1F18CF20DBA3630075C1FA /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1F18CE20DBA3630075C1FA /* ProfileViewController.swift */; };
+		0B5504BF21D362D7003B8B23 /* MoreDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5504BE21D362D7003B8B23 /* MoreDetailsViewController.swift */; };
 		0B67D09F20AAA6D000FC39E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B67D09E20AAA6D000FC39E5 /* AppDelegate.swift */; };
 		0B67D0A120AAA6D000FC39E5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B67D0A020AAA6D000FC39E5 /* LoginViewController.swift */; };
 		0B67D0A420AAA6D000FC39E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B67D0A220AAA6D000FC39E5 /* Main.storyboard */; };
@@ -92,6 +93,7 @@
 		08CFD44055D14123C98A65A8 /* Pods_DealsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DealsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B06479D20AC419100AE8496 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		0B1F18CE20DBA3630075C1FA /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		0B5504BE21D362D7003B8B23 /* MoreDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreDetailsViewController.swift; sourceTree = "<group>"; };
 		0B67D09B20AAA6D000FC39E5 /* Deals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Deals.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B67D09E20AAA6D000FC39E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0B67D0A020AAA6D000FC39E5 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -332,6 +334,7 @@
 				A7521A49211CAE9700E870B8 /* FavouritesListViewController.swift */,
 				A7521A4D211DBAD400E870B8 /* PurchasesListViewController.swift */,
 				0BB77F3021D1027C00BD925D /* PopupViewController.swift */,
+				0B5504BE21D362D7003B8B23 /* MoreDetailsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -668,6 +671,7 @@
 				A7521A4C211DB66F00E870B8 /* Purchase.swift in Sources */,
 				A77C543120F1E1D7003D5BCB /* UILabel+LetterSpacing.swift in Sources */,
 				0B9E123B20B3D44100C66129 /* ExploreViewController.swift in Sources */,
+				0B5504BF21D362D7003B8B23 /* MoreDetailsViewController.swift in Sources */,
 				A73E8FBC2100E8E000008CD3 /* PurchaseDealsCollectionViewCell.swift in Sources */,
 				0B9E123920B2B6E800C66129 /* FAQViewController.swift in Sources */,
 				0BB77F3121D1027C00BD925D /* PopupViewController.swift in Sources */,
