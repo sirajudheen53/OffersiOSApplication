@@ -25,8 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
         
         UITabBar.appearance().barTintColor = UIColor(red: 248.0/255.0, green: 248.0/255.0, blue: 248.0/255.0, alpha: 0.82)
-        UINavigationBar.appearance().backgroundColor = UIColor.red
+        UINavigationBar.appearance().backgroundColor = UIColor.white
         UINavigationBar.appearance().isTranslucent = false
+        UINavigationBar.appearance().largeTitleTextAttributes =
+            [NSAttributedStringKey.font: Constants.boldProDisplayWithSize(size: 32.0)]
         return true
     }
     

@@ -71,7 +71,7 @@ class DealsListingTableViewCell: UITableViewCell {
                 offerPriceString = deal.currencySymbol + " " + offerPriceString
             self.offerPriceValueLabel.text = offerPriceString
         if deal.originalPrice > 0 {
-            self.offerPercentValueLabel.text = "\(Int((Float(deal.dealPrice)/Float(deal.originalPrice))*100))% off"
+            self.offerPercentValueLabel.text = "\(Int((Float(deal.originalPrice - deal.dealPrice)/Float(deal.originalPrice))*100))% off"
         }
         if let images = deal.images {
             self.dealImageView.af_setImage(withURL: URL(string: image_service_url + images.first!)!,

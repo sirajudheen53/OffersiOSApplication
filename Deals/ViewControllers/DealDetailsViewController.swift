@@ -240,7 +240,7 @@ class DealDetailsViewController: UIViewController {
         self.phoneContactButton.setAttributedTitle(self.contactTitleAttributedText(text: "Contact"), for: UIControlState.normal)
         self.validUptoValueLabel.attributedText = self.validUptoAttributedText(validUptoDate: deal!.endDate.defaultStringFormat())
         
-        let offerPercent : Double = (Double(self.deal!.dealPrice)/Double(self.deal!.originalPrice)*100)
+        let offerPercent : Double = (Double(deal!.originalPrice - deal!.dealPrice)/Double(self.deal!.originalPrice)*100)
         self.offerPercentageStripLabel.attributedText = offerPercentageStripValueAttributedString(value: "\(Int(offerPercent)) % off")
         
         phoneContactButton.layer.borderColor = Constants.darkGrey.cgColor

@@ -99,7 +99,7 @@ class HotDealCollectionViewCell: UICollectionViewCell {
         self.distanceValueLabel.text = "2 kms away"
         self.descriptionLabel.attributedText = self.dealTitleAttributedText(title: deal.dealDescription)
         if deal.originalPrice > 0 {
-            self.offerTagValueLabel.text = "\(Int((Float(deal.dealPrice)/Float(deal.originalPrice))*100))% off"
+            self.offerTagValueLabel.text = "\(Int((Float(deal.originalPrice - deal.dealPrice)/Float(deal.originalPrice))*100))% off"
         }
             self.favouriteButton.setBackgroundImage(UIImage(named: deal.isFavourited ? "make_favourite" : "makeFavouriteTransparent"), for: UIControlState.normal)
 

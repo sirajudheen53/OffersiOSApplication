@@ -42,7 +42,8 @@ class ProfileViewController: UIViewController, GIDSignInUIDelegate, UICollection
         profileImageBackground.layer.borderWidth = 2.0
         profileImageBackground.layer.borderColor = UIColor(displayP3Red: 41.0/255.0, green: 204.0/255.0, blue: 150.0/255.0, alpha: 1).cgColor
         profileInfoView.roundCorners([.bottomLeft, .bottomRight], radius: view.frame.size.width/2.5)
-        
+        self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
+
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.userLoggedIn(notification:)), name: NSNotification.Name("userLoggedIn"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.userProfileUpdatedNotification(notification:)), name: Notification.Name("userProfileUpdated"), object: nil)
@@ -64,7 +65,8 @@ class ProfileViewController: UIViewController, GIDSignInUIDelegate, UICollection
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        self.navigationController?.navigationBar.isHidden = true
+
     }
     
     func decorateProfileMenuListItem(decorationView : UIView) {
