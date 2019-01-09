@@ -11,6 +11,7 @@ import GoogleSignIn
 import FacebookCore
 import FacebookLogin
 import AlamofireImage
+import SVProgressHUD
 
 class ProfileViewController: UIViewController, GIDSignInUIDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
 
@@ -234,8 +235,29 @@ class ProfileViewController: UIViewController, GIDSignInUIDelegate, UICollection
             case .cancelled:
                 print("User cancelled login.")
             case .success(let grantedPermissions, let declinedPermissions, let accessToken):
-                print("Logged in!")
-            }
+                SVProgressHUD.show()
+                BaseWebservice.performRequest(function: WebserviceFunction.login, requestMethod: .post, params: ["id_token" : accessToken.authenticationToken as AnyObject, "provider" : "facebook" as AnyObject], headers: nil) { (response, error) in
+                    SVProgressHUD.dismiss()
+                    if let response = response as? [String : Any] {
+                        if let status = response["status"] as? String {
+                            if status == "success" {
+                                if let userProperties = response["user"] as? [String : Any] {
+                                    let userObject = User.userObjectWithProperties(properties: userProperties)
+                                    userObject.saveToUserDefaults()
+                                    NotificationCenter.default.post(name: NSNotification.Name("userLoggedIn"), object: userProperties)
+                                } else {
+                                    //Handle Error
+                                }
+                            } else {
+                                //Handle Error
+                            }
+                        } else {
+                            //Handle Error
+                        }
+                    } else {
+                        //Handle Error
+                    }
+                }            }
         })
     }
     

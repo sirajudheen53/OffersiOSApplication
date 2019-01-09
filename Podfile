@@ -13,6 +13,7 @@ pod 'SVProgressHUD'
 pod 'FacebookCore'
 pod 'FacebookLogin'
 pod 'FacebookShare'
+pod "SkeletonView"
   # Pods for Test
 
   target 'DealsTests' do

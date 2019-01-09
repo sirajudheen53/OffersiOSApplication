@@ -98,12 +98,14 @@ class ExploreViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func selectedCategoryFilteredDeals() -> [Deal] {
         let selectedCategoryNames = self.filterCategories.map { appropriateCategoryName(category: $0)}
-        if self.filterCategories.count == 0 {
-            return self.availableDeals!
-        } else {
-            return self.availableDeals!.filter {
+        if self.filterCategories.count == 0, let avaialbleDeals = self.availableDeals {
+            return avaialbleDeals
+        } else if let avaialbleDeals = self.availableDeals  {
+            return avaialbleDeals.filter {
                 selectedCategoryNames.contains($0.category!.name!)
             }
+        } else {
+            return [Deal]()
         }
     }
     
@@ -196,13 +198,12 @@ class ExploreViewController: UIViewController, UITableViewDataSource, UITableVie
         if let token = User.getProfile()?.token {
             tokenHeader = ["Authorization" : "Token \(token)"]
         }
-        BaseWebservice.performRequest(function: WebserviceFunction.fetchDealsList, requestMethod: .get, params: nil, headers: tokenHeader) { (response, error) in
+        BaseWebservice.performRequest(function: WebserviceFunction.fetchDealsList, requestMethod: .get, params: ["location" : location as AnyObject], headers: tokenHeader) { (response, error) in
             if let response = response as? [String : Any] {
                 if let status = response["status"] as? String {
                     if status=="success" {
                         if let allDealsProperties = response["data"] as? [String : Any] {
                             if let allDeals = allDealsProperties["deals"] as? [[String : Any]] {
-                                print(allDeals)
                                 self.availableDeals = Deal.dealObjectsFromProperties(properties: allDeals)
                                 self.filteredDeals = self.availableDeals
                                 self.searchUpdateUI()

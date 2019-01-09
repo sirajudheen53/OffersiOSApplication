@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import SkeletonView
 
 class HotDealCollectionViewCell: UICollectionViewCell {
 
@@ -33,8 +34,19 @@ class HotDealCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 
+        dealImageView.showAnimatedSkeleton()
+        vendorNameLabel.showAnimatedSkeleton()
+        distanceValueLabel.showAnimatedSkeleton()
+        descriptionLabel.showAnimatedSkeleton()
+        originalPriceLabel.showAnimatedSkeleton()
+        
+        
         offerTagView.transform  = CGAffineTransform(rotationAngle: (.pi/4)*7)
-      
+        offerTagView.isHidden = true
+        favouriteButton.isHidden = true
+        offerPriceLabel.isHidden = true
+        vendorNameLabel.isHidden = true
+
         self.shadowLayerView.layer.cornerRadius = 6.0
         
         self.shadowLayerView.layer.shadowColor = Constants.blackDarkColor.cgColor
@@ -69,7 +81,15 @@ class HotDealCollectionViewCell: UICollectionViewCell {
         return requiredString
     }
     
+    func hideLoadingAnimation() {
+        dealImageView.hideSkeleton()
+        distanceValueLabel.hideSkeleton()
+        descriptionLabel.hideSkeleton()
+        originalPriceLabel.hideSkeleton()
+    }
+    
     func customizeCell(deal : Deal) {
+        hideLoadingAnimation()
         self.deal = deal
         self.dealImageView.image = UIImage(named: "logo_small")
         dealImageView.contentMode = UIViewContentMode.center
@@ -84,6 +104,10 @@ class HotDealCollectionViewCell: UICollectionViewCell {
                                             self.dealImageView?.contentMode = UIViewContentMode.scaleAspectFill
             }
         }
+        offerTagView.isHidden = false
+        favouriteButton.isHidden = false
+        offerPriceLabel.isHidden = false
+        vendorNameLabel.isHidden = false
         self.vendorNameLabel.text = deal.vendor!.name!
 //        self.originalPriceLabel.attributedText = self.originalPriceAttributedText(value: "\(deal.originalPrice!)")
 //        self.offerPriceLabel.text = "\(deal.dealPrice!)"

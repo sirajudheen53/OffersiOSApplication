@@ -57,15 +57,18 @@ class HotDealTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollect
         if let hotDeals = self.hotDeals {
             return hotDeals.count
         } else {
-            return 0
+            return 10
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "hotDealCell", for: indexPath) as! HotDealCollectionViewCell
-        cell.currentUserLocation = self.currentUserLocation
-       cell.customizeCell(deal: self.hotDeals![indexPath.row])
-        cell.makeFavouriteActionBlock = self.makeFavouriteActionBlock
+        if let hotDeals = hotDeals {
+            cell.currentUserLocation = self.currentUserLocation
+            cell.customizeCell(deal: hotDeals[indexPath.row])
+            cell.makeFavouriteActionBlock = self.makeFavouriteActionBlock
+        }
+ 
         return cell
     }
     
@@ -73,10 +76,12 @@ class HotDealTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollect
         var showingNumber = indexPath.row
         if indexPath.row == 0 {
             showingNumber = 1
-        } else if indexPath.row == self.hotDeals!.count-1 {
-            showingNumber = self.hotDeals!.count
+        } else if let hotDeals = self.hotDeals, indexPath.row == hotDeals.count-1  {
+            showingNumber = hotDeals.count
         }
-        self.dealNumbersInfoValueLabel.attributedText = self.dealNumbersInfoAttributedText(showingDealNumber: showingNumber)
+        if let _ = self.hotDeals {
+            self.dealNumbersInfoValueLabel.attributedText = self.dealNumbersInfoAttributedText(showingDealNumber: showingNumber)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

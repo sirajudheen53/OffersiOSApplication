@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import SkeletonView
 
 class DealsListingTableViewCell: UITableViewCell {
 
@@ -30,6 +31,9 @@ class DealsListingTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+       
+        
         self.offerTagView.transform  = CGAffineTransform(rotationAngle: (.pi/4)*7)
         self.backgroundColor = UIColor.clear
         
@@ -45,6 +49,23 @@ class DealsListingTableViewCell: UITableViewCell {
         self.dealImageContentView.layer.cornerRadius = 6.0
         self.dealImageContentView.clipsToBounds = true
         
+        offerTagView.isHidden = true
+        offerPriceValueLabel.isHidden = true
+        
+        dealImageView.showAnimatedGradientSkeleton()
+        offerTagView.showAnimatedSkeleton()
+        vendorNameValueLabel.showAnimatedSkeleton()
+        offerDescriptionValueLabel.showAnimatedSkeleton()
+        originalPriceValueLabel.showAnimatedSkeleton()
+        
+    }
+    
+    func hideLoadingAnimation() {
+        dealImageView.hideSkeleton()
+        offerTagView.hideSkeleton()
+        vendorNameValueLabel.hideSkeleton()
+        offerDescriptionValueLabel.hideSkeleton()
+        originalPriceValueLabel.hideSkeleton()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -59,10 +80,13 @@ class DealsListingTableViewCell: UITableViewCell {
     }
     
     func customizeCell(deal : Deal) {
+        hideLoadingAnimation()
         self.deal = deal
         if let vendor = deal.vendor {
             self.vendorNameValueLabel.text = vendor.name!
         }
+            offerTagView.isHidden = false
+            offerPriceValueLabel.isHidden = false
             self.offerDescriptionValueLabel.attributedText = self.dealDescriptionAttributeText(title: deal.dealDescription)
             var originalPriceString = "\(deal.originalPrice)"
                 originalPriceString = deal.currencySymbol + " " + originalPriceString
