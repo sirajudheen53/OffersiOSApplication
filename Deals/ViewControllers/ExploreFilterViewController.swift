@@ -27,7 +27,7 @@ class ExploreFilterViewController: UIViewController {
     @IBOutlet weak var doneButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.setInitialCategoryTileImages()
+        self.setInitialCategoryTileImages()
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,14 +36,27 @@ class ExploreFilterViewController: UIViewController {
     }
     
     func setInitialCategoryTileImages() {
-        restaurentCategoryButton.setBackgroundImage(UIImage(named: "restaurent")?.noir, for: UIControlState.normal)
-        travelCategoryButton.setBackgroundImage(UIImage(named: "travel")?.noir, for: UIControlState.normal)
-        healthCategoryButton.setBackgroundImage(UIImage(named: "health")?.noir, for: UIControlState.normal)
-        beautyCategoryButton.setBackgroundImage(UIImage(named: "beauty")?.noir, for: UIControlState.normal)
-        carcareCategoryButton.setBackgroundImage(UIImage(named: "carcare")?.noir, for: UIControlState.normal)
-        retailCategoryButton.setBackgroundImage(UIImage(named: "reatail")?.noir, for: UIControlState.normal)
-        entertainmentCategoryButton.setBackgroundImage(UIImage(named: "entertainment")?.noir, for: UIControlState.normal)
-        servicesCategoryButton.setBackgroundImage(UIImage(named: "services")?.noir, for: UIControlState.normal)
+        _ = selectedFilters.map { (categories) -> FilterCategories in
+            switch categories {
+            case .Beauty:
+                beautyCategoryButton.isSelected = true
+            case .CarCare:
+                carcareCategoryButton.isSelected = true
+            case .Entertainment:
+                entertainmentCategoryButton.isSelected = true
+            case .Health:
+                healthCategoryButton.isSelected = true
+            case .Restaurent:
+                restaurentCategoryButton.isSelected = true
+            case .Retail:
+                retailCategoryButton.isSelected = true
+            case .Services:
+                servicesCategoryButton.isSelected = true
+            case .Travel:
+                travelCategoryButton.isSelected = true
+            }
+            return categories
+        }
 
     }
     
@@ -55,6 +68,7 @@ class ExploreFilterViewController: UIViewController {
     }
     
     @IBAction func filterCategoryButtonClicked(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
         switch sender.tag {
         case 0:
             if let index = self.selectedFilters.index(of: FilterCategories.Restaurent) {

@@ -49,15 +49,20 @@ class DealsListingTableViewCell: UITableViewCell {
         self.dealImageContentView.layer.cornerRadius = 6.0
         self.dealImageContentView.clipsToBounds = true
         
+        
+        
+        showLoadingAnimation()
+        
+    }
+    
+    func showLoadingAnimation() {
         offerTagView.isHidden = true
         offerPriceValueLabel.isHidden = true
-        
         dealImageView.showAnimatedGradientSkeleton()
         offerTagView.showAnimatedSkeleton()
         vendorNameValueLabel.showAnimatedSkeleton()
         offerDescriptionValueLabel.showAnimatedSkeleton()
         originalPriceValueLabel.showAnimatedSkeleton()
-        
     }
     
     func hideLoadingAnimation() {

@@ -67,6 +67,8 @@ class HotDealTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollect
             cell.currentUserLocation = self.currentUserLocation
             cell.customizeCell(deal: hotDeals[indexPath.row])
             cell.makeFavouriteActionBlock = self.makeFavouriteActionBlock
+        } else {
+            cell.showLoadingAnimation()
         }
  
         return cell

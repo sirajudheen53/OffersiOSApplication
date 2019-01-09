@@ -79,6 +79,11 @@ class ExploreViewController: UIViewController, UITableViewDataSource, UITableVie
         self.dealsListingTableView.reloadData()
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
+    }
+    
     func searchDealsWithTerm(term : String, deals : [Deal]) -> [Deal] {
         if term.trimmingCharacters(in: CharacterSet.whitespaces) == "" {
             return deals

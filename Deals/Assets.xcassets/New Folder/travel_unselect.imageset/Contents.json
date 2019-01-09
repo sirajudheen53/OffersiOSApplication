@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "H&G.png",
+      "filename" : "Travel.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "H&G@2x.png",
+      "filename" : "Travel@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "H&G@3x.png",
+      "filename" : "Travel@3x.png",
       "scale" : "3x"
     }
   ],

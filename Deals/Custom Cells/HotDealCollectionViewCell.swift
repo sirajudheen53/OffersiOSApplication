@@ -34,18 +34,11 @@ class HotDealCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        dealImageView.showAnimatedSkeleton()
-        vendorNameLabel.showAnimatedSkeleton()
-        distanceValueLabel.showAnimatedSkeleton()
-        descriptionLabel.showAnimatedSkeleton()
-        originalPriceLabel.showAnimatedSkeleton()
+       
         
-        
+        showLoadingAnimation()
         offerTagView.transform  = CGAffineTransform(rotationAngle: (.pi/4)*7)
-        offerTagView.isHidden = true
-        favouriteButton.isHidden = true
-        offerPriceLabel.isHidden = true
-        vendorNameLabel.isHidden = true
+        
 
         self.shadowLayerView.layer.cornerRadius = 6.0
         
@@ -79,6 +72,18 @@ class HotDealCollectionViewCell: UICollectionViewCell {
                           NSAttributedStringKey.foregroundColor : Constants.dimGrey]
         let requiredString = NSAttributedString(string: title, attributes: attributes)
         return requiredString
+    }
+    
+    func showLoadingAnimation() {
+        offerTagView.isHidden = true
+        favouriteButton.isHidden = true
+        offerPriceLabel.isHidden = true
+        vendorNameLabel.isHidden = true
+        dealImageView.showAnimatedSkeleton()
+        vendorNameLabel.showAnimatedSkeleton()
+        distanceValueLabel.showAnimatedSkeleton()
+        descriptionLabel.showAnimatedSkeleton()
+        originalPriceLabel.showAnimatedSkeleton()
     }
     
     func hideLoadingAnimation() {

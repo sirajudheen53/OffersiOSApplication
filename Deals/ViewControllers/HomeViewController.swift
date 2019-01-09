@@ -75,6 +75,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @objc func locationUpdated() {
         if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
+            hotDeals = nil
+            availableDeals = nil
+            dealsListingTableView.reloadData()
             locationNameLabel.text = selectedLocation
             self.fetchAllDealsFromServerAndUpdateUI(location: selectedLocation)
         }
@@ -257,6 +260,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 dealListingCell.currentUserLocation = self.currentLocation
                 dealListingCell.customizeCell(deal: availableDeals[indexPath.row])
                 dealListingCell.makeFavouriteActionBlock = self.makeFavouriteActionBlock()
+            } else {
+                dealListingCell.showLoadingAnimation()
             }
             
             cell = dealListingCell
