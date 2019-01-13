@@ -94,7 +94,7 @@
 		0B06479D20AC419100AE8496 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		0B1F18CE20DBA3630075C1FA /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		0B5504BE21D362D7003B8B23 /* MoreDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreDetailsViewController.swift; sourceTree = "<group>"; };
-		0B67D09B20AAA6D000FC39E5 /* Deals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Deals.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0B67D09B20AAA6D000FC39E5 /* Dollor Deals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dollor Deals.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B67D09E20AAA6D000FC39E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0B67D0A020AAA6D000FC39E5 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		0B67D0A320AAA6D000FC39E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -238,7 +238,7 @@
 		0B67D09C20AAA6D000FC39E5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0B67D09B20AAA6D000FC39E5 /* Deals.app */,
+				0B67D09B20AAA6D000FC39E5 /* Dollor Deals.app */,
 				0B67D0AF20AAA6D000FC39E5 /* DealsTests.xctest */,
 				0B67D0BA20AAA6D000FC39E5 /* DealsUITests.xctest */,
 			);
@@ -400,7 +400,7 @@
 			);
 			name = Deals;
 			productName = Test;
-			productReference = 0B67D09B20AAA6D000FC39E5 /* Deals.app */;
+			productReference = 0B67D09B20AAA6D000FC39E5 /* Dollor Deals.app */;
 			productType = "com.apple.product-type.application";
 		};
 		0B67D0AE20AAA6D000FC39E5 /* DealsTests */ = {
@@ -943,7 +943,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Deals/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.qburst.-";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Dollor Deals";
 				PROVISIONING_PROFILE_SPECIFIER = Generic2018;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -961,7 +961,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Deals/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.qburst.-";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Dollor Deals";
 				PROVISIONING_PROFILE_SPECIFIER = Generic2018;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
