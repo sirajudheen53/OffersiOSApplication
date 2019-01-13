@@ -16,7 +16,10 @@ class PurchasesListViewController: UIViewController, UITableViewDelegate, UITabl
         super.viewDidLoad()
 
         self.navigationController?.navigationBar.isHidden = false
-        
+        self.title = "Purchases"
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
+        self.purchasesListTableView.contentInset = UIEdgeInsetsMake(20.0, 0, 0, 0)
         let dealListingCellNib = UINib(nibName: "DealsListingTableViewCell", bundle: nil)
         self.purchasesListTableView.register(dealListingCellNib, forCellReuseIdentifier: "dealListingCell")    }
     

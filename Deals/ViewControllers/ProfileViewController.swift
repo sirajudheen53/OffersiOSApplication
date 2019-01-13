@@ -11,6 +11,7 @@ import GoogleSignIn
 import FacebookCore
 import FacebookLogin
 import AlamofireImage
+import SVProgressHUD
 
 class ProfileViewController: UIViewController, GIDSignInUIDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
 
@@ -42,7 +43,8 @@ class ProfileViewController: UIViewController, GIDSignInUIDelegate, UICollection
         profileImageBackground.layer.borderWidth = 2.0
         profileImageBackground.layer.borderColor = UIColor(displayP3Red: 41.0/255.0, green: 204.0/255.0, blue: 150.0/255.0, alpha: 1).cgColor
         profileInfoView.roundCorners([.bottomLeft, .bottomRight], radius: view.frame.size.width/2.5)
-        
+        self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
+
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.userLoggedIn(notification:)), name: NSNotification.Name("userLoggedIn"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.userProfileUpdatedNotification(notification:)), name: Notification.Name("userProfileUpdated"), object: nil)
@@ -64,7 +66,8 @@ class ProfileViewController: UIViewController, GIDSignInUIDelegate, UICollection
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        self.navigationController?.navigationBar.isHidden = true
+
     }
     
     func decorateProfileMenuListItem(decorationView : UIView) {
@@ -232,8 +235,29 @@ class ProfileViewController: UIViewController, GIDSignInUIDelegate, UICollection
             case .cancelled:
                 print("User cancelled login.")
             case .success(let grantedPermissions, let declinedPermissions, let accessToken):
-                print("Logged in!")
-            }
+                SVProgressHUD.show()
+                BaseWebservice.performRequest(function: WebserviceFunction.login, requestMethod: .post, params: ["id_token" : accessToken.authenticationToken as AnyObject, "provider" : "facebook" as AnyObject], headers: nil) { (response, error) in
+                    SVProgressHUD.dismiss()
+                    if let response = response as? [String : Any] {
+                        if let status = response["status"] as? String {
+                            if status == "success" {
+                                if let userProperties = response["user"] as? [String : Any] {
+                                    let userObject = User.userObjectWithProperties(properties: userProperties)
+                                    userObject.saveToUserDefaults()
+                                    NotificationCenter.default.post(name: NSNotification.Name("userLoggedIn"), object: userProperties)
+                                } else {
+                                    //Handle Error
+                                }
+                            } else {
+                                //Handle Error
+                            }
+                        } else {
+                            //Handle Error
+                        }
+                    } else {
+                        //Handle Error
+                    }
+                }            }
         })
     }
     

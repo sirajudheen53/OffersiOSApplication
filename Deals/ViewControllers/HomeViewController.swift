@@ -9,8 +9,9 @@
 import UIKit
 import GoogleSignIn
 import CoreLocation
+import SkeletonView
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, GIDSignInUIDelegate, CLLocationManagerDelegate {
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, GIDSignInUIDelegate, CLLocationManagerDelegate, SkeletonTableViewDataSource {
 
     var availableDeals : [Deal]?
     var hotDeals : [Deal]?
@@ -74,6 +75,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @objc func locationUpdated() {
         if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
+            hotDeals = nil
+            availableDeals = nil
+            dealsListingTableView.reloadData()
             locationNameLabel.text = selectedLocation
             self.fetchAllDealsFromServerAndUpdateUI(location: selectedLocation)
         }
@@ -220,7 +224,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         if let availableDeals = self.availableDeals {
             return availableDeals.count;
         } else {
-            return 0;
+            return 10;
         }
     }
     
@@ -232,10 +236,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell = homeTitleCell
         } else if indexPath.row == 1 {
            let hotDealTableViewCell = tableView.dequeueReusableCell(withIdentifier: "hotDealsListingCell", for: indexPath) as! HotDealTableViewCell;
-            hotDealTableViewCell.currentUserLocation = self.currentLocation
-           hotDealTableViewCell.customizeCell(hotDeals: availableDeals!)
-            hotDealTableViewCell.makeFavouriteActionBlock = self.makeFavouriteActionBlock()
-            hotDealTableViewCell.hotDealsCellSelectionActionBlock = self.hotDealCellSelectionActionBlock()
+            if let availableDeals = self.availableDeals {
+                hotDealTableViewCell.currentUserLocation = self.currentLocation
+                hotDealTableViewCell.customizeCell(hotDeals: availableDeals)
+                hotDealTableViewCell.makeFavouriteActionBlock = self.makeFavouriteActionBlock()
+                hotDealTableViewCell.hotDealsCellSelectionActionBlock = self.hotDealCellSelectionActionBlock()
+            }
+            
            cell = hotDealTableViewCell
         } else if indexPath.row == 2 {
             let dealNearbyTitleCell = tableView.dequeueReusableCell(withIdentifier: "dealsNearbyTitleCell", for: indexPath)
@@ -249,11 +256,17 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell = exploreCell
         } else {
             let dealListingCell = tableView.dequeueReusableCell(withIdentifier: "dealListingCell", for: indexPath) as! DealsListingTableViewCell;
-            dealListingCell.currentUserLocation = self.currentLocation
-            dealListingCell.customizeCell(deal: availableDeals![indexPath.row])
-            dealListingCell.makeFavouriteActionBlock = self.makeFavouriteActionBlock()
+            if let availableDeals = self.availableDeals {
+                dealListingCell.currentUserLocation = self.currentLocation
+                dealListingCell.customizeCell(deal: availableDeals[indexPath.row])
+                dealListingCell.makeFavouriteActionBlock = self.makeFavouriteActionBlock()
+            } else {
+                dealListingCell.showLoadingAnimation()
+            }
+            
             cell = dealListingCell
         }
+        
         cell.selectionStyle = UITableViewCellSelectionStyle.none
         return cell
     }
@@ -354,6 +367,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func fetchAllDealsFromServerAndUpdateUI(location : String) {
+        
+        
         var tokenHeader = [String : String]()
         if let token = User.getProfile()?.token {
             tokenHeader = ["Authorization" : "Token \(token)"]
@@ -379,4 +394,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             
         }
     }
+    
+    //Mark: - SkeletonTableViewDataSource
+    func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "dealListingCell"
+    }
+
+    
+    
 }

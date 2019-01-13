@@ -17,6 +17,10 @@ class FavouritesListViewController: UIViewController, UITableViewDataSource, UIT
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.isHidden = false
+        self.title = "Favourites"
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
+        self.favouritesListingTableView.contentInset = UIEdgeInsetsMake(20.0, 0, 0, 0)
 
         let dealListingCellNib = UINib(nibName: "DealsListingTableViewCell", bundle: nil)
         self.favouritesListingTableView.register(dealListingCellNib, forCellReuseIdentifier: "dealListingCell")

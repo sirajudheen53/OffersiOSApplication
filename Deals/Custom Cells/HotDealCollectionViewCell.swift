@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import SkeletonView
 
 class HotDealCollectionViewCell: UICollectionViewCell {
 
@@ -33,8 +34,12 @@ class HotDealCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 
+       
+        
+        showLoadingAnimation()
         offerTagView.transform  = CGAffineTransform(rotationAngle: (.pi/4)*7)
-      
+        
+
         self.shadowLayerView.layer.cornerRadius = 6.0
         
         self.shadowLayerView.layer.shadowColor = Constants.blackDarkColor.cgColor
@@ -69,7 +74,27 @@ class HotDealCollectionViewCell: UICollectionViewCell {
         return requiredString
     }
     
+    func showLoadingAnimation() {
+        offerTagView.isHidden = true
+        favouriteButton.isHidden = true
+        offerPriceLabel.isHidden = true
+        vendorNameLabel.isHidden = true
+        dealImageView.showAnimatedSkeleton()
+        vendorNameLabel.showAnimatedSkeleton()
+        distanceValueLabel.showAnimatedSkeleton()
+        descriptionLabel.showAnimatedSkeleton()
+        originalPriceLabel.showAnimatedSkeleton()
+    }
+    
+    func hideLoadingAnimation() {
+        dealImageView.hideSkeleton()
+        distanceValueLabel.hideSkeleton()
+        descriptionLabel.hideSkeleton()
+        originalPriceLabel.hideSkeleton()
+    }
+    
     func customizeCell(deal : Deal) {
+        hideLoadingAnimation()
         self.deal = deal
         self.dealImageView.image = UIImage(named: "logo_small")
         dealImageView.contentMode = UIViewContentMode.center
@@ -84,6 +109,10 @@ class HotDealCollectionViewCell: UICollectionViewCell {
                                             self.dealImageView?.contentMode = UIViewContentMode.scaleAspectFill
             }
         }
+        offerTagView.isHidden = false
+        favouriteButton.isHidden = false
+        offerPriceLabel.isHidden = false
+        vendorNameLabel.isHidden = false
         self.vendorNameLabel.text = deal.vendor!.name!
 //        self.originalPriceLabel.attributedText = self.originalPriceAttributedText(value: "\(deal.originalPrice!)")
 //        self.offerPriceLabel.text = "\(deal.dealPrice!)"
@@ -99,7 +128,7 @@ class HotDealCollectionViewCell: UICollectionViewCell {
         self.distanceValueLabel.text = "2 kms away"
         self.descriptionLabel.attributedText = self.dealTitleAttributedText(title: deal.dealDescription)
         if deal.originalPrice > 0 {
-            self.offerTagValueLabel.text = "\(Int((Float(deal.dealPrice)/Float(deal.originalPrice))*100))% off"
+            self.offerTagValueLabel.text = "\(Int((Float(deal.originalPrice - deal.dealPrice)/Float(deal.originalPrice))*100))% off"
         }
             self.favouriteButton.setBackgroundImage(UIImage(named: deal.isFavourited ? "make_favourite" : "makeFavouriteTransparent"), for: UIControlState.normal)
 
