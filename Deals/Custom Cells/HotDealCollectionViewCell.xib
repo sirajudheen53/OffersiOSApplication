@@ -23,7 +23,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="HotDealCollectionViewCell" customModule="Deals" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="HotDealCollectionViewCell" customModule="Dollor_Deals" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="295" height="240"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -85,8 +85,8 @@
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Igm-mk-Ry6">
-                                        <rect key="frame" x="12" y="197.5" width="261" height="20.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Igm-mk-Ry6">
+                                        <rect key="frame" x="12" y="182" width="261" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -144,13 +144,13 @@
                                     <constraint firstAttribute="trailing" secondItem="acf-MZ-P6I" secondAttribute="trailing" id="UMA-yl-pd1"/>
                                     <constraint firstItem="Igm-mk-Ry6" firstAttribute="leading" secondItem="jBb-yP-pQN" secondAttribute="leading" constant="12" id="W5h-51-SoF"/>
                                     <constraint firstItem="BIS-Kh-GcS" firstAttribute="top" secondItem="vpY-ZS-hDI" secondAttribute="bottom" constant="2" id="hFV-14-roM"/>
+                                    <constraint firstItem="Igm-mk-Ry6" firstAttribute="top" secondItem="vpY-ZS-hDI" secondAttribute="bottom" constant="15" id="lnY-vQ-TLD"/>
                                     <constraint firstItem="F4x-1e-iaR" firstAttribute="top" secondItem="jBb-yP-pQN" secondAttribute="top" constant="13" id="myw-tG-BNU"/>
                                     <constraint firstItem="MGC-ne-C0J" firstAttribute="centerY" secondItem="vpY-ZS-hDI" secondAttribute="centerY" id="pbU-wa-5YY"/>
                                     <constraint firstItem="acf-MZ-P6I" firstAttribute="top" secondItem="jBb-yP-pQN" secondAttribute="top" id="toi-dE-Al1"/>
                                     <constraint firstItem="F4x-1e-iaR" firstAttribute="leading" secondItem="jBb-yP-pQN" secondAttribute="leading" constant="-25" id="uAN-XA-lWj"/>
                                     <constraint firstAttribute="trailing" secondItem="iG8-pk-K4N" secondAttribute="trailing" constant="12" id="yOZ-Ey-vhn"/>
                                     <constraint firstAttribute="trailing" secondItem="Igm-mk-Ry6" secondAttribute="trailing" constant="12" id="z07-DZ-BNj"/>
-                                    <constraint firstAttribute="bottom" secondItem="Igm-mk-Ry6" secondAttribute="bottom" constant="12" id="zjz-LP-e0h"/>
                                 </constraints>
                             </view>
                         </subviews>

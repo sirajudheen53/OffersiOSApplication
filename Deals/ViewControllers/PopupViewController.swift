@@ -10,6 +10,7 @@ import UIKit
 import GoogleSignIn
 import FacebookCore
 import FacebookLogin
+import SVProgressHUD
 class PopupViewController: UIViewController, GIDSignInUIDelegate {
 
     var actionBlock : (()->())?
@@ -18,6 +19,11 @@ class PopupViewController: UIViewController, GIDSignInUIDelegate {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(self.userLoggedIn(notification:)), name: NSNotification.Name("userLoggedIn"), object: nil)
 
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,12 +45,36 @@ class PopupViewController: UIViewController, GIDSignInUIDelegate {
         loginManager.logIn(readPermissions: [.publicProfile, .email], viewController: self, completion: {loginResult in
             switch loginResult {
             case .failed(let error):
-                print(error)
+                UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
             case .cancelled:
                 print("User cancelled login.")
-            case .success(let grantedPermissions, let declinedPermissions, let accessToken):
-                print("Logged in!")
-            }
+            case .success(_, _, let accessToken):
+                SVProgressHUD.show()
+                BaseWebservice.performRequest(function: WebserviceFunction.login, requestMethod: .post, params: ["id_token" : accessToken.authenticationToken as AnyObject, "provider" : "facebook" as AnyObject], headers: nil) { (response, error) in
+                    SVProgressHUD.dismiss()
+                    if let error = error {
+                        UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
+                        
+                    } else if let response = response as? [String : Any] {
+                        if let status = response["status"] as? String {
+                            if status == "success" {
+                                if let userProperties = response["user"] as? [String : Any] {
+                                    let userObject = User.userObjectWithProperties(properties: userProperties)
+                                    userObject.saveToUserDefaults()
+                                    NotificationCenter.default.post(name: NSNotification.Name("userLoggedIn"), object: userProperties)
+                                } else {
+                                    UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                                }
+                            } else {
+                                UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                            }
+                        } else {
+                            UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                        }
+                    } else {
+                        UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                    }
+                }            }
         })
     }
     

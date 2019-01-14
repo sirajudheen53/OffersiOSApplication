@@ -158,25 +158,25 @@ class ProfileViewController: UIViewController, GIDSignInUIDelegate, UICollection
         let userProfileFetchHeader = ["Authorization" : "Token \(User.getProfile()!.token!)"]
         BaseWebservice.performRequest(function: WebserviceFunction.fetchUserProfile, requestMethod: .get, params: nil, headers: userProfileFetchHeader) { (response, error) in
             if let error = error {
-                //Handle Error
+                UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
             } else if let response = response as? [String : Any] {
                 if response["status"] as? String == "success" {
                     if let userProfileProperties = response["user"] as? [String : Any] {
                         self.userProfile = UserProfile.userProfileWithProperties(properties: userProfileProperties)
                         self.displayProfileData()
                     } else {
-                        //Handle Error
+                        UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                     }
                 } else {
                     if response["detail"] as? String == "Invalid token." {
                         self.profileContentView.isHidden = true
                         self.loginViewContent.isHidden = false
                     } else {
-                        //Handle Error
+                        UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                     }
                 }
             } else {
-                //Handle Error
+                UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
             }
         }
     }
@@ -231,14 +231,17 @@ class ProfileViewController: UIViewController, GIDSignInUIDelegate, UICollection
         loginManager.logIn(readPermissions: [.publicProfile, .email], viewController: self, completion: {loginResult in
             switch loginResult {
             case .failed(let error):
-                print(error)
+                UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
             case .cancelled:
                 print("User cancelled login.")
-            case .success(let grantedPermissions, let declinedPermissions, let accessToken):
+            case .success(_, _, let accessToken):
                 SVProgressHUD.show()
                 BaseWebservice.performRequest(function: WebserviceFunction.login, requestMethod: .post, params: ["id_token" : accessToken.authenticationToken as AnyObject, "provider" : "facebook" as AnyObject], headers: nil) { (response, error) in
                     SVProgressHUD.dismiss()
-                    if let response = response as? [String : Any] {
+                    if let error = error {
+                        UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
+
+                    } else if let response = response as? [String : Any] {
                         if let status = response["status"] as? String {
                             if status == "success" {
                                 if let userProperties = response["user"] as? [String : Any] {
@@ -246,16 +249,16 @@ class ProfileViewController: UIViewController, GIDSignInUIDelegate, UICollection
                                     userObject.saveToUserDefaults()
                                     NotificationCenter.default.post(name: NSNotification.Name("userLoggedIn"), object: userProperties)
                                 } else {
-                                    //Handle Error
+                                    UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                                 }
                             } else {
-                                //Handle Error
+                                UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                             }
                         } else {
-                            //Handle Error
+                            UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                         }
                     } else {
-                        //Handle Error
+                        UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                     }
                 }            }
         })

@@ -80,7 +80,6 @@ class HotDealCollectionViewCell: UICollectionViewCell {
         offerPriceLabel.isHidden = true
         vendorNameLabel.isHidden = true
         dealImageView.showAnimatedSkeleton()
-        vendorNameLabel.showAnimatedSkeleton()
         distanceValueLabel.showAnimatedSkeleton()
         descriptionLabel.showAnimatedSkeleton()
         originalPriceLabel.showAnimatedSkeleton()
