@@ -132,8 +132,6 @@ class ExploreViewController: UIViewController, UITableViewDataSource, UITableVie
             return "Entertainment"
         case .Services:
             return "Services"
-        default:
-            return "Services"
         }
     }
     
@@ -213,19 +211,19 @@ class ExploreViewController: UIViewController, UITableViewDataSource, UITableVie
                                 self.filteredDeals = self.availableDeals
                                 self.searchUpdateUI()
                             } else {
-                                //Handle Error condition
+                                UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                             }
                         } else {
-                            
+                            UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                         }
                     } else {
-                        //Handle Error condition
+                        UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                     }
                 } else {
-                    //Handle Error condition
+                    UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                 }
             } else {
-                //Handle Error condition
+                UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
             }
             
         }

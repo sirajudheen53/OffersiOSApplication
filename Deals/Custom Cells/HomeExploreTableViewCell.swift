@@ -8,7 +8,7 @@
 
 import UIKit
 
-let categoriesImagesList = ["beauty", "carcare", "entertainment", "health", "reatail", "restaurent", "services", "travel"]
+let categoriesImagesList = ["beauty", "carcare", "entertainment", "health", "retail", "restaurent", "services", "travel"]
 let categoriesTitleList = ["Beauty", "Car Care", "Entertainment", "Health", "Retail", "Restaurent", "Services", "Travel"]
 
 class HomeExploreTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource {

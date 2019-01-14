@@ -23,7 +23,7 @@ class HotDealTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollect
     @IBOutlet weak var hotDealsListingCollectionView: UICollectionView!
     override func awakeFromNib() {
         super.awakeFromNib()
-
+        dealNumbersInfoValueLabel.isHidden = true
         let nibName = UINib(nibName: "HotDealCollectionViewCell", bundle:nil)
         self.hotDealsListingCollectionView.register(nibName, forCellWithReuseIdentifier: "hotDealCell")
         self.dealInfoLabel.attributedText = self.dealInfoTitleAttributedText(text: "Walk in to your dream deals")
@@ -64,6 +64,7 @@ class HotDealTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollect
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "hotDealCell", for: indexPath) as! HotDealCollectionViewCell
         if let hotDeals = hotDeals {
+            dealNumbersInfoValueLabel.isHidden = false
             cell.currentUserLocation = self.currentUserLocation
             cell.customizeCell(deal: hotDeals[indexPath.row])
             cell.makeFavouriteActionBlock = self.makeFavouriteActionBlock

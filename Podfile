@@ -14,6 +14,8 @@ pod 'FacebookCore'
 pod 'FacebookLogin'
 pod 'FacebookShare'
 pod "SkeletonView"
+pod 'SwiftMessages'
+
   # Pods for Test
 
   target 'DealsTests' do

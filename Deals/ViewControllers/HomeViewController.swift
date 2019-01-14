@@ -10,6 +10,7 @@ import UIKit
 import GoogleSignIn
 import CoreLocation
 import SkeletonView
+import SwiftMessages
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, GIDSignInUIDelegate, CLLocationManagerDelegate, SkeletonTableViewDataSource {
 
@@ -153,16 +154,16 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 let flag = deal.isFavourited ? "false" : "true"
                 BaseWebservice.performRequest(function: .makeFavourite, requestMethod: .post, params: ["deal_id" : deal.dealId as AnyObject, "flag" : flag as AnyObject], headers: userProfileFetchHeader, onCompletion: { (response, error) in
                     if let error = error {
-                        //Handle Error
+                        UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
                     } else if let response = response as? [String : Any?] {
                         if response["status"] as? String == "success" {
                             deal.isFavourited = true
                             NotificationCenter.default.post(Notification.init(name: Notification.Name("userProfileUpdated")))
                         } else {
-                            //Handle Error
+                            UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                         }
                     } else {
-                        //Handle Error
+                        UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                     }
                 })
             }
@@ -180,16 +181,16 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 let flag = deal.isFavourited ? "false" : "true"
                 BaseWebservice.performRequest(function: .makeFavourite, requestMethod: .post, params: ["deal_id" : deal.dealId as AnyObject, "flag" : flag as AnyObject], headers: userProfileFetchHeader, onCompletion: { (response, error) in
                     if let error = error {
-                        //Handle Error
+                        UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
                     } else if let response = response as? [String : Any?] {
                         if response["status"] as? String == "success" {
                             deal.isFavourited = true
                             NotificationCenter.default.post(Notification.init(name: Notification.Name("userProfileUpdated")))
                         } else {
-                            //Handle Error
+                            UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                         }
                     } else {
-                        //Handle Error
+                        UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                     }
                 })
             }
@@ -229,7 +230,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("Current location in home table rel \(self.currentLocation)")
         var cell : UITableViewCell
         if indexPath.row == 0 {
             let homeTitleCell = tableView.dequeueReusableCell(withIdentifier: "HomeTitleCell", for: indexPath)
@@ -241,6 +241,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 hotDealTableViewCell.customizeCell(hotDeals: availableDeals)
                 hotDealTableViewCell.makeFavouriteActionBlock = self.makeFavouriteActionBlock()
                 hotDealTableViewCell.hotDealsCellSelectionActionBlock = self.hotDealCellSelectionActionBlock()
+            } else {
+                hotDealTableViewCell.hotDealsListingCollectionView.reloadData()
             }
             
            cell = hotDealTableViewCell
@@ -374,24 +376,35 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             tokenHeader = ["Authorization" : "Token \(token)"]
         }
         BaseWebservice.performRequest(function: WebserviceFunction.fetchDealsList, requestMethod: .get, params: ["location" : location as AnyObject], headers: tokenHeader) { (response, error) in
-            if let response = response as? [String : Any] {
+            if let error = error {
+                UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
+                self.noDealsContentView.isHidden = false
+                self.dealsListingTableView.isHidden = true
+            } else if let response = response as? [String : Any] {
                 if let status = response["status"] as? String {
                     if status=="success" {
                         if let allDealsProperties = response["data"] as? [String : Any] {
                             self.parseAllDealsResponseAndReloadView(allDealsResponse: allDealsProperties)
                         } else {
-                            //Handle Error condition
+                            self.noDealsContentView.isHidden = false
+                            self.dealsListingTableView.isHidden = true
+                            UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                         }
                     } else {
-                        //Handle Error condition
+                        self.noDealsContentView.isHidden = false
+                        self.dealsListingTableView.isHidden = true
+                        UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                     }
                 } else {
-                    //Handle Error condition
+                    self.noDealsContentView.isHidden = false
+                    self.dealsListingTableView.isHidden = true
+                    UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                 }
             } else {
-                //Handle Error condition
+                self.noDealsContentView.isHidden = false
+                self.dealsListingTableView.isHidden = true
+                UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
             }
-            
         }
     }
     
@@ -399,7 +412,4 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
         return "dealListingCell"
     }
-
-    
-    
 }
