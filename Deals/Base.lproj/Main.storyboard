@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="j9J-FH-zqh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14269.14" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="j9J-FH-zqh">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14252.5"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -36,7 +36,7 @@
         <!--Home View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="HomeViewController" customModule="Deals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="HomeViewController" customModule="Dollor_Deals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -162,7 +162,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="dealListingCell" id="dwu-MA-n3j" customClass="DealsListingTableViewCell" customModule="Deals" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="dealListingCell" id="dwu-MA-n3j" customClass="DealsListingTableViewCell" customModule="Dollor_Deals" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="178" width="414" height="300"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dwu-MA-n3j" id="uKv-iy-HvO">
@@ -388,7 +388,7 @@
         <!--My Orders View Controller-->
         <scene sceneID="cNY-GW-VF8">
             <objects>
-                <viewController id="LOw-6w-djO" customClass="MyOrdersViewController" customModule="Deals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="LOw-6w-djO" customClass="MyOrdersViewController" customModule="Dollor_Deals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LKr-4M-HgH">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -501,7 +501,7 @@
         <!--Item-->
         <scene sceneID="Tpc-IE-fyw">
             <objects>
-                <viewController id="wsw-En-rJQ" customClass="DealDetailsViewController" customModule="Deals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="wsw-En-rJQ" customClass="DealDetailsViewController" customModule="Dollor_Deals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Sm0-8F-9g6">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -513,7 +513,7 @@
                                     <constraint firstAttribute="height" constant="438" id="2m1-yI-VLO"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0FG-pH-1Il" customClass="RoundedView" customModule="Deals" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0FG-pH-1Il" customClass="RoundedView" customModule="Dollor_Deals" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="281" width="414" height="455"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enjoy rich and tasty food from Cafe Truffle! Get Chicken Burger and Vanilla shake at ₹99 instead of ₹180" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T84-1p-H9N">
@@ -1112,7 +1112,7 @@
         <!--More Details View Controller-->
         <scene sceneID="uXX-dc-AT8">
             <objects>
-                <viewController id="aaN-Wr-EjH" customClass="MoreDetailsViewController" customModule="Deals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="aaN-Wr-EjH" customClass="MoreDetailsViewController" customModule="Dollor_Deals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HGX-pD-h1b">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1144,7 +1144,7 @@
                                         <rect key="frame" x="20" y="59.666666666666657" width="304" height="446.33333333333337"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="condtionsCell" id="FKP-Rs-wqH" customClass="ConditionsListingTableViewCell" customModule="Deals" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="condtionsCell" id="FKP-Rs-wqH" customClass="ConditionsListingTableViewCell" customModule="Dollor_Deals" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="304" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FKP-Rs-wqH" id="qcx-uH-5YV">
@@ -1251,7 +1251,7 @@
         <!--Location Selection View Controller-->
         <scene sceneID="Mut-Dz-sfq">
             <objects>
-                <viewController id="MvD-Nx-Wb5" customClass="LocationSelectionViewController" customModule="Deals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="MvD-Nx-Wb5" customClass="LocationSelectionViewController" customModule="Dollor_Deals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vFF-f9-z1P">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1279,7 +1279,7 @@
                                     <action selector="cochiSelected:" destination="MvD-Nx-Wb5" eventType="touchUpInside" id="sX9-WJ-dkG"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HHc-EV-hjU">
+                            <button hidden="YES" opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HHc-EV-hjU">
                                 <rect key="frame" x="25" y="327" width="364" height="104"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="104" id="qAF-t8-UbW"/>
@@ -1330,7 +1330,7 @@
         <!--Popup View Controller-->
         <scene sceneID="zbf-Th-9dJ">
             <objects>
-                <viewController id="HRl-OZ-FPz" customClass="PopupViewController" customModule="Deals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="HRl-OZ-FPz" customClass="PopupViewController" customModule="Dollor_Deals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uA6-xl-1pk">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1408,7 +1408,7 @@
         <!--Item-->
         <scene sceneID="BqB-Df-Yst">
             <objects>
-                <viewController id="Pbq-Me-cYC" customClass="ExploreFilterViewController" customModule="Deals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Pbq-Me-cYC" customClass="ExploreFilterViewController" customModule="Dollor_Deals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FdW-T2-cqb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1665,7 +1665,7 @@
         <!--Profile View Controller-->
         <scene sceneID="au3-JQ-qtU">
             <objects>
-                <viewController id="3YQ-2z-6E5" customClass="ProfileViewController" customModule="Deals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="3YQ-2z-6E5" customClass="ProfileViewController" customModule="Dollor_Deals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9a2-xS-XE8">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2034,7 +2034,7 @@
                                                                     <constraint firstItem="qbt-E6-Yr4" firstAttribute="top" secondItem="VYW-d3-wSe" secondAttribute="top" id="wsQ-Fq-yQ3"/>
                                                                 </constraints>
                                                             </view>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0nr-dN-4IO">
+                                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0nr-dN-4IO">
                                                                 <rect key="frame" x="20" y="67" width="374" height="50"/>
                                                                 <subviews>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rightArrow" translatesAutoresizingMaskIntoConstraints="NO" id="QdS-hM-Nyq">
@@ -2069,7 +2069,7 @@
                                                                 </constraints>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qfq-ba-8E4">
-                                                                <rect key="frame" x="20" y="129" width="374" height="50"/>
+                                                                <rect key="frame" x="20" y="67" width="374" height="50"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feedback" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Hw-EF-1Wi">
                                                                         <rect key="frame" x="11" y="16.666666666666629" width="66" height="17"/>
@@ -2105,7 +2105,6 @@
                                                         </subviews>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
-                                                            <constraint firstItem="qfq-ba-8E4" firstAttribute="top" secondItem="0nr-dN-4IO" secondAttribute="bottom" constant="12" id="0BO-od-MhT"/>
                                                             <constraint firstItem="VYW-d3-wSe" firstAttribute="leading" secondItem="5L1-zv-tbB" secondAttribute="leading" constant="20" id="5cQ-la-6fY"/>
                                                             <constraint firstAttribute="trailing" secondItem="VYW-d3-wSe" secondAttribute="trailing" constant="20" id="Jei-SI-meB"/>
                                                             <constraint firstAttribute="trailing" secondItem="0nr-dN-4IO" secondAttribute="trailing" constant="20" id="POe-VI-6MT"/>
@@ -2114,6 +2113,7 @@
                                                             <constraint firstItem="VYW-d3-wSe" firstAttribute="top" secondItem="5L1-zv-tbB" secondAttribute="top" constant="5" id="lZT-Tw-Xec"/>
                                                             <constraint firstItem="qfq-ba-8E4" firstAttribute="leading" secondItem="5L1-zv-tbB" secondAttribute="leading" constant="20" id="qBH-pS-IQp"/>
                                                             <constraint firstItem="0nr-dN-4IO" firstAttribute="top" secondItem="VYW-d3-wSe" secondAttribute="bottom" constant="12" id="upd-cn-aQJ"/>
+                                                            <constraint firstItem="qfq-ba-8E4" firstAttribute="top" secondItem="qbt-E6-Yr4" secondAttribute="bottom" constant="12" id="xcK-zL-XTh"/>
                                                             <constraint firstItem="0nr-dN-4IO" firstAttribute="leading" secondItem="5L1-zv-tbB" secondAttribute="leading" constant="20" id="zNV-bv-yGR"/>
                                                         </constraints>
                                                     </view>
@@ -2182,7 +2182,7 @@
         <!--View Controller-->
         <scene sceneID="A9a-gU-kRE">
             <objects>
-                <viewController id="fAu-5j-Klw" customClass="FAQViewController" customModule="Deals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="fAu-5j-Klw" customClass="FAQViewController" customModule="Dollor_Deals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sWF-HA-C4h">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2258,7 +2258,7 @@
         <!--Favourites List View Controller-->
         <scene sceneID="iGg-W9-Bze">
             <objects>
-                <viewController id="vju-cd-5ur" customClass="FavouritesListViewController" customModule="Deals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="vju-cd-5ur" customClass="FavouritesListViewController" customModule="Dollor_Deals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Blw-se-iiC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2271,19 +2271,51 @@
                                     <outlet property="delegate" destination="vju-cd-5ur" id="rT5-xd-ZQc"/>
                                 </connections>
                             </tableView>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart_broken" translatesAutoresizingMaskIntoConstraints="NO" id="26h-2Y-zdR">
+                                <rect key="frame" x="148" y="217" width="118" height="102"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="118" id="bRu-us-KMA"/>
+                                    <constraint firstAttribute="height" constant="102" id="zkN-VD-Raq"/>
+                                </constraints>
+                            </imageView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ooops !" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TX9-7R-mIk">
+                                <rect key="frame" x="169.66666666666666" y="355" width="75" height="24"/>
+                                <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="20"/>
+                                <color key="textColor" red="0.63921568627450975" green="0.63921568627450975" blue="0.63921568627450975" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We dont know your favourites..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jos-0l-98E">
+                                <rect key="frame" x="113.66666666666669" y="389" width="187" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="nJe-n9-aZo"/>
+                                    <constraint firstAttribute="width" constant="187" id="zna-fh-y9s"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="20"/>
+                                <color key="textColor" red="0.63921568627450975" green="0.63921568627450975" blue="0.63921568627450975" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="26h-2Y-zdR" firstAttribute="centerX" secondItem="Blw-se-iiC" secondAttribute="centerX" id="0js-dR-fYZ"/>
+                            <constraint firstItem="TX9-7R-mIk" firstAttribute="top" secondItem="26h-2Y-zdR" secondAttribute="bottom" constant="36" id="1oU-Hk-5Kh"/>
+                            <constraint firstItem="26h-2Y-zdR" firstAttribute="centerY" secondItem="Blw-se-iiC" secondAttribute="centerY" constant="-100" id="2bC-sg-ied"/>
                             <constraint firstItem="Nh7-P3-N7E" firstAttribute="bottom" secondItem="uba-Va-QSV" secondAttribute="bottom" id="77I-ZT-uDx"/>
                             <constraint firstItem="uba-Va-QSV" firstAttribute="top" secondItem="Nh7-P3-N7E" secondAttribute="top" id="G1d-C5-cZQ"/>
+                            <constraint firstItem="Jos-0l-98E" firstAttribute="top" secondItem="TX9-7R-mIk" secondAttribute="bottom" constant="10" id="GFm-ds-nLQ"/>
                             <constraint firstItem="uba-Va-QSV" firstAttribute="leading" secondItem="Nh7-P3-N7E" secondAttribute="leading" id="OCM-HD-JnR"/>
                             <constraint firstItem="Nh7-P3-N7E" firstAttribute="trailing" secondItem="uba-Va-QSV" secondAttribute="trailing" id="geY-Hz-XRT"/>
+                            <constraint firstItem="Jos-0l-98E" firstAttribute="centerX" secondItem="Blw-se-iiC" secondAttribute="centerX" id="qpz-5Q-G9M"/>
+                            <constraint firstItem="TX9-7R-mIk" firstAttribute="centerX" secondItem="Blw-se-iiC" secondAttribute="centerX" id="vyl-8f-Bij"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Nh7-P3-N7E"/>
                     </view>
                     <navigationItem key="navigationItem" id="dVY-dB-bZd"/>
                     <connections>
                         <outlet property="favouritesListingTableView" destination="uba-Va-QSV" id="9V1-WB-RbA"/>
+                        <outlet property="noFavouritesImage" destination="26h-2Y-zdR" id="v9e-IM-bDi"/>
+                        <outlet property="noFavouritesTitle1" destination="TX9-7R-mIk" id="pgd-4w-a6B"/>
+                        <outlet property="noFavouritesTitle2" destination="Jos-0l-98E" id="gBC-Av-Iil"/>
                         <segue destination="wsw-En-rJQ" kind="presentation" identifier="showDetailsView" animates="NO" modalPresentationStyle="overFullScreen" id="Ffb-Sb-1Uq"/>
                     </connections>
                 </viewController>
@@ -2294,7 +2326,7 @@
         <!--Explore View Controller-->
         <scene sceneID="Vxt-Hf-Foz">
             <objects>
-                <viewController id="QdU-Wb-EPU" customClass="ExploreViewController" customModule="Deals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="QdU-Wb-EPU" customClass="ExploreViewController" customModule="Dollor_Deals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TCu-i7-d5v">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2459,7 +2491,7 @@
         <!--Purchases List View Controller-->
         <scene sceneID="AmD-zk-cYg">
             <objects>
-                <viewController id="pti-v1-AU9" customClass="PurchasesListViewController" customModule="Deals" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="pti-v1-AU9" customClass="PurchasesListViewController" customModule="Dollor_Deals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3RW-bi-xlT">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2559,7 +2591,7 @@
     <resources>
         <image name="Food22449.jpeg" width="375" height="120"/>
         <image name="address" width="13" height="16"/>
-        <image name="beauty" width="486" height="270"/>
+        <image name="beauty" width="162" height="90"/>
         <image name="beauty_unselect" width="162" height="90"/>
         <image name="carcare" width="162" height="90"/>
         <image name="carcare_unselect" width="162" height="90"/>
@@ -2567,13 +2599,14 @@
         <image name="cochi_selected" width="335" height="104"/>
         <image name="cochi_unselected" width="335" height="104"/>
         <image name="dummy_deal" width="378" height="450"/>
-        <image name="entertainment" width="486" height="270"/>
+        <image name="entertainment" width="162" height="90"/>
         <image name="entertainment_unselect" width="162" height="90"/>
         <image name="explore_search" width="16" height="16"/>
         <image name="explore_tab" width="20" height="20"/>
         <image name="filterNumber" width="18" height="12"/>
         <image name="health" width="162" height="90"/>
         <image name="health_unselect" width="162" height="90"/>
+        <image name="heart_broken" width="118" height="102"/>
         <image name="home_tab" width="20" height="22"/>
         <image name="location_selection" width="20" height="24"/>
         <image name="login_with_fb" width="300" height="52"/>
@@ -2592,7 +2625,7 @@
         <image name="profile_background" width="293" height="472"/>
         <image name="profile_tab" width="18" height="20"/>
         <image name="profile_tab_selected" width="18" height="20"/>
-        <image name="restaurent" width="486" height="270"/>
+        <image name="restaurent" width="162" height="90"/>
         <image name="restaurent_unselect" width="162" height="90"/>
         <image name="retail" width="162" height="90"/>
         <image name="retail_unselect" width="162" height="90"/>
@@ -2600,13 +2633,13 @@
         <image name="services" width="162" height="90"/>
         <image name="services_unselect" width="162" height="90"/>
         <image name="share" width="20" height="20"/>
-        <image name="travel" width="486" height="270"/>
+        <image name="travel" width="162" height="90"/>
         <image name="travel_unselect" width="162" height="90"/>
         <image name="trivandrum_selected" width="335" height="104"/>
         <image name="trivandrum_unselected" width="335" height="104"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="A3n-xN-iaX"/>
-        <segue reference="OD9-Gk-d3K"/>
+        <segue reference="Ffb-Sb-1Uq"/>
     </inferredMetricsTieBreakers>
 </document>

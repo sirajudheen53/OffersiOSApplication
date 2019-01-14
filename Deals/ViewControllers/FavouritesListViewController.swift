@@ -12,6 +12,10 @@ class FavouritesListViewController: UIViewController, UITableViewDataSource, UIT
     
     var favourites : [Deal]?
     
+    @IBOutlet weak var noFavouritesImage: UIImageView!
+    @IBOutlet weak var noFavouritesTitle1: UILabel!
+    @IBOutlet weak var noFavouritesTitle2: UILabel!
+    
     @IBOutlet weak var favouritesListingTableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +32,17 @@ class FavouritesListViewController: UIViewController, UITableViewDataSource, UIT
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        if let favorites = favourites, favorites.count > 0 {
+            favouritesListingTableView.isHidden = false
+            noFavouritesImage.isHidden = true
+            noFavouritesTitle1.isHidden = true
+            noFavouritesTitle2.isHidden = true
+        } else {
+            favouritesListingTableView.isHidden = true
+            noFavouritesImage.isHidden = false
+            noFavouritesTitle1.isHidden = false
+            noFavouritesTitle2.isHidden = false
+        }
     }
     
     // MARK: - TableView Delegate Methods
