@@ -75,8 +75,12 @@ class ExploreViewController: UIViewController, UITableViewDataSource, UITableVie
         let categoryFilteredDeals = self.selectedCategoryFilteredDeals()
         if let currentText = searchTextField.text {
             self.filteredDeals = self.searchDealsWithTerm(term: currentText, deals: categoryFilteredDeals)
+            if self.filteredDeals?.count == 0 {
+                
+            } else {
+                self.dealsListingTableView.reloadData()
+            }
         }
-        self.dealsListingTableView.reloadData()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

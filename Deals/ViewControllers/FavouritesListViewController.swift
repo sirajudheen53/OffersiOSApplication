@@ -26,6 +26,11 @@ class FavouritesListViewController: UIViewController, UITableViewDataSource, UIT
         self.favouritesListingTableView.register(dealListingCellNib, forCellReuseIdentifier: "dealListingCell")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
+    
     // MARK: - TableView Delegate Methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
