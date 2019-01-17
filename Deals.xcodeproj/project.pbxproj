@@ -944,15 +944,17 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 5DYFD9UMYF;
+				DEVELOPMENT_TEAM = 6R3U4523N6;
 				INFOPLIST_FILE = "$(SRCROOT)/Deals/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.qburst.-";
+				PRODUCT_BUNDLE_IDENTIFIER = com.firewheelstrading.dollordeals;
 				PRODUCT_NAME = "Dollor Deals";
-				PROVISIONING_PROFILE_SPECIFIER = Generic2018;
+				PROVISIONING_PROFILE_SPECIFIER = "Dollor Deals Distribution";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -962,15 +964,17 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 5DYFD9UMYF;
+				DEVELOPMENT_TEAM = 6R3U4523N6;
 				INFOPLIST_FILE = "$(SRCROOT)/Deals/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.qburst.-";
+				PRODUCT_BUNDLE_IDENTIFIER = com.firewheelstrading.dollordeals;
 				PRODUCT_NAME = "Dollor Deals";
-				PROVISIONING_PROFILE_SPECIFIER = Generic2018;
+				PROVISIONING_PROFILE_SPECIFIER = "Dollor Deals Distribution";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
