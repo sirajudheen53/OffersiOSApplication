@@ -110,7 +110,9 @@ class DealsListingTableViewCell: UITableViewCell {
                                            progressQueue: DispatchQueue.main,
                                            imageTransition: UIImageView.ImageTransition.noTransition,
                                            runImageTransitionIfCached: false) { (data) in
-                                            self.dealImageView?.contentMode = UIViewContentMode.scaleAspectFill
+                                            if let _ = data.result.value {
+                                                self.dealImageView?.contentMode = UIViewContentMode.scaleAspectFill
+                                            }
             }
         }
             self.favouriteButton.setBackgroundImage(UIImage(named: deal.isFavourited ? "make_favourite" : "makeFavouriteTransparent"), for: UIControlState.normal)

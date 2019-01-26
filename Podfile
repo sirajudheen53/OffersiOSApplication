@@ -15,6 +15,7 @@ pod 'FacebookLogin'
 pod 'FacebookShare'
 pod "SkeletonView"
 pod 'SwiftMessages'
+pod 'Firebase/Core'
 
   # Pods for Test
 

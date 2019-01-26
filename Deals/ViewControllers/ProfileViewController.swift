@@ -34,6 +34,8 @@ class ProfileViewController: UIViewController, GIDSignInUIDelegate, UICollection
     @IBOutlet weak var feedbackContentView: UIView!
     @IBOutlet weak var faqContentView: UIView!
     @IBOutlet weak var favouritesContentView: UIView!
+    @IBOutlet weak var privacyContentView: UIView!
+
     @IBOutlet weak var numberOfPurchases: UILabel!
     var userProfile : UserProfile?
     
@@ -82,6 +84,7 @@ class ProfileViewController: UIViewController, GIDSignInUIDelegate, UICollection
         self.decorateProfileMenuListItem(decorationView: self.feedbackContentView)
         self.decorateProfileMenuListItem(decorationView: self.faqContentView)
         self.decorateProfileMenuListItem(decorationView: self.favouritesContentView)
+        decorateProfileMenuListItem(decorationView: privacyContentView)
     }
     
     @IBAction func logutButtonClicked(_ sender: Any) {
@@ -216,6 +219,14 @@ class ProfileViewController: UIViewController, GIDSignInUIDelegate, UICollection
             if let deal = sender as? Deal {
                 detailsView.deal = deal
             }
+        } else if segue.identifier == "showTerms" {
+            let webView = segue.destination as! TermsViewController
+            webView.itemTitle = "Terms and Conditions"
+            webView.itemFileName = "dollordeals_terms"
+        } else if segue.identifier == "showPrivacy" {
+            let webView = segue.destination as! TermsViewController
+            webView.itemTitle = "Privacy Policy"
+            webView.itemFileName = "dollor_deals_privacy"
         }
     }
 

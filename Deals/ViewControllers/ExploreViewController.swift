@@ -14,6 +14,7 @@ class ExploreViewController: UIViewController, UITableViewDataSource, UITableVie
     var filteredDeals : [Deal]?
     var filterCategories = [FilterCategories]()
     
+    @IBOutlet weak var noDealsContentView: UIView!
     @IBOutlet weak var searchBackgroundView: UIView!
     @IBOutlet weak var dealsListingTableView: UITableView!
     @IBOutlet weak var filterContentView: UIView!
@@ -65,6 +66,13 @@ class ExploreViewController: UIViewController, UITableViewDataSource, UITableVie
         let categoryFilteredDeals = self.selectedCategoryFilteredDeals()
         if let currentText = searchTextField.text {
             self.filteredDeals = self.searchDealsWithTerm(term: currentText, deals: categoryFilteredDeals)
+            if let filteredDeals = filteredDeals, filteredDeals.count == 0 {
+                dealsListingTableView.isHidden = true
+                noDealsContentView.isHidden = false
+            } else {
+                dealsListingTableView.isHidden = false
+                noDealsContentView.isHidden = true
+            }
         }
         self.dealsListingTableView.reloadData()
     }
@@ -76,8 +84,11 @@ class ExploreViewController: UIViewController, UITableViewDataSource, UITableVie
         if let currentText = searchTextField.text {
             self.filteredDeals = self.searchDealsWithTerm(term: currentText, deals: categoryFilteredDeals)
             if self.filteredDeals?.count == 0 {
-                
+                dealsListingTableView.isHidden = true
+                noDealsContentView.isHidden = false
             } else {
+                dealsListingTableView.isHidden = false
+                noDealsContentView.isHidden = true
                 self.dealsListingTableView.reloadData()
             }
         }
@@ -121,17 +132,17 @@ class ExploreViewController: UIViewController, UITableViewDataSource, UITableVie
     func appropriateCategoryName(category : FilterCategories) -> String {
         switch category {
         case .Restaurent:
-            return "Food"
+            return "Restaurent"
         case .Travel:
             return "Travel"
         case .Health:
-            return "Person Care"
+            return "Health"
         case .Beauty:
             return "Beauty"
         case .CarCare:
-            return "Automotive"
+            return "Car Care"
         case .Retail:
-            return "Retail Store"
+            return "Retail"
         case .Entertainment:
             return "Entertainment"
         case .Services:

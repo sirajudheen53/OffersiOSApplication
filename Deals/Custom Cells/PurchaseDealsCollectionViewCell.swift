@@ -58,7 +58,9 @@ class PurchaseDealsCollectionViewCell: UICollectionViewCell {
                                            progressQueue: DispatchQueue.main,
                                            imageTransition: UIImageView.ImageTransition.noTransition,
                                            runImageTransitionIfCached: false) { (data) in
-                                            self.dealImageView?.contentMode = UIViewContentMode.scaleAspectFill
+                                            if let _ = data.result.value {
+                                                self.dealImageView?.contentMode = UIViewContentMode.scaleAspectFill
+                                            }
             }
         }
     }

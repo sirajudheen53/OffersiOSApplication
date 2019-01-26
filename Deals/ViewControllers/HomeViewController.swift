@@ -223,7 +223,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let availableDeals = self.availableDeals {
-            return availableDeals.count;
+            return availableDeals.count + 5
         } else {
             return 10;
         }
@@ -257,10 +257,16 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             exploreCell.exploreCategorySelectionBlock = self.exploreCategorySelectionBlock()
             cell = exploreCell
         } else {
+            var index = 0
+            if indexPath.row < 7 {
+                index = indexPath.row - 3
+            } else {
+                index = indexPath.row - 4
+            }
             let dealListingCell = tableView.dequeueReusableCell(withIdentifier: "dealListingCell", for: indexPath) as! DealsListingTableViewCell;
             if let availableDeals = self.availableDeals {
                 dealListingCell.currentUserLocation = self.currentLocation
-                dealListingCell.customizeCell(deal: availableDeals[indexPath.row])
+                dealListingCell.customizeCell(deal: availableDeals[index])
                 dealListingCell.makeFavouriteActionBlock = self.makeFavouriteActionBlock()
             } else {
                 dealListingCell.showLoadingAnimation()
@@ -292,8 +298,17 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 || indexPath.row == 1 || indexPath.row == 2 || indexPath.row == 7 {
+            return
+        }
         DispatchQueue.main.async {
-            self.performSegue(withIdentifier: "showDetailsView", sender: self.availableDeals![indexPath.row])
+            var index = 0
+            if indexPath.row < 7 {
+                index = indexPath.row - 3
+            } else {
+                index = indexPath.row - 4
+            }
+            self.performSegue(withIdentifier: "showDetailsView", sender: self.availableDeals![index])
         }
     }
     
@@ -369,13 +384,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func fetchAllDealsFromServerAndUpdateUI(location : String) {
-        
-        
+        dealsListingTableView.isUserInteractionEnabled = false
         var tokenHeader = [String : String]()
         if let token = User.getProfile()?.token {
             tokenHeader = ["Authorization" : "Token \(token)"]
         }
         BaseWebservice.performRequest(function: WebserviceFunction.fetchDealsList, requestMethod: .get, params: ["location" : location as AnyObject], headers: tokenHeader) { (response, error) in
+            self.dealsListingTableView.isUserInteractionEnabled = true
             if let error = error {
                 UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
                 self.noDealsContentView.isHidden = false

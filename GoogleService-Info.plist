@@ -7,9 +7,9 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>59260456739-jobbufiv7t2hg8eha2i43hg9nut9emtq.apps.googleusercontent.com</string>
+	<string>59260456739-p8dl0r8g1kjr9e9ghbjl52ebcdhordb9.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.59260456739-jobbufiv7t2hg8eha2i43hg9nut9emtq</string>
+	<string>com.googleusercontent.apps.59260456739-p8dl0r8g1kjr9e9ghbjl52ebcdhordb9</string>
 	<key>API_KEY</key>
 	<string>AIzaSyCnT5qaZngMVbv54rw-VndibFck0CVORFk</string>
 	<key>GCM_SENDER_ID</key>
@@ -17,7 +17,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.qburst.Test</string>
+	<string>com.firewheelstrading.dollordeals</string>
 	<key>PROJECT_ID</key>
 	<string>offers-cfaff</string>
 	<key>STORAGE_BUCKET</key>
@@ -33,7 +33,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:59260456739:ios:2b4a753a50c85b1a</string>
+	<string>1:59260456739:ios:c41b8aa83710c9c1</string>
 	<key>DATABASE_URL</key>
 	<string>https://offers-cfaff.firebaseio.com</string>
 </dict>

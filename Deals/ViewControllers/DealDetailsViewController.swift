@@ -51,7 +51,6 @@ class DealDetailsViewController: UIViewController {
     @IBOutlet weak var offerStrinp: UIImageView!
     @IBOutlet weak var offerExpiredView: UIView!
     @IBOutlet weak var coupnInfoView: UIView!
-    let conditionsArray = ["1 Voucher Valid for 1 person only", "Print/ SMS/ In-App voucher can be used to avail the deal", "Prior reservation recommneded (Upon purchase, you will receive a voucher with the reservation number)", "Timings: 12:30 PM to 3:30 PM Monday to Friday", "Prices are inclusive of all tax and other service charges", "Food images are for representation purpose only", "Voucher codes in one transaction must be used in 1 visit. For seperate use, seperate transactions must be made"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,13 +119,15 @@ class DealDetailsViewController: UIViewController {
     }
     
     func addressAttributedText(address : String) -> NSAttributedString {
+        let addressText = address.replacingOccurrences(of: "--", with: " \n")
+        
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 1.7
         
         let attributes = [NSAttributedStringKey.font : Constants.compactTextRegulaFontWithSize(size: 14.0),
                           NSAttributedStringKey.paragraphStyle : paragraphStyle,
                           NSAttributedStringKey.foregroundColor : Constants.lightDarkColor]
-        let requiredString = NSAttributedString(string: address, attributes: attributes)
+        let requiredString = NSAttributedString(string: addressText, attributes: attributes)
         return requiredString
     }
     
@@ -232,7 +233,6 @@ class DealDetailsViewController: UIViewController {
             }
         }
         self.numberOfPeoplePurchased.text = "\(self.deal!.numberOfPeopleBought)"
-        self.vendorAddressValueLabel.text = self.deal!.vendor!.address
         self.offerTitleLabel.attributedText = self.titleAttributedText(title: self.deal!.dealDescription)
         self.dealDetailsButton.setAttributedTitle(self.moreDetailsAttributedText(title: "More Details"), for: UIControlState.normal)
         self.purchasesTitleLabel.attributedText = self.purchaseBoughtAttributedText(text: "PURCHASES")
@@ -271,7 +271,12 @@ class DealDetailsViewController: UIViewController {
         coupnInfoView.isHidden = false
         
         self.couponCodeLabelView.text = deal?.purchaseCode ?? ""
-        self.couponVendorAddressLabel.text = self.deal!.vendor!.address
+        if let vendorAddress = self.deal?.vendor?.address {
+            self.couponVendorAddressLabel.attributedText = self.addressAttributedText(address: vendorAddress)
+        } else {
+            self.couponVendorAddressLabel.attributedText = self.addressAttributedText(address: "-")
+        }
+        
         if let expiryDate = self.deal?.purchaseExpiry {
             if expiryDate < Date() {
                 maskedView.isHidden = false
@@ -300,7 +305,7 @@ class DealDetailsViewController: UIViewController {
                 BaseWebservice.performRequest(function: .makePurchase, requestMethod: .post, params: ["deal_id" : deal!.dealId as AnyObject], headers: userProfileFetchHeader, onCompletion: { (response, error) in
                     SVProgressHUD.dismiss()
                     if let error = error {
-                        //Handle Error
+                        UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
                     } else if let response = response as? [String : Any?] {
                         if response["status"] as? String == "success" {
                             NotificationCenter.default.post(Notification.init(name: Notification.Name("userProfileUpdated")))
@@ -321,10 +326,10 @@ class DealDetailsViewController: UIViewController {
                             self.showDealCodeView()
 
                         } else {
-                            //Handle Error
+                            UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                         }
                     } else {
-                        //Handle Error
+                        UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                     }
                 })
         } else {
@@ -342,6 +347,12 @@ class DealDetailsViewController: UIViewController {
     }
     
     @IBAction func shareButtonClicked(_ sender: Any) {
+        let text = "Grab awesome deals from following application"
+        let myWebsite = URL(string:"www.dollordeals.com")
+        let shareAll = [text, myWebsite as Any] as [Any]
+        let activityViewController = UIActivityViewController(activityItems: shareAll, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        self.present(activityViewController, animated: true, completion: nil)
     }
     
     @IBAction func makeFavouriteButtonClicked(_ sender: UIButton) {
@@ -352,16 +363,16 @@ class DealDetailsViewController: UIViewController {
                 let flag = deal.isFavourited ? "false" : "true"
                 BaseWebservice.performRequest(function: .makeFavourite, requestMethod: .post, params: ["deal_id" : deal.dealId as AnyObject, "flag" : flag as AnyObject], headers: userProfileFetchHeader, onCompletion: { (response, error) in
                     if let error = error {
-                        //Handle Error
+                        UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
                     } else if let response = response as? [String : Any?] {
                         if response["status"] as? String == "success" {
                             deal.isFavourited = true
                             NotificationCenter.default.post(Notification.init(name: Notification.Name("userProfileUpdated")))
                         } else {
-                            //Handle Error
+                            UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                         }
                     } else {
-                        //Handle Error
+                        UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                     }
                 })
             }
