@@ -1569,17 +1569,10 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NIC-hq-maS">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="70"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pgJ-bJ-JBd">
-                                                <rect key="frame" x="19.999999999999993" y="20.666666666666661" width="90.333333333333314" height="37.333333333333343"/>
-                                                <attributedString key="attributedText">
-                                                    <fragment content="Profile">
-                                                        <attributes>
-                                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                            <font key="NSFont" metaFont="system" size="32"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pgJ-bJ-JBd">
+                                                <rect key="frame" x="20" y="19.666666666666661" width="106" height="38.333333333333343"/>
+                                                <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="32"/>
+                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <nil key="highlightedColor"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="letterSpace">
@@ -2678,7 +2671,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="LFe-de-dCP"/>
-        <segue reference="A3n-xN-iaX"/>
-        <segue reference="lrb-JF-K5p"/>
+        <segue reference="uwF-og-KTp"/>
+        <segue reference="Ovg-CE-8Vh"/>
     </inferredMetricsTieBreakers>
 </document>

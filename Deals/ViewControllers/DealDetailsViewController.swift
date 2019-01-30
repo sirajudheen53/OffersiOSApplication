@@ -9,7 +9,7 @@
 import UIKit
 import CoreGraphics
 import SVProgressHUD
-class DealDetailsViewController: UIViewController {
+class DealDetailsViewController: BaseViewController {
 
     var deal : Deal?
     var dealCode : String?
@@ -53,6 +53,8 @@ class DealDetailsViewController: UIViewController {
     @IBOutlet weak var coupnInfoView: UIView!
     
     override func viewDidLoad() {
+        analyticsScreenName = "Deal Details View"
+
         super.viewDidLoad()
         UIApplication.shared.isStatusBarHidden = true
         self.navigationController?.isNavigationBarHidden = true
@@ -69,7 +71,7 @@ class DealDetailsViewController: UIViewController {
         drawDottedLine(start: CGPoint(x: dashedView.bounds.minX, y: dashedView.bounds.minY),
                        end: CGPoint(x: dashedView.bounds.maxX, y: dashedView.bounds.minY), view: dashedView)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

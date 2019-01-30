@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FavouritesListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class FavouritesListViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate {
     
     var favourites : [Deal]?
     
@@ -18,6 +18,8 @@ class FavouritesListViewController: UIViewController, UITableViewDataSource, UIT
     
     @IBOutlet weak var favouritesListingTableView: UITableView!
     override func viewDidLoad() {
+        analyticsScreenName = "Favourites List View"
+
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.isHidden = false

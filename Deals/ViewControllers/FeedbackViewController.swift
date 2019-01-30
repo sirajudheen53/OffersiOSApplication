@@ -9,9 +9,11 @@
 import UIKit
 import MessageUI
 
-class FeedbackViewController: UIViewController, MFMailComposeViewControllerDelegate {
+class FeedbackViewController: BaseViewController, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate {
 
     override func viewDidLoad() {
+        analyticsScreenName = "Feedback View"
+
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
@@ -32,7 +34,7 @@ class FeedbackViewController: UIViewController, MFMailComposeViewControllerDeleg
     }
     
     @IBAction func phoneButtonClicked(_ sender: Any) {
-        if let url = URL(string: "tel://+91 8606806956)"),
+        if let url = URL(string: "tel://+918606806956)"),
             UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
@@ -67,6 +69,10 @@ class FeedbackViewController: UIViewController, MFMailComposeViewControllerDeleg
     */
     
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.dismiss(animated: true, completion: nil)
     }
 

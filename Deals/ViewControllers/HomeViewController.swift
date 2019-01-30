@@ -12,7 +12,7 @@ import CoreLocation
 import SkeletonView
 import SwiftMessages
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, GIDSignInUIDelegate, CLLocationManagerDelegate, SkeletonTableViewDataSource {
+class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, GIDSignInUIDelegate, CLLocationManagerDelegate, SkeletonTableViewDataSource {
 
     var availableDeals : [Deal]?
     var hotDeals : [Deal]?
@@ -29,7 +29,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var currentLocation : CLLocation?
     
     override func viewDidLoad() {
+        analyticsScreenName = "Home View"
+
         super.viewDidLoad()
+        
         NotificationCenter.default.addObserver(self, selector: #selector(locationUpdated), name: NSNotification.Name(rawValue: "locationUpdated"), object: nil)
         
         GIDSignIn.sharedInstance().uiDelegate = self

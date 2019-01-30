@@ -8,9 +8,10 @@
 
 import UIKit
 
-class MyOrdersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MyOrdersViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate {
 
     override func viewDidLoad() {
+        analyticsScreenName = "My Orders View"
         super.viewDidLoad()
 
         self.title = "Your Orders"

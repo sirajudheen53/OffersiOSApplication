@@ -8,11 +8,13 @@
 
 import UIKit
 
-class MoreDetailsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MoreDetailsViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
 
     var conditions = [String]()
     
     override func viewDidLoad() {
+        analyticsScreenName = "More Details View"
+
         super.viewDidLoad()
 
     }

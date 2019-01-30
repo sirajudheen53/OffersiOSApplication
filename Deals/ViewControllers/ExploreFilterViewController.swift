@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ExploreFilterViewController: UIViewController {
+class ExploreFilterViewController: BaseViewController {
 
     var selectedFilters = [FilterCategories]()
     var exploreViewController : ExploreViewController?
@@ -26,6 +26,8 @@ class ExploreFilterViewController: UIViewController {
     
     @IBOutlet weak var doneButton: UIButton!
     override func viewDidLoad() {
+        analyticsScreenName = "Explore Filter View"
+
         super.viewDidLoad()
         self.setInitialCategoryTileImages()
     }

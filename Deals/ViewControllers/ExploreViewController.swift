@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ExploreViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
+class ExploreViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
 
     var availableDeals : [Deal]?
     var filteredDeals : [Deal]?
@@ -22,6 +22,8 @@ class ExploreViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var searchTextField: UITextField!
     
     override func viewDidLoad() {
+        analyticsScreenName = "Explore View"
+
         super.viewDidLoad()
 
         NotificationCenter.default.addObserver(self, selector: #selector(categoriesSelected(_:)), name: Notification.Name(rawValue: "categoriesFilterSelected"), object: nil)

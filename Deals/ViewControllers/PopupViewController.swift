@@ -11,11 +11,13 @@ import GoogleSignIn
 import FacebookCore
 import FacebookLogin
 import SVProgressHUD
-class PopupViewController: UIViewController, GIDSignInUIDelegate {
+class PopupViewController: BaseViewController, GIDSignInUIDelegate {
 
     var actionBlock : (()->())?
     
     override func viewDidLoad() {
+        analyticsScreenName = "Login Popup View"
+
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(self.userLoggedIn(notification:)), name: NSNotification.Name("userLoggedIn"), object: nil)
 

@@ -9,11 +9,13 @@
 import UIKit
 import WebKit
 
-class TermsViewController: UIViewController {
+class TermsViewController: BaseViewController {
     @IBOutlet weak var termsWebView: WKWebView!
     var itemTitle = ""
     var itemFileName = ""
     override func viewDidLoad() {
+        analyticsScreenName = "Terms And Conditons View"
+
         super.viewDidLoad()
 
         self.navigationController?.navigationBar.isHidden = false

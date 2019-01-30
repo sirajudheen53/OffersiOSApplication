@@ -9,12 +9,13 @@
 import UIKit
 import GoogleSignIn
 
-class LoginViewController: UIViewController, GIDSignInUIDelegate {
+class LoginViewController: BaseViewController, GIDSignInUIDelegate {
 
     
     @IBOutlet weak var signInButton: GIDSignInButton!
     
     override func viewDidLoad() {
+        analyticsScreenName = "Login View"
         super.viewDidLoad()
 
         

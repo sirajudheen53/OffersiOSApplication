@@ -13,7 +13,7 @@ import FacebookLogin
 import AlamofireImage
 import SVProgressHUD
 
-class ProfileViewController: UIViewController, GIDSignInUIDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
+class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
 
     @IBOutlet weak var loginViewContent: UIView!
     @IBOutlet weak var profileTitleContentView: UIView!
@@ -40,6 +40,8 @@ class ProfileViewController: UIViewController, GIDSignInUIDelegate, UICollection
     var userProfile : UserProfile?
     
     override func viewDidLoad() {
+        analyticsScreenName = "Profile View"
+
         super.viewDidLoad()
 
         profileImageBackground.layer.borderWidth = 2.0

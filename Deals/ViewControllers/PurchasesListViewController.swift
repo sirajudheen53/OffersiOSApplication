@@ -8,11 +8,13 @@
 
 import UIKit
 
-class PurchasesListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class PurchasesListViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var purchasesListTableView: UITableView!
     var purchasesList : [Purchase]?
     override func viewDidLoad() {
+        analyticsScreenName = "Purchases View"
+
         super.viewDidLoad()
 
         self.navigationController?.navigationBar.isHidden = false

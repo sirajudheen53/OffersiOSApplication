@@ -8,12 +8,14 @@
 
 import UIKit
 
-class LocationSelectionViewController: UIViewController {
+class LocationSelectionViewController: BaseViewController {
     
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var trivandrumLocation: UIButton!
     @IBOutlet weak var cochiLocation: UIButton!
     override func viewDidLoad() {
+        analyticsScreenName = "Location Selection View"
+
         super.viewDidLoad()
 
         if let currentSelectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
