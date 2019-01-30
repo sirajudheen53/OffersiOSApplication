@@ -39,6 +39,7 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.userLoggedIn(notification:)), name: NSNotification.Name("userLoggedIn"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.userLoggedOut(notification:)), name: NSNotification.Name("userLoggedOut"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.detailsViewDismissed(notification:)), name: NSNotification.Name("detailsViewDismissed"), object: nil)
 
         let hotDealsListingCellNib = UINib(nibName: "HotDealTableViewCell", bundle: nil)
         self.dealsListingTableView.register(hotDealsListingCellNib, forCellReuseIdentifier: "hotDealsListingCell")
@@ -57,6 +58,7 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         }
         
         self.navigationController?.navigationBar.isHidden = true
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -106,6 +108,10 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
             self.fetchAllDealsFromServerAndUpdateUI(location: selectedLocation)
         }
+    }
+    
+    @objc func detailsViewDismissed(notification : Notification) {
+        dealsListingTableView.reloadData()
     }
     
     func locationAddressValueAttributedText(address : String) -> NSAttributedString {

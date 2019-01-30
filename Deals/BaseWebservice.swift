@@ -15,6 +15,7 @@ enum WebserviceFunction : String {
     case fetchUserProfile = "accounts/profile"
     case makeFavourite = "deals/wishlist"
     case makePurchase = "deals/purchase"
+    case userView = "deals/user_view"
 }
 
 enum WebserviceMethod {

@@ -213,6 +213,62 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
     
     // MARK: - Private
 
+    func parseAllDealsResponseAndReloadView(allDealsResponse : [String : Any]) {
+        if let allDeals = allDealsResponse["deals"] as? [[String : Any]] {
+            self.availableDeals = Deal.dealObjectsFromProperties(properties: allDeals)
+            var favourites = [Deal]()
+            var purchases = [Deal]()
+            if let allFavoritedDeals = allDealsResponse["wishlist"] as? [[String : Any]] {
+                favourites = Deal.dealObjectsFromProperties(properties: allFavoritedDeals)
+            }
+            if let allPurchased = allDealsResponse["purchases"] as? [[String : Any]] {
+                for dealProperty in allPurchased {
+                    if let singleDeal = dealProperty["deal"] as? [String : Any] {
+                        let deal = Deal.dealObjectFromProperty(property: singleDeal)
+                        if let purchaseDate = dealProperty["purchase_date"] as? Double {
+                            deal.purchasedDate = Date(timeIntervalSince1970: purchaseDate)
+                        }
+                        if let purchaseExpiry = dealProperty["expiry_date"] as? Double {
+                            deal.purchaseExpiry = Date(timeIntervalSince1970: purchaseExpiry)
+                        }
+                        if let code = dealProperty["code"] as? String {
+                            deal.purchaseCode = code
+                        }
+                        if let isRedeemed = dealProperty["isRedeemed"] as? Bool {
+                            deal.isRedeemed = isRedeemed
+                        }
+                        purchases.append(deal)
+                    }
+                }
+            }
+            _ = favourites.map({ (deal) -> Deal in
+                let correspondingDeal = self.availableDeals?.filter({ $0.dealId == deal.dealId}).first
+                correspondingDeal?.isFavourited = true
+                return deal
+            })
+            
+            _ = purchases.map({ (deal) -> Deal in
+                if let correspondingDeal = self.availableDeals?.filter({ $0.dealId == deal.dealId}).first {
+                    correspondingDeal.numberOfPurchases += 1
+                    if let correspondingDealPurchseDate =  correspondingDeal.purchasedDate,
+                        let dealPurchaseDate = deal.purchasedDate,
+                        correspondingDealPurchseDate.timeIntervalSince1970 < dealPurchaseDate.timeIntervalSince1970 {
+                        correspondingDeal.purchasedDate = dealPurchaseDate
+                        correspondingDeal.purchaseCode = deal.purchaseCode
+                        correspondingDeal.purchaseExpiry = deal.purchaseExpiry
+                    } else if correspondingDeal.purchasedDate == nil {
+                        correspondingDeal.purchasedDate = deal.purchasedDate
+                        correspondingDeal.purchaseCode = deal.purchaseCode
+                        correspondingDeal.purchaseExpiry = deal.purchaseExpiry
+                    }
+                }
+                return deal
+            })
+        } else {
+            //Handle Error condition
+        }
+    }
+    
     func fetchAllDealsFromServerAndUpdateUI(location : String) {
         var tokenHeader = [String : String]()
         if let token = User.getProfile()?.token {
@@ -223,8 +279,7 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
                 if let status = response["status"] as? String {
                     if status=="success" {
                         if let allDealsProperties = response["data"] as? [String : Any] {
-                            if let allDeals = allDealsProperties["deals"] as? [[String : Any]] {
-                                self.availableDeals = Deal.dealObjectsFromProperties(properties: allDeals)
+                                self.parseAllDealsResponseAndReloadView(allDealsResponse: allDealsProperties)
                                 self.filteredDeals = self.availableDeals
                                 self.searchUpdateUI()
                             } else {
@@ -239,10 +294,6 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
                 } else {
                     UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                 }
-            } else {
-                UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
-            }
-            
         }
     }
 

@@ -1640,10 +1640,10 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EIi-ny-Hx6">
-                                                <rect key="frame" x="57" y="96" width="333" height="33.666666666666657"/>
+                                                <rect key="frame" x="57" y="96" width="254" height="33.666666666666657"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="33.5" id="54W-ys-vSl"/>
-                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="244" id="7q2-Hf-Umh"/>
+                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="7q2-Hf-Umh"/>
                                                 </constraints>
                                                 <attributedString key="attributedText">
                                                     <fragment content="Login and get complete access to your dream deals">
@@ -1658,7 +1658,6 @@
                                         </subviews>
                                         <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="EIi-ny-Hx6" secondAttribute="trailing" constant="24" id="1lY-OD-P0Y"/>
                                             <constraint firstAttribute="bottom" secondItem="DAz-eZ-XvM" secondAttribute="bottom" constant="50" id="2cu-nV-Ezv"/>
                                             <constraint firstItem="EIi-ny-Hx6" firstAttribute="top" secondItem="NcB-bY-6c1" secondAttribute="bottom" constant="4" id="7CT-lc-oP3"/>
                                             <constraint firstAttribute="trailing" secondItem="FN1-A9-3Iw" secondAttribute="trailing" id="K66-YL-Kgw"/>

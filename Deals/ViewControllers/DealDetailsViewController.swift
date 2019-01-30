@@ -9,6 +9,7 @@
 import UIKit
 import CoreGraphics
 import SVProgressHUD
+
 class DealDetailsViewController: BaseViewController {
 
     var deal : Deal?
@@ -54,7 +55,6 @@ class DealDetailsViewController: BaseViewController {
     
     override func viewDidLoad() {
         analyticsScreenName = "Deal Details View"
-
         super.viewDidLoad()
         UIApplication.shared.isStatusBarHidden = true
         self.navigationController?.isNavigationBarHidden = true
@@ -66,6 +66,8 @@ class DealDetailsViewController: BaseViewController {
             coupnInfoView.isHidden = true
         }
         
+        
+        makeViewedAPI()
         self.configureUIElements()
         self.title = "Details"
         drawDottedLine(start: CGPoint(x: dashedView.bounds.minX, y: dashedView.bounds.minY),
@@ -349,12 +351,23 @@ class DealDetailsViewController: BaseViewController {
     }
     
     @IBAction func shareButtonClicked(_ sender: Any) {
-        let text = "Grab awesome deals from following application"
-        let myWebsite = URL(string:"www.dollordeals.com")
+        let text = "Grab awesome deals from\n\n"
+        let myWebsite = URL(string:"https://www.dollordeals.com")
         let shareAll = [text, myWebsite as Any] as [Any]
         let activityViewController = UIActivityViewController(activityItems: shareAll, applicationActivities: nil)
         activityViewController.popoverPresentationController?.sourceView = self.view
         self.present(activityViewController, animated: true, completion: nil)
+    }
+    
+    func makeViewedAPI() {
+        if let serverToken = User.getProfile()?.token {
+            let userProfileFetchHeader = ["Authorization" : "Token \(serverToken)"]
+            if let deal = deal {
+                BaseWebservice.performRequest(function: .userView, requestMethod: .post, params: ["deal_id" : deal.dealId as AnyObject], headers: userProfileFetchHeader, onCompletion: { (response, error) in
+                    
+                    })
+            }
+        }
     }
     
     @IBAction func makeFavouriteButtonClicked(_ sender: UIButton) {
@@ -363,12 +376,12 @@ class DealDetailsViewController: BaseViewController {
             let userProfileFetchHeader = ["Authorization" : "Token \(serverToken)"]
             if let deal = deal {
                 let flag = deal.isFavourited ? "false" : "true"
+                deal.isFavourited = !deal.isFavourited
                 BaseWebservice.performRequest(function: .makeFavourite, requestMethod: .post, params: ["deal_id" : deal.dealId as AnyObject, "flag" : flag as AnyObject], headers: userProfileFetchHeader, onCompletion: { (response, error) in
                     if let error = error {
                         UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
                     } else if let response = response as? [String : Any?] {
                         if response["status"] as? String == "success" {
-                            deal.isFavourited = true
                             NotificationCenter.default.post(Notification.init(name: Notification.Name("userProfileUpdated")))
                         } else {
                             UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
@@ -383,7 +396,9 @@ class DealDetailsViewController: BaseViewController {
     
     
     @IBAction func closeButtonClicked(_ sender: Any) {
-        self.dismiss(animated: false, completion: nil)
+        self.dismiss(animated: false, completion: {
+            NotificationCenter.default.post(name: NSNotification.Name("detailsViewDismissed"), object: nil)
+        })
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

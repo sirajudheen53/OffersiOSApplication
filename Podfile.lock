@@ -9,6 +9,9 @@ PODS:
   - Bolts/AppLinks (1.9.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.9.0)
+  - Crashlytics (3.12.0):
+    - Fabric (~> 1.9.0)
+  - Fabric (1.9.0)
   - FacebookCore (0.3.3):
     - Bolts (~> 1.9)
     - FBSDKCoreKit (~> 4.36)
@@ -107,6 +110,8 @@ DEPENDENCIES:
   - AFDateHelper
   - Alamofire (~> 4.7)
   - AlamofireImage (~> 3.3)
+  - Crashlytics (~> 3.12.0)
+  - Fabric (~> 1.9.0)
   - FacebookCore
   - FacebookLogin
   - FacebookShare
@@ -122,6 +127,8 @@ SPEC REPOS:
     - Alamofire
     - AlamofireImage
     - Bolts
+    - Crashlytics
+    - Fabric
     - FacebookCore
     - FacebookLogin
     - FacebookShare
@@ -148,6 +155,8 @@ SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
   AlamofireImage: 78d67ccbb763d87ba44b21583d2153500a195630
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
+  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
+  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   FacebookCore: 9ecbe48cfd37c91a93add7f8cec2b4a2c50a1eec
   FacebookLogin: bdaea5789e9b364fa8a1990ba3bbba4fd2197415
   FacebookShare: 14e88f2dcc3a03376304d2a1e10254296076ce88
@@ -169,6 +178,6 @@ SPEC CHECKSUMS:
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftMessages: 32ce3cfc8388b41aae56ff4853cc752a20101147
 
-PODFILE CHECKSUM: f562a2bf820842af93ceb9bf69fa3e18a4263f3e
+PODFILE CHECKSUM: ce6f29e87a51f33d6162d0f7d76747c342ed3bf0
 
 COCOAPODS: 1.5.3

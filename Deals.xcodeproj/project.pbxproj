@@ -405,6 +405,7 @@
 				0B67D09920AAA6D000FC39E5 /* Resources */,
 				2F3964BFCE7ACF6AE0B5FCCB /* [CP] Embed Pods Frameworks */,
 				87B614786645C21757E3C028 /* [CP] Copy Pods Resources */,
+				A76A56B3220224E900475B7D /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -650,6 +651,23 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Deals/Pods-Deals-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		A76A56B3220224E900475B7D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 74c2e7cc376d3a710ff5832191156c0073c7d000 c0ce561cf57fa7c3398f367f62b9b1f5e3b48b2b5adb2dd42d4eb4941520c331\n";
+		};
 		D338B8603394F1A4E9E1FAF5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -884,15 +902,16 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 6R3U4523N6;
 				INFOPLIST_FILE = "$(SRCROOT)/Deals/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.firewheelstrading.dollordeals;
 				PRODUCT_NAME = "Dollor Deals";
-				PROVISIONING_PROFILE_SPECIFIER = "Dollor Deals Development";
+				PROVISIONING_PROFILE_SPECIFIER = "Dollor Deals Distribution";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -904,7 +923,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 6R3U4523N6;
 				INFOPLIST_FILE = "$(SRCROOT)/Deals/Info.plist";
@@ -912,7 +931,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.firewheelstrading.dollordeals;
 				PRODUCT_NAME = "Dollor Deals";
-				PROVISIONING_PROFILE_SPECIFIER = "Dollor Deals Development";
+				PROVISIONING_PROFILE_SPECIFIER = "Dollor Deals Distribution";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

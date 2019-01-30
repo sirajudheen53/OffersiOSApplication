@@ -43,13 +43,15 @@ class LocationSelectionViewController: BaseViewController {
         cochiLocation.isSelected = false
         trivandrumLocation.isSelected = true
         UserDefaults.standard.set("Trivandrum", forKey: "SelectedLocation")
-
+        NotificationCenter.default.post(Notification.init(name: Notification.Name(rawValue: "locationUpdated")))
+        self.dismiss(animated: true, completion: nil)
     }
     @IBAction func cochiSelected(_ sender: UIButton) {
         cochiLocation.isSelected = true
         trivandrumLocation.isSelected = false
         UserDefaults.standard.set("Cochin", forKey: "SelectedLocation")
-
+        NotificationCenter.default.post(Notification.init(name: Notification.Name(rawValue: "locationUpdated")))
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func closeButtonClicked(_ sender: Any) {
