@@ -1309,7 +1309,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yqE-rk-at2">
                                 <rect key="frame" x="23" y="31" width="30" height="30"/>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pbi-hn-ei2">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pbi-hn-ei2">
                                 <rect key="frame" x="327" y="31" width="55" height="36"/>
                                 <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="20"/>
                                 <state key="normal" title="Reset">
@@ -2670,7 +2670,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="LFe-de-dCP"/>
-        <segue reference="uwF-og-KTp"/>
+        <segue reference="A3n-xN-iaX"/>
         <segue reference="Ovg-CE-8Vh"/>
     </inferredMetricsTieBreakers>
 </document>
