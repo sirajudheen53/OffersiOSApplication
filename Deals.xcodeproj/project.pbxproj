@@ -116,6 +116,7 @@
 		0B9E123620B29D4000C66129 /* MyOrdersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrdersViewController.swift; sourceTree = "<group>"; };
 		0B9E123A20B3D44100C66129 /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
 		0BB77F3021D1027C00BD925D /* PopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
+		0BCA3431220317C4004E6DE9 /* Dollor Deals.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Dollor Deals.entitlements"; sourceTree = "<group>"; };
 		1595C26B8A0DA6C9704FFE3F /* Pods-DealsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DealsUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DealsUITests/Pods-DealsUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		3F82ABA086AE586B62D4753B /* Pods-TestUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TestUITests/Pods-TestUITests.release.xcconfig"; sourceTree = "<group>"; };
 		417C4184F1DBE1B897A147E4 /* Pods-DealsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DealsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DealsTests/Pods-DealsTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -256,6 +257,7 @@
 		0B67D09D20AAA6D000FC39E5 /* Deals */ = {
 			isa = PBXGroup;
 			children = (
+				0BCA3431220317C4004E6DE9 /* Dollor Deals.entitlements */,
 				A7DB14E420EBDCCD00AE30DA /* Models */,
 				A7DB14E320EBDCC000AE30DA /* CustomView */,
 				A7F7501F20D9547A0012FE47 /* Fonts */,
@@ -467,6 +469,11 @@
 					0B67D09A20AAA6D000FC39E5 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					0B67D0AE20AAA6D000FC39E5 = {
 						CreatedOnToolsVersion = 9.2;
@@ -902,6 +909,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Deals/Dollor Deals.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -923,6 +931,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Deals/Dollor Deals.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 6R3U4523N6;

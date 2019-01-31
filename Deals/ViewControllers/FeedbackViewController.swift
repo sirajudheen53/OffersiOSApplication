@@ -34,7 +34,7 @@ class FeedbackViewController: BaseViewController, MFMailComposeViewControllerDel
     }
     
     @IBAction func phoneButtonClicked(_ sender: Any) {
-        if let url = URL(string: "tel://+918606806956)"),
+        if let url = URL(string: "tel://+916238660381)"),
             UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }

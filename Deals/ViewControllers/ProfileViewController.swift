@@ -57,10 +57,14 @@ class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollecti
             self.profileContentView.isHidden = false
             self.loginViewContent.isHidden = true
             self.fetchUserProfileAndUpdateView()
+            analyticsScreenName = "Profile View"
+
             displayProfileData()
         } else {
             self.profileContentView.isHidden = true
             self.loginViewContent.isHidden = false
+            analyticsScreenName = "Login View"
+
         }
         
         let purchaseHistoryCellNib = UINib(nibName: "PurchaseDealsCollectionViewCell", bundle: nil)

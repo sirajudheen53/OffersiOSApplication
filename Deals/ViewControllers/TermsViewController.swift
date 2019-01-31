@@ -14,7 +14,7 @@ class TermsViewController: BaseViewController {
     var itemTitle = ""
     var itemFileName = ""
     override func viewDidLoad() {
-        analyticsScreenName = "Terms And Conditons View"
+        analyticsScreenName = "Terms And Conditions View"
 
         super.viewDidLoad()
 
