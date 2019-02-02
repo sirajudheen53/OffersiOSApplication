@@ -270,7 +270,7 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             if indexPath.row < 7 {
                 index = indexPath.row - 3
             } else {
-                index = indexPath.row - 4
+                index = indexPath.row - 5
             }
             let dealListingCell = tableView.dequeueReusableCell(withIdentifier: "dealListingCell", for: indexPath) as! DealsListingTableViewCell;
             if let availableDeals = self.availableDeals {
@@ -315,7 +315,7 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             if indexPath.row < 7 {
                 index = indexPath.row - 3
             } else {
-                index = indexPath.row - 4
+                index = indexPath.row - 5
             }
             self.performSegue(withIdentifier: "showDetailsView", sender: self.availableDeals![index])
         }
