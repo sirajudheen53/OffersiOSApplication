@@ -12,6 +12,8 @@ import Alamofire
 enum WebserviceFunction : String {
     case fetchDealsList = "deals/all_deals"
     case login = "accounts/login"
+    case addPhoneNumber = "accounts/add_phone_number"
+    case verifyPhoneNumber = "accounts/verify_phone_number"
     case fetchUserProfile = "accounts/profile"
     case makeFavourite = "deals/wishlist"
     case makePurchase = "deals/purchase"

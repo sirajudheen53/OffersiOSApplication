@@ -245,9 +245,9 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             cell = homeTitleCell
         } else if indexPath.row == 1 {
            let hotDealTableViewCell = tableView.dequeueReusableCell(withIdentifier: "hotDealsListingCell", for: indexPath) as! HotDealTableViewCell;
-            if let availableDeals = self.availableDeals {
+            if let hotDeals = self.hotDeals {
                 hotDealTableViewCell.currentUserLocation = self.currentLocation
-                hotDealTableViewCell.customizeCell(hotDeals: availableDeals)
+                hotDealTableViewCell.customizeCell(hotDeals: hotDeals)
                 hotDealTableViewCell.makeFavouriteActionBlock = self.makeFavouriteActionBlock()
                 hotDealTableViewCell.hotDealsCellSelectionActionBlock = self.hotDealCellSelectionActionBlock()
             } else {

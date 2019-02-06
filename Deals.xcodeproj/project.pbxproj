@@ -31,6 +31,7 @@
 		A717A32520EF42770036A32E /* DealsListingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A717A32320EF42770036A32E /* DealsListingTableViewCell.xib */; };
 		A72B2B2621FC4DC8005A4532 /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72B2B2521FC4DC8005A4532 /* FeedbackViewController.swift */; };
 		A72B2B2821FC4E08005A4532 /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72B2B2721FC4E08005A4532 /* TermsViewController.swift */; };
+		A7337DE6220B630E00CB73AE /* UITextField+Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7337DE5220B630E00CB73AE /* UITextField+Border.swift */; };
 		A73E8FBC2100E8E000008CD3 /* PurchaseDealsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73E8FBA2100E8E000008CD3 /* PurchaseDealsCollectionViewCell.swift */; };
 		A73E8FBD2100E8E000008CD3 /* PurchaseDealsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A73E8FBB2100E8E000008CD3 /* PurchaseDealsCollectionViewCell.xib */; };
 		A74EC1A321C4E1B700605A8A /* LocationSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74EC1A221C4E1B700605A8A /* LocationSelectionViewController.swift */; };
@@ -73,6 +74,8 @@
 		A7F7502A20D9559B0012FE47 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = A7F7502720D955990012FE47 /* SF-Pro-Text-Regular.otf */; };
 		A7F7502C20D970FF0012FE47 /* UIView+RoundCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F7502B20D970FE0012FE47 /* UIView+RoundCorner.swift */; };
 		A7F7502E20D971220012FE47 /* RoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F7502D20D971220012FE47 /* RoundedView.swift */; };
+		A7F9AD3822060021001BE5D2 /* PhoneNumberInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F9AD3722060021001BE5D2 /* PhoneNumberInputViewController.swift */; };
+		A7F9AD3A22061F12001BE5D2 /* country_code.json in Resources */ = {isa = PBXBuildFile; fileRef = A7F9AD3922061F12001BE5D2 /* country_code.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,6 +134,7 @@
 		A717A32320EF42770036A32E /* DealsListingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DealsListingTableViewCell.xib; sourceTree = "<group>"; };
 		A72B2B2521FC4DC8005A4532 /* FeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
 		A72B2B2721FC4E08005A4532 /* TermsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsViewController.swift; sourceTree = "<group>"; };
+		A7337DE5220B630E00CB73AE /* UITextField+Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Border.swift"; sourceTree = "<group>"; };
 		A73E8FBA2100E8E000008CD3 /* PurchaseDealsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseDealsCollectionViewCell.swift; sourceTree = "<group>"; };
 		A73E8FBB2100E8E000008CD3 /* PurchaseDealsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PurchaseDealsCollectionViewCell.xib; sourceTree = "<group>"; };
 		A74EC1A221C4E1B700605A8A /* LocationSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectionViewController.swift; sourceTree = "<group>"; };
@@ -174,6 +178,8 @@
 		A7F7502720D955990012FE47 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
 		A7F7502B20D970FE0012FE47 /* UIView+RoundCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+RoundCorner.swift"; sourceTree = "<group>"; };
 		A7F7502D20D971220012FE47 /* RoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedView.swift; sourceTree = "<group>"; };
+		A7F9AD3722060021001BE5D2 /* PhoneNumberInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberInputViewController.swift; sourceTree = "<group>"; };
+		A7F9AD3922061F12001BE5D2 /* country_code.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = country_code.json; sourceTree = "<group>"; };
 		BDC3F225C35034B28A04DD0C /* Pods_DealsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DealsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDF0751CA2A535F0D5512D1D /* Pods-TestTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TestTests/Pods-TestTests.release.xcconfig"; sourceTree = "<group>"; };
 		CE7D8FF93B8C5235AA444D6F /* Pods_Deals.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Deals.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -274,6 +280,7 @@
 				A79CA1A01FF9B47600713DE3 /* Date+Extension.swift */,
 				A7C22C1021FC90B600BCF81C /* dollordeals_terms.html */,
 				A7C22C1221FC933500BCF81C /* dollor_deals_privacy.html */,
+				A7F9AD3922061F12001BE5D2 /* country_code.json */,
 				A7E6B71121C3834D00FA943B /* UIView+Extension.swift */,
 			);
 			path = Deals;
@@ -335,6 +342,7 @@
 			isa = PBXGroup;
 			children = (
 				0B67D0A020AAA6D000FC39E5 /* LoginViewController.swift */,
+				A7F9AD3722060021001BE5D2 /* PhoneNumberInputViewController.swift */,
 				0B06479D20AC419100AE8496 /* HomeViewController.swift */,
 				0B9E123420B290A400C66129 /* DealDetailsViewController.swift */,
 				A74EC1A221C4E1B700605A8A /* LocationSelectionViewController.swift */,
@@ -360,6 +368,7 @@
 				A7F7502D20D971220012FE47 /* RoundedView.swift */,
 				A757D17520EFD66400E4A282 /* UIView+Shadow.swift */,
 				A77C543020F1E1D7003D5BCB /* UILabel+LetterSpacing.swift */,
+				A7337DE5220B630E00CB73AE /* UITextField+Border.swift */,
 				A7521A4F211DDFA400E870B8 /* UIImage+Noir.swift */,
 			);
 			path = CustomView;
@@ -471,7 +480,7 @@
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Push = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -519,6 +528,7 @@
 				A757D17E20EFDD1C00E4A282 /* HomeExploreCollectionViewCell.xib in Resources */,
 				A7F7502820D9559B0012FE47 /* SF-Pro-Text-Light.otf in Resources */,
 				A717A32520EF42770036A32E /* DealsListingTableViewCell.xib in Resources */,
+				A7F9AD3A22061F12001BE5D2 /* country_code.json in Resources */,
 				A786579F20DAE82000649410 /* SF-Pro-Display-Light.otf in Resources */,
 				A757D17A20EFDBD100E4A282 /* HomeExploreTableViewCell.xib in Resources */,
 				A78D194F214CDE2B00E9F6BF /* SF-Pro-Text-Bold.otf in Resources */,
@@ -594,6 +604,7 @@
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SkeletonView/SkeletonView.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftPhoneNumberFormatter/SwiftPhoneNumberFormatter.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -615,6 +626,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkeletonView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftMessages.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftPhoneNumberFormatter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -711,6 +723,8 @@
 				0B9E123720B29D4000C66129 /* MyOrdersViewController.swift in Sources */,
 				A757D17920EFDBD100E4A282 /* HomeExploreTableViewCell.swift in Sources */,
 				A72B2B2821FC4E08005A4532 /* TermsViewController.swift in Sources */,
+				A7337DE6220B630E00CB73AE /* UITextField+Border.swift in Sources */,
+				A7F9AD3822060021001BE5D2 /* PhoneNumberInputViewController.swift in Sources */,
 				A786579720DADB5C00649410 /* HotDealTableViewCell.swift in Sources */,
 				A757D17620EFD66400E4A282 /* UIView+Shadow.swift in Sources */,
 				0B67D09F20AAA6D000FC39E5 /* AppDelegate.swift in Sources */,
@@ -909,8 +923,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Deals/Dollor Deals.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 6R3U4523N6;
@@ -919,7 +932,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.firewheelstrading.dollordeals;
 				PRODUCT_NAME = "Dollor Deals";
-				PROVISIONING_PROFILE_SPECIFIER = "Dollor Deals Distribution";
+				PROVISIONING_PROFILE_SPECIFIER = "Dollor Deals Development";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -931,8 +944,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Deals/Dollor Deals.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 6R3U4523N6;
 				INFOPLIST_FILE = "$(SRCROOT)/Deals/Info.plist";
@@ -940,7 +952,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.firewheelstrading.dollordeals;
 				PRODUCT_NAME = "Dollor Deals";
-				PROVISIONING_PROFILE_SPECIFIER = "Dollor Deals Distribution";
+				PROVISIONING_PROFILE_SPECIFIER = "Dollor Deals Development";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

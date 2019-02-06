@@ -18,6 +18,7 @@ class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollecti
     @IBOutlet weak var loginViewContent: UIView!
     @IBOutlet weak var profileTitleContentView: UIView!
     
+    @IBOutlet weak var phoneNumberButton: UIButton!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var profileImageBackground: UIView!
     @IBOutlet weak var profileContentView: UIView!
@@ -28,7 +29,6 @@ class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollecti
 
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var fullNameLabel: UILabel!
-    @IBOutlet weak var phoneNumberLabel: UILabel!
     
     @IBOutlet weak var purchaseHistoryView: UIView!
     @IBOutlet weak var feedbackContentView: UIView!
@@ -75,7 +75,6 @@ class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollecti
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = true
-
     }
     
     func decorateProfileMenuListItem(decorationView : UIView) {
@@ -129,7 +128,7 @@ class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollecti
                 }
             }
             if let phoneNumber = profileData.phoneNumber {
-                self.phoneNumberLabel.text = phoneNumber
+                phoneNumberButton.setTitle(phoneNumber, for: .normal)
             }
             if let email = profileData.email {
                 self.emailLabel.text = email
@@ -233,6 +232,18 @@ class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollecti
             let webView = segue.destination as! TermsViewController
             webView.itemTitle = "Privacy Policy"
             webView.itemFileName = "dollor_deals_privacy"
+        } else if segue.identifier == "showPhoneInput" {
+            let phoneInputView = segue.destination as! PhoneNumberInputViewController
+            if let profileData = self.userProfile {
+                phoneInputView.currentUser = profileData
+                phoneInputView.phoneNumberChangeActionBlock = {
+                    if let user = self.userProfile {
+                        if let phoneNumber = user.phoneNumber {
+                            self.phoneNumberButton.setTitle(phoneNumber, for: .normal)
+                        }
+                    }
+                }
+            }
         }
     }
 
