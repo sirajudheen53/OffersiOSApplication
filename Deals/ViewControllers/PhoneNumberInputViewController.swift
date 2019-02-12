@@ -7,19 +7,19 @@
 //
 
 import UIKit
-import SwiftPhoneNumberFormatter
+import PhoneNumberKit
 import SVProgressHUD
 
-class PhoneNumberInputViewController: UIViewController, UIGestureRecognizerDelegate {
+class PhoneNumberInputViewController: UIViewController, UIGestureRecognizerDelegate, CodeInputViewDelegate {
 
     enum InputTextFieldTag : Int {
         case phoneNumberFieldTag = 100
-        case firstOtpFieldTag = 101
-        case secondOtpFieldTag = 102
-        case thirdOtpFieldTag = 103
-        case fourthOtpFieldTag = 104
     }
     
+    
+    
+    @IBOutlet weak var invalidOTPErrorMessagLabel: UILabel!
+    @IBOutlet weak var codeInputView: UIView!
     @IBOutlet weak var inputViewVerticalCenterConstraint: NSLayoutConstraint!
     @IBOutlet weak var inputViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var phoneNumberInputInfoTitle: UILabel!
@@ -29,36 +29,36 @@ class PhoneNumberInputViewController: UIViewController, UIGestureRecognizerDeleg
     @IBOutlet weak var otpInputView: UIView!
     @IBOutlet weak var phoneNumberInputView: UIView!
     @IBOutlet weak var verificationCodeInputInfoLabel: UILabel!
-    @IBOutlet weak var phoneNumberTextField: PhoneFormattedTextField!
+    @IBOutlet weak var phoneNumberTextField: PhoneNumberTextField!
     
-    @IBOutlet weak var otpFourthField: UITextField!
-    @IBOutlet weak var otpThirdTextField: UITextField!
-    @IBOutlet weak var otpSecondTextField: UITextField!
-    @IBOutlet weak var otpFirstTextField: UITextField!
-    
+    let phoneNumberKit = PhoneNumberKit()
+    var _codeInputView : CodeInputView!
+    var inputOTP = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        otpFirstTextField.setBottomBorder()
-        otpSecondTextField.setBottomBorder()
-        otpThirdTextField.setBottomBorder()
-        otpFourthField.setBottomBorder()
         addDoneAccessoryViewInTextField()
         addPrefixIconOnPhoneInputTextField()
-       
-        phoneNumberTextField.config.defaultConfiguration = PhoneFormat(defaultPhoneFormat: "(###) ###-##-##")
 
-        if let countryCode = (Locale.current as NSLocale).object(forKey: .countryCode) as? String {
-            phoneNumberTextField.prefix = "+\(getCorrespondingISDCode(countryCode: countryCode)) "
-        } else {
-            phoneNumberTextField.prefix = "+1 "
-        }
-        if let currentUser = currentUser, let  currentPhoneNumber = currentUser.phoneNumber, currentPhoneNumber != "" {
+        _codeInputView = CodeInputView(frame: codeInputView.frame)
+        _codeInputView.delegate = self
+        otpInputView.addSubview(_codeInputView)
+        
+        
+        
+        if let currentUser = User.getProfile(), let currentPhoneNumber = currentUser.phoneNumber, currentPhoneNumber != "" {
             phoneNumberInputInfoTitle.isHidden = true
-            
-            
-            phoneNumberTextField.formattedText = currentPhoneNumber
+            do {
+                let parsedNumber = try phoneNumberKit.parse(currentPhoneNumber)
+                phoneNumberTextField.text = "+\(parsedNumber.countryCode)" + "\(parsedNumber.nationalNumber)"
+            }
+            catch {
+                phoneNumberTextField.text = currentPhoneNumber
+                print("Generic parser error")
+            }
+        } else {
+            phoneNumberTextField.text = "+\(phoneNumberKit.countryCode(for: phoneNumberTextField.defaultRegion) ?? 1)"
         }
     }
     
@@ -78,56 +78,35 @@ class PhoneNumberInputViewController: UIViewController, UIGestureRecognizerDeleg
         self.view.endEditing(true)
     }
     
-    @IBAction func otpFieldEditingChanged(_ sender: Any) {
-        guard let textField = sender as? UITextField else {
-            return
-        }
-        let text = textField.text
-        
-        if text?.utf16.count ?? 0 >= 1{
-            switch textField{
-            case otpFirstTextField:
-                otpSecondTextField.becomeFirstResponder()
-            case otpSecondTextField:
-                otpThirdTextField.becomeFirstResponder()
-            case otpThirdTextField:
-                otpFourthField.becomeFirstResponder()
-            case otpFourthField:
-                verifyOTPWithServer()
-            default:
-                break
-            }
-        } else if text?.utf16.count ?? 0 == 0{
-            switch textField{
-            case otpFourthField:
-                otpThirdTextField.becomeFirstResponder()
-            case otpThirdTextField:
-                otpSecondTextField.becomeFirstResponder()
-            case otpSecondTextField:
-                otpFirstTextField.becomeFirstResponder()
-            case otpFirstTextField:
-                return
-            default:
-                break
-            }
-        }
-    }
     
     func verifyOTPWithServer() {
-        guard let otp1 = otpFirstTextField.text, let otp2 = otpSecondTextField.text, let otp3 = otpThirdTextField.text, let otp4 = otpFourthField.text else {
-            return
-        }
-        guard let phoneNumber = phoneNumberTextField.phoneNumber() else {
+        guard let textFieldText = phoneNumberTextField.text else {
+            errorMessageLabel.text = "Please enter a valid phone number"
+            errorMessageLabel.isHidden = false
             return
         }
         
-        let inputOTP = otp1 + otp2 + otp3 + otp4
+        var requiredNumber : String = "";
+        do {
+            let parsedNumber = try phoneNumberKit.parse(textFieldText)
+            requiredNumber = "+\(parsedNumber.countryCode)" + "\(parsedNumber.nationalNumber)"
+        }
+        catch {
+            print("Generic parser error")
+        }
+        
+        if !requiredNumber.isPhoneNumber {
+            errorMessageLabel.text = "Please enter a valid phone number"
+            errorMessageLabel.isHidden = false
+            return
+        }
+        
         
         if let serverToken = User.getProfile()?.token {
             SVProgressHUD.show()
 
             let userProfileFetchHeader = ["Authorization" : "Token \(serverToken)"]
-            BaseWebservice.performRequest(function: .verifyPhoneNumber, requestMethod: .post, params: ["phone_number" :  phoneNumber as AnyObject, "otp" : inputOTP as AnyObject], headers: userProfileFetchHeader) { (response, error) in
+            BaseWebservice.performRequest(function: .verifyPhoneNumber, requestMethod: .post, params: ["phone_number" :  requiredNumber as AnyObject, "otp" : inputOTP as AnyObject], headers: userProfileFetchHeader) { (response, error) in
                 SVProgressHUD.dismiss()
                 if let error = error {
                     UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
@@ -135,11 +114,13 @@ class PhoneNumberInputViewController: UIViewController, UIGestureRecognizerDeleg
                 if let response = response as? [String : String] {
                     if response["status"] == "success" {
                         if let user = User.getProfile() {
-                            user.phoneNumber = phoneNumber
+                            user.phoneNumber = requiredNumber
                             user.saveToUserDefaults()
                             self.dismiss(animated: false, completion: self.phoneNumberChangeActionBlock)
                         }
-                    } else {
+                    } else if response["status"] == "failed" {
+                        self.invalidOTPErrorMessagLabel.isHidden = false
+                    }  else {
                         UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                     }
                 } else {
@@ -152,7 +133,23 @@ class PhoneNumberInputViewController: UIViewController, UIGestureRecognizerDeleg
     }
     
     @objc func doneWithNumberPad() {
-        guard let phoneNumber = phoneNumberTextField.phoneNumber(), phoneNumber.isPhoneNumber else {
+        
+        guard let textFieldText = phoneNumberTextField.text else {
+            errorMessageLabel.text = "Please enter a valid phone number"
+            errorMessageLabel.isHidden = false
+            return
+        }
+        
+        var requiredNumber : String = "";
+        do {
+            let parsedNumber = try phoneNumberKit.parse(textFieldText)
+            requiredNumber = "+\(parsedNumber.countryCode)" + "\(parsedNumber.nationalNumber)"
+        }
+        catch {
+            print("Generic parser error")
+        }
+        
+        if !requiredNumber.isPhoneNumber {
             errorMessageLabel.text = "Please enter a valid phone number"
             errorMessageLabel.isHidden = false
             return
@@ -165,18 +162,20 @@ class PhoneNumberInputViewController: UIViewController, UIGestureRecognizerDeleg
             SVProgressHUD.show()
 
             let userProfileFetchHeader = ["Authorization" : "Token \(serverToken)"]
-            BaseWebservice.performRequest(function: .addPhoneNumber, requestMethod: .post, params: ["phone_number" : phoneNumber as AnyObject], headers: userProfileFetchHeader) { (response, error) in
+            BaseWebservice.performRequest(function: .addPhoneNumber, requestMethod: .post, params: ["phone_number" : requiredNumber as AnyObject], headers: userProfileFetchHeader) { (response, error) in
                 if let response = response as? [String : String] {
                     SVProgressHUD.dismiss()
                     if let error = error {
                         UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
                     }
                     if response["status"] == "success" {
-                            if let formattedText = self.phoneNumberTextField.formattedText {
+                            if let formattedText = self.phoneNumberTextField.text {
                                 self.verificationCodeInputInfoLabel.text = "Please enter verification code sent to\n\(formattedText)"
                             }
                             self.phoneNumberInputView.isHidden = true
                             self.otpInputView.isHidden = false
+                            self._codeInputView.becomeFirstResponder()
+
                     } else {
                             UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                     }
@@ -203,6 +202,7 @@ class PhoneNumberInputViewController: UIViewController, UIGestureRecognizerDeleg
     }
  
     @objc func backgroundTapped() {
+        SVProgressHUD.dismiss()
         self.view.endEditing(true)
         self.dismiss(animated: true, completion: nil)
     }
@@ -268,40 +268,20 @@ class PhoneNumberInputViewController: UIViewController, UIGestureRecognizerDeleg
         }
         return true
     }
-
-}
-
-extension PhoneNumberInputViewController: UITextFieldDelegate{
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        if textField.tag == InputTextFieldTag.phoneNumberFieldTag.rawValue {
-            return
-        }
-        if let text = otpFirstTextField.text, text.utf16.count == 0 {
-            otpFirstTextField.becomeFirstResponder()
-        } else if let text = otpFirstTextField.text, text.utf16.count == 0 {
-            otpSecondTextField.becomeFirstResponder()
-        } else if let text = otpFirstTextField.text, text.utf16.count == 0 {
-            otpThirdTextField.becomeFirstResponder()
-        } else if let text = otpFirstTextField.text, text.utf16.count == 0 {
-            otpFourthField.becomeFirstResponder()
-        }
+    
+    func codeInputView(_ codeInputView: CodeInputView, didFinishWithCode code: String) {
+        inputOTP = code
+        verifyOTPWithServer()
     }
+
 }
 
 extension String {
     var isPhoneNumber: Bool {
-        do {
-            let detector = try NSDataDetector(types: NSTextCheckingResult.CheckingType.phoneNumber.rawValue)
-            let matches = detector.matches(in: self, options: [], range: NSMakeRange(0, self.characters.count))
-            if let res = matches.first {
-                return res.resultType == .phoneNumber && res.range.location == 0 && res.range.length == self.characters.count && self.characters.count == 10
-            } else {
-                return false
-            }
-        } catch {
-            return false
-        }
+        let PHONE_REGEX = "^((\\+)|(00))[0-9]{6,14}$"
+        let phoneTest = NSPredicate(format: "SELF MATCHES %@", PHONE_REGEX)
+        let result =  phoneTest.evaluate(with: self)
+        return result
     }
-    
 }
 

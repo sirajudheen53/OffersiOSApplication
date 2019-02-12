@@ -100,12 +100,17 @@ PODS:
     - nanopb/encode (= 0.3.901)
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
+  - PhoneNumberKit (2.5.0):
+    - PhoneNumberKit/PhoneNumberKitCore (= 2.5.0)
+    - PhoneNumberKit/UIKit (= 2.5.0)
+  - PhoneNumberKit/PhoneNumberKitCore (2.5.0)
+  - PhoneNumberKit/UIKit (2.5.0):
+    - PhoneNumberKit/PhoneNumberKitCore
   - SkeletonView (1.4)
   - SVProgressHUD (2.2.5)
   - SwiftMessages (5.0.1):
     - SwiftMessages/App (= 5.0.1)
   - SwiftMessages/App (5.0.1)
-  - SwiftPhoneNumberFormatter (1.5)
 
 DEPENDENCIES:
   - AFDateHelper
@@ -118,10 +123,10 @@ DEPENDENCIES:
   - FacebookShare
   - Firebase/Core
   - GoogleSignIn
+  - PhoneNumberKit (~> 2.5)
   - SkeletonView
   - SVProgressHUD
   - SwiftMessages
-  - SwiftPhoneNumberFormatter
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -148,10 +153,10 @@ SPEC REPOS:
     - GTMOAuth2
     - GTMSessionFetcher
     - nanopb
+    - PhoneNumberKit
     - SkeletonView
     - SVProgressHUD
     - SwiftMessages
-    - SwiftPhoneNumberFormatter
 
 SPEC CHECKSUMS:
   AFDateHelper: 4ad66fb19503041fbba8a3018cb7ef9c71b2ff88
@@ -177,11 +182,11 @@ SPEC CHECKSUMS:
   GTMOAuth2: e8b6512c896235149df975c41d9a36c868ab7fba
   GTMSessionFetcher: 5fa5b80fd20e439ef5f545fb2cb3ca6c6714caa2
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
+  PhoneNumberKit: 32a1cd1e0aa9e950feb01886a22fd7386b8cf903
   SkeletonView: 50f7a9b04e3a62bd0ae964859c19317fabaea367
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftMessages: 32ce3cfc8388b41aae56ff4853cc752a20101147
-  SwiftPhoneNumberFormatter: 0cc91f4daa06dd606a9defb21048a75c36a771a2
 
-PODFILE CHECKSUM: 8243a36822608937c14c9ec9d3435b4de03e2cf8
+PODFILE CHECKSUM: 1cd8564c3a017c36b8b5ca7725fda2ccd939d3ef
 
 COCOAPODS: 1.5.3

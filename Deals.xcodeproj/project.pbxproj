@@ -45,6 +45,7 @@
 		A757D17D20EFDD1C00E4A282 /* HomeExploreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A757D17B20EFDD1C00E4A282 /* HomeExploreCollectionViewCell.swift */; };
 		A757D17E20EFDD1C00E4A282 /* HomeExploreCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A757D17C20EFDD1C00E4A282 /* HomeExploreCollectionViewCell.xib */; };
 		A76788DF2201E613006F616C /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76788DE2201E613006F616C /* BaseViewController.swift */; };
+		A769A3D22212901D00D07F06 /* CodeInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A769A3D12212901D00D07F06 /* CodeInputView.swift */; };
 		A77C543120F1E1D7003D5BCB /* UILabel+LetterSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C543020F1E1D7003D5BCB /* UILabel+LetterSpacing.swift */; };
 		A786578C20DABFBC00649410 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A786578B20DABFBC00649410 /* Constants.swift */; };
 		A786578E20DAC8A300649410 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A786578D20DAC8A200649410 /* CoreLocation.framework */; };
@@ -148,6 +149,7 @@
 		A757D17B20EFDD1C00E4A282 /* HomeExploreCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeExploreCollectionViewCell.swift; sourceTree = "<group>"; };
 		A757D17C20EFDD1C00E4A282 /* HomeExploreCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeExploreCollectionViewCell.xib; sourceTree = "<group>"; };
 		A76788DE2201E613006F616C /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		A769A3D12212901D00D07F06 /* CodeInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeInputView.swift; sourceTree = "<group>"; };
 		A77C543020F1E1D7003D5BCB /* UILabel+LetterSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+LetterSpacing.swift"; sourceTree = "<group>"; };
 		A786578B20DABFBC00649410 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A786578D20DAC8A200649410 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -365,6 +367,7 @@
 			isa = PBXGroup;
 			children = (
 				A7F7502B20D970FE0012FE47 /* UIView+RoundCorner.swift */,
+				A769A3D12212901D00D07F06 /* CodeInputView.swift */,
 				A7F7502D20D971220012FE47 /* RoundedView.swift */,
 				A757D17520EFD66400E4A282 /* UIView+Shadow.swift */,
 				A77C543020F1E1D7003D5BCB /* UILabel+LetterSpacing.swift */,
@@ -601,10 +604,10 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/PhoneNumberKit/PhoneNumberKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SkeletonView/SkeletonView.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftPhoneNumberFormatter/SwiftPhoneNumberFormatter.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -623,10 +626,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PhoneNumberKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkeletonView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftMessages.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftPhoneNumberFormatter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -718,6 +721,7 @@
 				0B67D0A120AAA6D000FC39E5 /* LoginViewController.swift in Sources */,
 				A786578C20DABFBC00649410 /* Constants.swift in Sources */,
 				A7C28A0120FE46A30071FC59 /* User.swift in Sources */,
+				A769A3D22212901D00D07F06 /* CodeInputView.swift in Sources */,
 				0B1F18CF20DBA3630075C1FA /* ProfileViewController.swift in Sources */,
 				A786579120DAD0E200649410 /* HotDealCollectionViewCell.swift in Sources */,
 				0B9E123720B29D4000C66129 /* MyOrdersViewController.swift in Sources */,

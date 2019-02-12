@@ -171,6 +171,8 @@ class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollecti
                 if response["status"] as? String == "success" {
                     if let userProfileProperties = response["user"] as? [String : Any] {
                         self.userProfile = UserProfile.userProfileWithProperties(properties: userProfileProperties)
+                        self.userProfile?.token = User.getProfile()!.token!
+                        self.userProfile?.saveToUserDefaults()
                         self.displayProfileData()
                     } else {
                         UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
@@ -235,9 +237,8 @@ class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollecti
         } else if segue.identifier == "showPhoneInput" {
             let phoneInputView = segue.destination as! PhoneNumberInputViewController
             if let profileData = self.userProfile {
-                phoneInputView.currentUser = profileData
                 phoneInputView.phoneNumberChangeActionBlock = {
-                    if let user = self.userProfile {
+                    if let user = User.getProfile() {
                         if let phoneNumber = user.phoneNumber {
                             self.phoneNumberButton.setTitle(phoneNumber, for: .normal)
                         }

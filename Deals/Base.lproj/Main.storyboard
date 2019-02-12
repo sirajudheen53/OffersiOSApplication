@@ -996,6 +996,7 @@
                         <outlet property="vendorNameLabel" destination="ugq-Yn-mcj" id="TkN-d8-TgZ"/>
                         <outlet property="viewsTitleLabel" destination="mut-Ej-UDQ" id="WC3-lu-dBo"/>
                         <segue destination="HRl-OZ-FPz" kind="presentation" identifier="showLoginPopup" animates="NO" modalPresentationStyle="overFullScreen" id="A3n-xN-iaX"/>
+                        <segue destination="WN4-Pv-tL4" kind="presentation" identifier="showPhoneNumberInput" animates="NO" modalPresentationStyle="overFullScreen" id="F0e-Pl-oRI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rm2-S8-oaz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2652,7 +2653,7 @@
                                         <color key="textColor" red="0.9316869378" green="0.2091614306" blue="0.24581736330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hg5-eL-HTU" customClass="PhoneFormattedTextField" customModule="SwiftPhoneNumberFormatter">
+                                    <textField opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hg5-eL-HTU" customClass="PhoneNumberTextField" customModule="PhoneNumberKit">
                                         <rect key="frame" x="35" y="79" width="344" height="26"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="21"/>
@@ -2692,83 +2693,38 @@
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aGE-nW-1Gz">
                                 <rect key="frame" x="0.0" y="288.66666666666669" width="414" height="159"/>
                                 <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3l1-Ye-KTW">
+                                        <rect key="frame" x="35" y="72" width="200" height="44"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="200" id="RSZ-3M-oFt"/>
+                                            <constraint firstAttribute="height" constant="44" id="Rcx-86-iLL"/>
+                                        </constraints>
+                                    </view>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter a valid phone number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NBk-aW-b3w">
+                                        <rect key="frame" x="35" y="126" width="179" height="13"/>
+                                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="11"/>
+                                        <color key="textColor" red="0.9316869378" green="0.2091614306" blue="0.24581736330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter the verification code sent to" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Pe-Sc-K1m">
                                         <rect key="frame" x="35" y="35" width="271" height="17"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TCP-ov-fmm">
-                                        <rect key="frame" x="35" y="77" width="25" height="26"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="26" id="AXz-w5-of8"/>
-                                            <constraint firstAttribute="width" constant="25" id="sJE-gM-NsO"/>
-                                        </constraints>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="21"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
-                                        <connections>
-                                            <action selector="otpFieldEditingChanged:" destination="WN4-Pv-tL4" eventType="editingChanged" id="LQ5-le-Ouk"/>
-                                            <outlet property="delegate" destination="WN4-Pv-tL4" id="gzN-CW-LCH"/>
-                                        </connections>
-                                    </textField>
-                                    <textField opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Yah-zI-HiT">
-                                        <rect key="frame" x="115" y="77" width="25" height="26"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="26" id="8s9-3x-VO0"/>
-                                            <constraint firstAttribute="width" constant="25" id="DVA-QB-d8O"/>
-                                        </constraints>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="21"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
-                                        <connections>
-                                            <action selector="otpFieldEditingChanged:" destination="WN4-Pv-tL4" eventType="editingChanged" id="xpO-MJ-8hm"/>
-                                            <outlet property="delegate" destination="WN4-Pv-tL4" id="dYK-lR-b1o"/>
-                                        </connections>
-                                    </textField>
-                                    <textField opaque="NO" tag="103" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="D9i-mi-K8T">
-                                        <rect key="frame" x="75" y="77" width="25" height="26"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="26" id="IVy-HD-ZmJ"/>
-                                            <constraint firstAttribute="width" constant="25" id="VgM-pW-6lb"/>
-                                        </constraints>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="21"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
-                                        <connections>
-                                            <action selector="otpFieldEditingChanged:" destination="WN4-Pv-tL4" eventType="editingChanged" id="51q-KR-dsm"/>
-                                            <outlet property="delegate" destination="WN4-Pv-tL4" id="lUo-TL-Y77"/>
-                                        </connections>
-                                    </textField>
-                                    <textField opaque="NO" tag="104" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PBu-y6-xIu">
-                                        <rect key="frame" x="155" y="77" width="25" height="26"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="25" id="AmH-4D-iZe"/>
-                                            <constraint firstAttribute="height" constant="26" id="n0H-GV-bSJ"/>
-                                        </constraints>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="21"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
-                                        <connections>
-                                            <action selector="otpFieldEditingChanged:" destination="WN4-Pv-tL4" eventType="editingChanged" id="GXz-oi-PuW"/>
-                                            <outlet property="delegate" destination="WN4-Pv-tL4" id="6Oy-Vx-AwG"/>
-                                        </connections>
-                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="0Pe-Sc-K1m" firstAttribute="leading" secondItem="aGE-nW-1Gz" secondAttribute="leading" constant="35" id="0Gy-5a-wv2"/>
-                                    <constraint firstItem="D9i-mi-K8T" firstAttribute="top" secondItem="TCP-ov-fmm" secondAttribute="top" id="8lG-ny-YKY"/>
                                     <constraint firstItem="0Pe-Sc-K1m" firstAttribute="top" secondItem="aGE-nW-1Gz" secondAttribute="top" constant="35" id="9lF-3X-9Fl"/>
-                                    <constraint firstItem="PBu-y6-xIu" firstAttribute="top" secondItem="Yah-zI-HiT" secondAttribute="top" id="D1B-F0-Y1g"/>
-                                    <constraint firstItem="Yah-zI-HiT" firstAttribute="top" secondItem="D9i-mi-K8T" secondAttribute="top" id="J5K-7b-5hP"/>
-                                    <constraint firstItem="PBu-y6-xIu" firstAttribute="leading" secondItem="Yah-zI-HiT" secondAttribute="trailing" constant="15" id="J88-oN-OJN"/>
-                                    <constraint firstItem="TCP-ov-fmm" firstAttribute="top" secondItem="0Pe-Sc-K1m" secondAttribute="bottom" constant="25" id="KSt-sp-Xhh"/>
-                                    <constraint firstItem="D9i-mi-K8T" firstAttribute="leading" secondItem="TCP-ov-fmm" secondAttribute="trailing" constant="15" id="cR3-Id-W6y"/>
-                                    <constraint firstItem="Yah-zI-HiT" firstAttribute="leading" secondItem="D9i-mi-K8T" secondAttribute="trailing" constant="15" id="iF7-5h-ahw"/>
+                                    <constraint firstItem="NBk-aW-b3w" firstAttribute="leading" secondItem="3l1-Ye-KTW" secondAttribute="leading" id="Iik-mA-d1G"/>
+                                    <constraint firstItem="3l1-Ye-KTW" firstAttribute="leading" secondItem="0Pe-Sc-K1m" secondAttribute="leading" id="Qg4-79-t7z"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="NBk-aW-b3w" secondAttribute="trailing" constant="20" id="Svs-Es-9Xk"/>
+                                    <constraint firstItem="3l1-Ye-KTW" firstAttribute="top" secondItem="0Pe-Sc-K1m" secondAttribute="bottom" constant="20" id="hWj-vP-EMR"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0Pe-Sc-K1m" secondAttribute="trailing" constant="20" id="ldw-rw-o2s"/>
+                                    <constraint firstItem="NBk-aW-b3w" firstAttribute="top" secondItem="3l1-Ye-KTW" secondAttribute="bottom" constant="10" id="sMY-Je-TkT"/>
                                     <constraint firstAttribute="height" constant="159" id="tS8-F6-isR"/>
-                                    <constraint firstItem="TCP-ov-fmm" firstAttribute="leading" secondItem="aGE-nW-1Gz" secondAttribute="leading" constant="35" id="zIl-Lo-5j6"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -2790,14 +2746,12 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="codeInputView" destination="3l1-Ye-KTW" id="89n-RL-J4W"/>
                         <outlet property="errorMessageLabel" destination="Gr3-SV-eBl" id="R9f-7F-B8R"/>
                         <outlet property="inputViewBottomConstraint" destination="mwX-sR-A4K" id="7pk-IK-zDy"/>
                         <outlet property="inputViewVerticalCenterConstraint" destination="OKt-NG-vPL" id="m7T-cQ-BDW"/>
-                        <outlet property="otpFirstTextField" destination="TCP-ov-fmm" id="1SY-0q-8q5"/>
-                        <outlet property="otpFourthField" destination="PBu-y6-xIu" id="Naz-NM-bX3"/>
+                        <outlet property="invalidOTPErrorMessagLabel" destination="NBk-aW-b3w" id="XCq-jO-sS9"/>
                         <outlet property="otpInputView" destination="aGE-nW-1Gz" id="BQu-yy-q9o"/>
-                        <outlet property="otpSecondTextField" destination="D9i-mi-K8T" id="BTe-bk-JBB"/>
-                        <outlet property="otpThirdTextField" destination="Yah-zI-HiT" id="OCi-kG-hmV"/>
                         <outlet property="phoneNumberInputInfoTitle" destination="qjQ-h7-aqm" id="LLx-eY-xuK"/>
                         <outlet property="phoneNumberInputView" destination="FHg-15-WLb" id="Kek-H9-hP8"/>
                         <outlet property="phoneNumberTextField" destination="hg5-eL-HTU" id="2Jt-QP-pd8"/>
@@ -2862,8 +2816,9 @@
         <image name="trivandrum_unselected" width="335" height="104"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="F0e-Pl-oRI"/>
         <segue reference="LFe-de-dCP"/>
-        <segue reference="uwF-og-KTp"/>
+        <segue reference="A3n-xN-iaX"/>
         <segue reference="Kwg-01-gCJ"/>
     </inferredMetricsTieBreakers>
 </document>

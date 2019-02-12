@@ -303,7 +303,13 @@ class DealDetailsViewController: BaseViewController {
     // MARK: - IBAction Methods
     
     @IBAction func buyNowButtonClicked(_ sender: UIButton) {
+        
+        
         if let serverToken = User.getProfile()?.token {
+            guard let userPhoneNumber = User.getProfile()?.phoneNumber, userPhoneNumber != "" else {
+                self.performSegue(withIdentifier: "showPhoneNumberInput", sender: nil)
+                return
+            }
             SVProgressHUD.show()
             let userProfileFetchHeader = ["Authorization" : "Token \(serverToken)"]
                 BaseWebservice.performRequest(function: .makePurchase, requestMethod: .post, params: ["deal_id" : deal!.dealId as AnyObject], headers: userProfileFetchHeader, onCompletion: { (response, error) in

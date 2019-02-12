@@ -87,6 +87,14 @@ class User: NSObject, NSCoding {
         }
     }
     
+//    class func saveAuthToken(token : String) {
+//        UserDefaults.standard.setValue(token, forKey: "AuthToken")
+//    }
+//    
+//    class func authToken() -> String? {
+//        return UserDefaults.standard.value(forKey: "AuthToken") as? String
+//    }
+    
     class func deleteProfile() {
         do {
             try FileManager.default.removeItem(atPath: NSHomeDirectory() + "/Documents/profile.bin")
