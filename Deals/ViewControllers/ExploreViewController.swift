@@ -178,8 +178,6 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let dealListingCell = tableView.dequeueReusableCell(withIdentifier: "dealListingCell", for: indexPath) as! DealsListingTableViewCell
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        dealListingCell.currentUserLocation = appDelegate.currentUserLocation
         dealListingCell.customizeCell(deal: filteredDeals![indexPath.row])
         dealListingCell.selectionStyle = .none
         return dealListingCell;

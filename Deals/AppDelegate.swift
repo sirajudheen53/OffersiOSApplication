@@ -15,12 +15,27 @@ import Crashlytics
 import Fabric
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLocationManagerDelegate {
 
     var window: UIWindow?
-    var currentUserLocation : CLLocation?
+    let locationManager = CLLocationManager()
+    var currentLocation : CLLocation?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        self.locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            UserDefaults.standard.set(true, forKey: "UserAuthorizationForLocation")
+
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+
+        } else {
+            UserDefaults.standard.set(false, forKey: "UserAuthorizationForLocation")
+        }
+        
         GIDSignIn.sharedInstance().clientID = "575363958117-8tm13saonriclsrvmithkb3fhvrtk9s7.apps.googleusercontent.com"
         GIDSignIn.sharedInstance().delegate = self
        
@@ -119,6 +134,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    // MARK: - Location Manager Delegate Methods
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        manager.stopUpdatingLocation()
+        UserDefaults.standard.set(true, forKey: "UserAuthorizationForLocation")
+
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        DispatchQueue.main.async {
+            self.currentLocation = CLLocation(latitude: locValue.latitude, longitude: locValue.longitude)
+            NotificationCenter.default.post(name: NSNotification.Name("locationUpdated"), object: nil)
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        UserDefaults.standard.set(false, forKey: "UserAuthorizationForLocation")
+        NotificationCenter.default.post(name: NSNotification.Name("locationUpdated"), object: nil)
+        
+
     }
 
 

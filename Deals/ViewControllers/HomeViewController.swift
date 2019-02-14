@@ -13,13 +13,11 @@ import SkeletonView
 import SwiftMessages
 
 
-class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, GIDSignInUIDelegate, CLLocationManagerDelegate, SkeletonTableViewDataSource {
+class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, GIDSignInUIDelegate, SkeletonTableViewDataSource {
 
     var availableDeals = [Deal]()
     var hotDeals : [Deal]?
-    let locationManager = CLLocationManager()
 
-    @IBOutlet weak var test: UIView!
     @IBOutlet weak var locationNameLabel: UILabel!
     
     @IBOutlet weak var noDealsContentView: UIView!
@@ -33,8 +31,6 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     var currentPage : Int = 1
     var numberOfPages : Int = 1
     var isLoadingList : Bool = false
-
-    var currentLocation : CLLocation?
     
     override func viewDidLoad() {
         analyticsScreenName = "Home View"
@@ -70,17 +66,34 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 
     }
     
-    // MARK: - Location Manager Delegate Methods
-
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        manager.stopUpdatingLocation()
-        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        DispatchQueue.main.async {
-            self.currentLocation = CLLocation(latitude: locValue.latitude, longitude: locValue.longitude)
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            appDelegate.currentUserLocation = self.currentLocation
-            self.dealsListingTableView.reloadData()
-        }
+    func enableLocationBlock() -> (()->()) {
+        return { // initialise a pop up for using later
+            let alertController = UIAlertController(title: "Dollor Deals", message: "Please go to Settings and turn on the permissions", preferredStyle: .alert)
+            let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
+                guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+                    return
+                }
+                if UIApplication.shared.canOpenURL(settingsUrl) {
+                    UIApplication.shared.open(settingsUrl, options: [:], completionHandler: { (success) in
+                        
+                    })
+                }
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+            alertController.addAction(cancelAction)
+            alertController.addAction(settingsAction)
+            
+            // check the permission status
+            switch(CLLocationManager.authorizationStatus()) {
+            case .authorizedAlways, .authorizedWhenInUse:
+                if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                    appDelegate.locationManager.startUpdatingLocation()
+                }
+            // get the user location
+            case .notDetermined, .restricted, .denied:
+                // redirect the users to settings
+                self.present(alertController, animated: true, completion: nil)
+            }}
     }
  
     // MARK: - Private Methods
@@ -215,10 +228,10 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         } else if indexPath.row == 1 {
            let hotDealTableViewCell = tableView.dequeueReusableCell(withIdentifier: "hotDealsListingCell", for: indexPath) as! HotDealTableViewCell;
             if let hotDeals = self.hotDeals {
-                hotDealTableViewCell.currentUserLocation = self.currentLocation
                 hotDealTableViewCell.customizeCell(hotDeals: hotDeals)
                 hotDealTableViewCell.makeFavouriteActionBlock = self.makeFavouriteActionBlock()
                 hotDealTableViewCell.hotDealsCellSelectionActionBlock = self.hotDealCellSelectionActionBlock()
+                hotDealTableViewCell.enableLocationBlock = enableLocationBlock()
             } else {
                 hotDealTableViewCell.hotDealsListingCollectionView.reloadData()
             }
@@ -254,9 +267,10 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             }
             let dealListingCell = tableView.dequeueReusableCell(withIdentifier: "dealListingCell", for: indexPath) as! DealsListingTableViewCell;
             if availableDeals.count > 0 {
-                    dealListingCell.currentUserLocation = self.currentLocation
                     dealListingCell.customizeCell(deal: availableDeals[index])
                     dealListingCell.makeFavouriteActionBlock = self.makeFavouriteActionBlock()
+                dealListingCell.enableLocationBlock = enableLocationBlock()
+
                     cell = dealListingCell
             } else {
                 dealListingCell.showLoadingAnimation()

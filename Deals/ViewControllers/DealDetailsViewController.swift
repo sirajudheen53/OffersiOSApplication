@@ -9,6 +9,7 @@
 import UIKit
 import CoreGraphics
 import SVProgressHUD
+import CoreLocation
 
 class DealDetailsViewController: BaseViewController {
 
@@ -53,6 +54,8 @@ class DealDetailsViewController: BaseViewController {
     @IBOutlet weak var offerExpiredView: UIView!
     @IBOutlet weak var coupnInfoView: UIView!
     
+    @IBOutlet weak var dealInfoEnableLocationButton: UIButton!
+    @IBOutlet weak var couponeLocationEnableButton: UIButton!
     override func viewDidLoad() {
         analyticsScreenName = "Deal Details View"
         super.viewDidLoad()
@@ -65,7 +68,8 @@ class DealDetailsViewController: BaseViewController {
             dealInfoView.isHidden = false
             coupnInfoView.isHidden = true
         }
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.userLocationUpdated(notification:)), name: NSNotification.Name("locationUpdated"), object: nil)
+
         
         makeViewedAPI()
         self.configureUIElements()
@@ -133,6 +137,39 @@ class DealDetailsViewController: BaseViewController {
                           NSAttributedStringKey.foregroundColor : Constants.lightDarkColor]
         let requiredString = NSAttributedString(string: addressText, attributes: attributes)
         return requiredString
+    }
+    
+    @objc func userLocationUpdated(notification : Notification) {
+        updateDistanceValue()
+    }
+    
+    @IBAction func enableLoctionButtonClicked(_ sender: Any) {
+        let alertController = UIAlertController(title: "Dollor Deals", message: "Please go to Settings and turn on the permissions", preferredStyle: .alert)
+        let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
+            guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+                return
+            }
+            if UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl, options: [:], completionHandler: { (success) in
+                    
+                })
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        alertController.addAction(cancelAction)
+        alertController.addAction(settingsAction)
+        
+        // check the permission status
+        switch(CLLocationManager.authorizationStatus()) {
+        case .authorizedAlways, .authorizedWhenInUse:
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                appDelegate.locationManager.startUpdatingLocation()
+            }
+        // get the user location
+        case .notDetermined, .restricted, .denied:
+            // redirect the users to settings
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
     
     func purchaseBoughtAttributedText(text : String) -> NSAttributedString {
@@ -256,6 +293,54 @@ class DealDetailsViewController: BaseViewController {
         couponContactButton.layer.borderWidth = 1.0
         couponContactButton.layer.cornerRadius = 4.0
         couponContactButton.clipsToBounds = true
+        
+        updateDistanceValue()
+    }
+    
+    func updateDistanceValue() {
+        guard let _ = deal else {
+            return
+        }
+        
+        guard let userLocationStatus = UserDefaults.standard.value(forKey: "UserAuthorizationForLocation") as? Bool, userLocationStatus else {
+            couponDistanceValueLabel.isHidden = true
+            distanceValueLabel.isHidden = true
+            
+            couponeLocationEnableButton.isHidden = false
+            dealInfoEnableLocationButton.isHidden = false
+            return
+        }
+        couponDistanceValueLabel.isHidden = false
+        distanceValueLabel.isHidden = false
+        
+        couponeLocationEnableButton.isHidden = true
+        dealInfoEnableLocationButton.isHidden = true
+        
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate, let currentLocation = appDelegate.currentLocation {
+            if let vendorLong = self.deal?.vendor?.locationLong, let vendorLat = self.deal?.vendor?.locationLat {
+                let vendorLocation = CLLocation(latitude: vendorLat, longitude: vendorLong)
+                let distance = vendorLocation.distance(from: currentLocation)
+                if Int(Double(distance)/Double(1000)) == 0 {
+                    let distanceInKm = Int(distance)
+                    couponDistanceValueLabel.text = "\(distanceInKm) m away"
+                    distanceValueLabel.text = "\(distanceInKm) m away"
+                } else {
+                    let distanceInKm = Int(Double(distance)/Double(1000))
+                    if Int(Double(distance)/Double(1000)) == 1 {
+                        couponDistanceValueLabel.text = "\(distanceInKm) km away"
+                        distanceValueLabel.text = "\(distanceInKm) km away"
+                    } else {
+                        couponDistanceValueLabel.text = "\(distanceInKm) kms away"
+                        distanceValueLabel.text = "\(distanceInKm) kms away"
+                    }
+                }
+            } else {
+                couponDistanceValueLabel.text = "Could not find vendor location"
+                distanceValueLabel.text = "Could not find vendor location"
+            }
+        } else {
+            distanceValueLabel.text = "Could not find user location"
+        }
     }
     
     func drawDottedLine(start p0: CGPoint, end p1: CGPoint, view: UIView) {
@@ -347,8 +432,6 @@ class DealDetailsViewController: BaseViewController {
         }
     }
     
-    @IBAction func moreDetailsButtonClicked(_ sender: Any) {
-    }
     
     @IBAction func contactButtonClicked(_ sender: Any) {
         if let vendorPhone = deal?.vendor?.phoneNumber, let url = URL(string: "telprompt://\(vendorPhone)") {

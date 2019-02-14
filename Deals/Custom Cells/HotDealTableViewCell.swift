@@ -18,6 +18,7 @@ class HotDealTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollect
     var makeFavouriteActionBlock : ((_ deal : Deal)->())?
     var hotDealsCellSelectionActionBlock : ((_ deal : Deal)->())?
     var currentUserLocation : CLLocation?
+    var enableLocationBlock : (()->())?
 
     @IBOutlet weak var topShadowDummyView: UIView!
     @IBOutlet weak var hotDealsListingCollectionView: UICollectionView!
@@ -65,9 +66,9 @@ class HotDealTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollect
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "hotDealCell", for: indexPath) as! HotDealCollectionViewCell
         if let hotDeals = hotDeals {
             dealNumbersInfoValueLabel.isHidden = false
-            cell.currentUserLocation = self.currentUserLocation
             cell.customizeCell(deal: hotDeals[indexPath.row])
             cell.makeFavouriteActionBlock = self.makeFavouriteActionBlock
+            cell.enableLocationBlock = enableLocationBlock
         } else {
             cell.showLoadingAnimation()
         }

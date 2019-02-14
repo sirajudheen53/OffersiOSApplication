@@ -26,14 +26,16 @@ class DealsListingTableViewCell: UITableViewCell {
     @IBOutlet weak var dealImageView: UIImageView!
     @IBOutlet weak var favouriteButton: UIButton!
     
+    @IBOutlet weak var enableLocationButton: UIButton!
     var currentUserLocation : CLLocation?
     var makeFavouriteActionBlock : ((_ deal : Deal)->())?
+    var enableLocationBlock : (()->())?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-       
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.userLocationUpdated(notification:)), name: NSNotification.Name("locationUpdated"), object: nil)
+
         self.offerTagView.transform  = CGAffineTransform(rotationAngle: (.pi/4)*7)
         self.backgroundColor = UIColor.clear
         
@@ -55,9 +57,15 @@ class DealsListingTableViewCell: UITableViewCell {
         
     }
     
+    @objc func userLocationUpdated(notification : Notification) {
+        updateDistanceValue()
+    }
+    
     func showLoadingAnimation() {
         offerTagView.isHidden = true
         offerPriceValueLabel.isHidden = true
+        distanceToVendorValueLabel.isHidden = true
+        enableLocationButton.isHidden = true
         dealImageView.showAnimatedGradientSkeleton()
         offerTagView.showAnimatedSkeleton()
         vendorNameValueLabel.showAnimatedSkeleton()
@@ -82,6 +90,12 @@ class DealsListingTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         dealImageView.contentMode = UIViewContentMode.center
         self.dealImageView.image = UIImage(named: "logo_small")
+    }
+    
+    @IBAction func enableLocationButtonClicked(_ sender: Any) {
+        if let block = enableLocationBlock {
+            block()
+        }
     }
     
     func customizeCell(deal : Deal) {
@@ -116,24 +130,43 @@ class DealsListingTableViewCell: UITableViewCell {
             }
         }
             self.favouriteButton.setBackgroundImage(UIImage(named: deal.isFavourited ? "make_favourite" : "makeFavouriteTransparent"), for: UIControlState.normal)
+        updateDistanceValue()
+        
+    }
     
-        if let vendorLat = self.deal?.vendor?.locationLat, let vendorLong = self.deal?.vendor?.locationLong, let currentUserLocation = self.currentUserLocation {
-            print("User location calculated")
-            let vendorLocation = CLLocation(latitude: vendorLat, longitude: vendorLong)
-            let distance = vendorLocation.distance(from: currentUserLocation)
-            if Int(Double(distance)/Double(1000)) == 0 {
-                let distanceInKm = Int(distance)
-                self.distanceToVendorValueLabel.text = "\(distanceInKm) m away"
-            } else {
-                let distanceInKm = Int(Double(distance)/Double(1000))
-                if Int(Double(distance)/Double(1000)) == 1 {
-                    self.distanceToVendorValueLabel.text = "\(distanceInKm) km away"
+    func updateDistanceValue() {
+        guard let _ = deal else {
+            return
+        }
+        
+        guard let userLocationStatus = UserDefaults.standard.value(forKey: "UserAuthorizationForLocation") as? Bool, userLocationStatus else {
+            distanceToVendorValueLabel.isHidden = true
+            enableLocationButton.isHidden = false
+            return
+        }
+        distanceToVendorValueLabel.isHidden = false
+        enableLocationButton.isHidden = true
+        
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate, let currentLocation = appDelegate.currentLocation {
+            if let vendorLong = self.deal?.vendor?.locationLong, let vendorLat = self.deal?.vendor?.locationLat {
+                let vendorLocation = CLLocation(latitude: vendorLat, longitude: vendorLong)
+                let distance = vendorLocation.distance(from: currentLocation)
+                if Int(Double(distance)/Double(1000)) == 0 {
+                    let distanceInKm = Int(distance)
+                    self.distanceToVendorValueLabel.text = "\(distanceInKm) m away"
                 } else {
-                    self.distanceToVendorValueLabel.text = "\(distanceInKm) kms away"
+                    let distanceInKm = Int(Double(distance)/Double(1000))
+                    if Int(Double(distance)/Double(1000)) == 1 {
+                        self.distanceToVendorValueLabel.text = "\(distanceInKm) km away"
+                    } else {
+                        self.distanceToVendorValueLabel.text = "\(distanceInKm) kms away"
+                    }
                 }
+            } else {
+                self.distanceToVendorValueLabel.text = "Could not find vendor location"
             }
         } else {
-
+            self.distanceToVendorValueLabel.text = "Could not find user location"
         }
     }
     
