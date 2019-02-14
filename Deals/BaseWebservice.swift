@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 
 enum WebserviceFunction : String {
-    case fetchDealsList = "deals/all_deals"
+    case fetchDealsList = "deals/v2/all_deals"
     case login = "accounts/login"
     case addPhoneNumber = "accounts/add_phone_number"
     case verifyPhoneNumber = "accounts/verify_phone_number"
@@ -25,14 +25,14 @@ enum WebserviceMethod {
     case get
 }
 
-let base_servive_url : String = "http://127.0.0.1:8000/"
-let image_service_url : String = "http://127.0.0.1:8000/"
+//let base_servive_url : String = "http://127.0.0.1:8000/"
+//let image_service_url : String = "http://127.0.0.1:8000/"
 
 //let image_service_url : String = "https://q-deals.herokuapp.com/"
 //let base_servive_url : String = "https://q-deals.herokuapp.com/"
 
-//let image_service_url : String = "https://api.dollordeals.com/"
-//let base_servive_url : String = "https://api.dollordeals.com/"
+let image_service_url : String = "https://api.dollordeals.com/"
+let base_servive_url : String = "https://api.dollordeals.com/"
 
 
 class BaseWebservice: NSObject {

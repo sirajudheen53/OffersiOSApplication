@@ -29,6 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         FirebaseApp.configure()
         Fabric.with([Crashlytics.self])
         
+        UserDefaults.standard.set("Cochin", forKey: "SelectedLocation")
+
         UITabBar.appearance().barTintColor = UIColor(red: 248.0/255.0, green: 248.0/255.0, blue: 248.0/255.0, alpha: 0.82)
         UINavigationBar.appearance().backgroundColor = UIColor.white
         UINavigationBar.appearance().isTranslucent = false

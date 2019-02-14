@@ -12,9 +12,10 @@ import CoreLocation
 import SkeletonView
 import SwiftMessages
 
+
 class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, GIDSignInUIDelegate, CLLocationManagerDelegate, SkeletonTableViewDataSource {
 
-    var availableDeals : [Deal]?
+    var availableDeals = [Deal]()
     var hotDeals : [Deal]?
     let locationManager = CLLocationManager()
 
@@ -25,6 +26,13 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var locationSelectionView: UIView!
     @IBOutlet weak var dealsListingTableView: UITableView!
+    
+    let numberOfExtraCells = 5
+    let numberOfItemsInAPage = 10
+
+    var currentPage : Int = 1
+    var numberOfPages : Int = 1
+    var isLoadingList : Bool = false
 
     var currentLocation : CLLocation?
     
@@ -32,8 +40,6 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         analyticsScreenName = "Home View"
 
         super.viewDidLoad()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(locationUpdated), name: NSNotification.Name(rawValue: "locationUpdated"), object: nil)
         
         GIDSignIn.sharedInstance().uiDelegate = self
         
@@ -53,8 +59,6 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
             locationNameLabel.text = selectedLocation
            self.fetchAllDealsFromServerAndUpdateUI(location: selectedLocation)
-        } else {
-            self.performSegue(withIdentifier: "showLocationSelection", sender: nil)
         }
         
         self.navigationController?.navigationBar.isHidden = true
@@ -78,24 +82,7 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             self.dealsListingTableView.reloadData()
         }
     }
-    
-    @objc func locationUpdated() {
-        if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
-            hotDeals = nil
-            availableDeals = nil
-            dealsListingTableView.reloadData()
-            locationNameLabel.text = selectedLocation
-            self.fetchAllDealsFromServerAndUpdateUI(location: selectedLocation)
-        }
-    }
-    
-    // MARK: - IBAction Methods
-
-    @IBAction func getUserLocationButtonClicked(_ sender: Any) {
-        self.performSegue(withIdentifier: "showLocationSelection", sender: nil)
-    }
-    
-    
+ 
     // MARK: - Private Methods
     
     @objc func userLoggedIn(notification : Notification) {
@@ -114,29 +101,6 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         dealsListingTableView.reloadData()
     }
     
-    func locationAddressValueAttributedText(address : String) -> NSAttributedString {
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = NSTextAlignment.right
-        paragraphStyle.lineSpacing = 1.6
-        
-        let attributes = [NSAttributedStringKey.font : Constants.mediumFontWithSize(size: 13.0),
-                          NSAttributedStringKey.paragraphStyle : paragraphStyle,
-                          NSAttributedStringKey.foregroundColor : Constants.blackDarkColor]
-        let requiredString = NSAttributedString(string: address, attributes: attributes)
-        return requiredString
-    }
-    
-    func locationLandmarkValueAttributedText(address : String) -> NSAttributedString {
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = NSTextAlignment.right
-        paragraphStyle.lineSpacing = 1.6
-        
-        let attributes = [NSAttributedStringKey.font : Constants.regularFontWithSize(size: 12.0),
-                          NSAttributedStringKey.paragraphStyle : paragraphStyle,
-                          NSAttributedStringKey.foregroundColor : Constants.darkGrey]
-        let requiredString = NSAttributedString(string: address, attributes: attributes)
-        return requiredString
-    }
     
     func exploreCategorySelectionBlock() -> ((_ exploreCategory : FilterCategories) -> ()) {
         return {(category) in
@@ -231,8 +195,13 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     // MARK: - TableView Delegates
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let availableDeals = self.availableDeals {
-            return availableDeals.count + 5
+        if availableDeals.count > 0 {
+            let numberOfCells = availableDeals.count + numberOfExtraCells
+            if availableDeals.count == (numberOfPages-1) * numberOfItemsInAPage {
+                return numberOfCells + 1
+            } else {
+                return numberOfCells
+            }
         } else {
             return 10;
         }
@@ -265,23 +234,35 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             let exploreCell = tableView.dequeueReusableCell(withIdentifier: "exploreTableViewCell", for: indexPath) as! HomeExploreTableViewCell
             exploreCell.exploreCategorySelectionBlock = self.exploreCategorySelectionBlock()
             cell = exploreCell
+        } else if indexPath.row == availableDeals.count + numberOfExtraCells {
+            let pagingLoadingCell = tableView.dequeueReusableCell(withIdentifier: "pagingLoadingCell", for: indexPath) as! PagingLoadingTableViewCell
+            pagingLoadingCell.activityIndicator.startAnimating()
+            cell = pagingLoadingCell
+            
+            if !isLoadingList {
+                currentPage += 1
+                if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
+                    self.fetchAllDealsFromServerAndUpdateUI(location: selectedLocation)
+                }
+            }
         } else {
             var index = 0
             if indexPath.row < 7 {
                 index = indexPath.row - 3
             } else {
-                index = indexPath.row - 5
+                index = indexPath.row - numberOfExtraCells
             }
             let dealListingCell = tableView.dequeueReusableCell(withIdentifier: "dealListingCell", for: indexPath) as! DealsListingTableViewCell;
-            if let availableDeals = self.availableDeals {
-                dealListingCell.currentUserLocation = self.currentLocation
-                dealListingCell.customizeCell(deal: availableDeals[index])
-                dealListingCell.makeFavouriteActionBlock = self.makeFavouriteActionBlock()
+            if availableDeals.count > 0 {
+                    dealListingCell.currentUserLocation = self.currentLocation
+                    dealListingCell.customizeCell(deal: availableDeals[index])
+                    dealListingCell.makeFavouriteActionBlock = self.makeFavouriteActionBlock()
+                    cell = dealListingCell
             } else {
                 dealListingCell.showLoadingAnimation()
+                cell = dealListingCell
             }
             
-            cell = dealListingCell
         }
         
         cell.selectionStyle = UITableViewCellSelectionStyle.none
@@ -300,6 +281,8 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             height = 60
         } else if indexPath.row == 8{
             height = 130.0
+        } else if indexPath.row == availableDeals.count + numberOfExtraCells {
+            height = 44.0
         } else  {
             height = 144.0
         }
@@ -307,7 +290,8 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 0 || indexPath.row == 1 || indexPath.row == 2 || indexPath.row == 7 {
+        if indexPath.row == 0 || indexPath.row == 1 || indexPath.row == 2
+            || indexPath.row == 7 || indexPath.row == availableDeals.count + numberOfExtraCells{
             return
         }
         DispatchQueue.main.async {
@@ -315,91 +299,28 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             if indexPath.row < 7 {
                 index = indexPath.row - 3
             } else {
-                index = indexPath.row - 5
+                index = indexPath.row - self.numberOfExtraCells
             }
-            self.performSegue(withIdentifier: "showDetailsView", sender: self.availableDeals![index])
+            self.performSegue(withIdentifier: "showDetailsView", sender: self.availableDeals[index])
         }
     }
     
     // MARK: - Private Methods
     
-    func parseAllDealsResponseAndReloadView(allDealsResponse : [String : Any]) {
-        if let hotDealsResponse = allDealsResponse["deals"] as? [[String : Any]] {
-            hotDeals = Deal.dealObjectsFromProperties(properties: hotDealsResponse)
+    func fetchAllDealsFromServerAndUpdateUI(location : String) { 
+        guard !isLoadingList else {
+            return
         }
         
-        if let allDeals = allDealsResponse["deals"] as? [[String : Any]] {
-            self.availableDeals = Deal.dealObjectsFromProperties(properties: allDeals)
-            var favourites = [Deal]()
-            var purchases = [Deal]()
-            if let allFavoritedDeals = allDealsResponse["wishlist"] as? [[String : Any]] {
-                favourites = Deal.dealObjectsFromProperties(properties: allFavoritedDeals)
-            }
-            if let allPurchased = allDealsResponse["purchases"] as? [[String : Any]] {
-                for dealProperty in allPurchased {
-                    if let singleDeal = dealProperty["deal"] as? [String : Any] {
-                        let deal = Deal.dealObjectFromProperty(property: singleDeal)
-                        if let purchaseDate = dealProperty["purchase_date"] as? Double {
-                            deal.purchasedDate = Date(timeIntervalSince1970: purchaseDate)
-                        }
-                        if let purchaseExpiry = dealProperty["expiry_date"] as? Double {
-                            deal.purchaseExpiry = Date(timeIntervalSince1970: purchaseExpiry)
-                        }
-                        if let code = dealProperty["code"] as? String {
-                            deal.purchaseCode = code
-                        }
-                        if let isRedeemed = dealProperty["isRedeemed"] as? Bool {
-                            deal.isRedeemed = isRedeemed
-                        }
-                        purchases.append(deal)
-                    }
-                }
-            }
-            _ = favourites.map({ (deal) -> Deal in
-                let correspondingDeal = self.availableDeals?.filter({ $0.dealId == deal.dealId}).first
-                correspondingDeal?.isFavourited = true
-                return deal
-            })
-            
-            _ = purchases.map({ (deal) -> Deal in
-                if let correspondingDeal = self.availableDeals?.filter({ $0.dealId == deal.dealId}).first {
-                    correspondingDeal.numberOfPurchases += 1
-                    if let correspondingDealPurchseDate =  correspondingDeal.purchasedDate,
-                        let dealPurchaseDate = deal.purchasedDate,
-                        correspondingDealPurchseDate.timeIntervalSince1970 < dealPurchaseDate.timeIntervalSince1970 {
-                        correspondingDeal.purchasedDate = dealPurchaseDate
-                        correspondingDeal.purchaseCode = deal.purchaseCode
-                        correspondingDeal.purchaseExpiry = deal.purchaseExpiry
-                    } else if correspondingDeal.purchasedDate == nil {
-                        correspondingDeal.purchasedDate = deal.purchasedDate
-                        correspondingDeal.purchaseCode = deal.purchaseCode
-                        correspondingDeal.purchaseExpiry = deal.purchaseExpiry
-                    }
-                }
-                return deal
-            })
-            
-            self.dealsListingTableView.reloadData()
-            if self.availableDeals?.count == 0 {
-                self.noDealsContentView.isHidden = false
-                self.dealsListingTableView.isHidden = true
-            } else {
-                self.noDealsContentView.isHidden = true
-                self.dealsListingTableView.isHidden = false
-            }
-        } else {
-            //Handle Error condition
-        }
-    }
-    
-    func fetchAllDealsFromServerAndUpdateUI(location : String) {
-        dealsListingTableView.isUserInteractionEnabled = false
+        isLoadingList = true
+        
         var tokenHeader = [String : String]()
         if let token = User.getProfile()?.token {
             tokenHeader = ["Authorization" : "Token \(token)"]
         }
-        BaseWebservice.performRequest(function: WebserviceFunction.fetchDealsList, requestMethod: .get, params: ["location" : location as AnyObject], headers: tokenHeader) { (response, error) in
-            self.dealsListingTableView.isUserInteractionEnabled = true
+        BaseWebservice.performRequest(function: WebserviceFunction.fetchDealsList, requestMethod: .get, params: ["location" : location as AnyObject, "page" : currentPage as AnyObject], headers: tokenHeader) { (response, error) in
+            self.isLoadingList = false
+
             if let error = error {
                 UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
                 self.noDealsContentView.isHidden = false
@@ -408,7 +329,18 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                 if let status = response["status"] as? String {
                     if status=="success" {
                         if let allDealsProperties = response["data"] as? [String : Any] {
-                            self.parseAllDealsResponseAndReloadView(allDealsResponse: allDealsProperties)
+                            if let totalPages = allDealsProperties["total_pages"] as? Int {
+                                self.numberOfPages = totalPages
+                            }
+                            if let hotTodayProperties = allDealsProperties["hot_today"] as? [[String : Any]] {
+                                self.hotDeals = Deal.dealObjectsFromProperties(properties: hotTodayProperties)
+                            }
+                            if let allDeals = allDealsProperties["deals"] as? [[String : Any]] {
+                                self.availableDeals.append(contentsOf: Deal.dealObjectsFromProperties(properties: allDeals))
+                            }
+                            self.noDealsContentView.isHidden = true
+                            self.dealsListingTableView.isHidden = false
+                            self.dealsListingTableView.reloadData()
                         } else {
                             self.noDealsContentView.isHidden = false
                             self.dealsListingTableView.isHidden = true

@@ -63,6 +63,7 @@
 		A7C22C1321FC933500BCF81C /* dollor_deals_privacy.html in Resources */ = {isa = PBXBuildFile; fileRef = A7C22C1221FC933500BCF81C /* dollor_deals_privacy.html */; };
 		A7C28A0120FE46A30071FC59 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C28A0020FE46A30071FC59 /* User.swift */; };
 		A7D9F25A20AB56B6005B08BE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A7D9F25920AB56B6005B08BE /* GoogleService-Info.plist */; };
+		A7DD00532215A95B0099284A /* PagingLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DD00522215A95B0099284A /* PagingLoadingTableViewCell.swift */; };
 		A7E6B71221C3834D00FA943B /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E6B71121C3834D00FA943B /* UIView+Extension.swift */; };
 		A7F7501220D4FF040012FE47 /* BaseWebservice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F7501120D4FF040012FE47 /* BaseWebservice.swift */; };
 		A7F7501420D638E80012FE47 /* Deal.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F7501320D638E80012FE47 /* Deal.swift */; };
@@ -167,6 +168,7 @@
 		A7C22C1221FC933500BCF81C /* dollor_deals_privacy.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = dollor_deals_privacy.html; sourceTree = "<group>"; };
 		A7C28A0020FE46A30071FC59 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A7D9F25920AB56B6005B08BE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		A7DD00522215A95B0099284A /* PagingLoadingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingLoadingTableViewCell.swift; sourceTree = "<group>"; };
 		A7E6B71121C3834D00FA943B /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIView+Extension.swift"; path = "Extensions/UIView+Extension.swift"; sourceTree = "<group>"; };
 		A7F7501120D4FF040012FE47 /* BaseWebservice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseWebservice.swift; sourceTree = "<group>"; };
 		A7F7501320D638E80012FE47 /* Deal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deal.swift; sourceTree = "<group>"; };
@@ -336,6 +338,7 @@
 				A757D17C20EFDD1C00E4A282 /* HomeExploreCollectionViewCell.xib */,
 				A73E8FBA2100E8E000008CD3 /* PurchaseDealsCollectionViewCell.swift */,
 				A73E8FBB2100E8E000008CD3 /* PurchaseDealsCollectionViewCell.xib */,
+				A7DD00522215A95B0099284A /* PagingLoadingTableViewCell.swift */,
 			);
 			path = "Custom Cells";
 			sourceTree = "<group>";
@@ -604,6 +607,7 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/PagingTableView/PagingTableView.framework",
 				"${BUILT_PRODUCTS_DIR}/PhoneNumberKit/PhoneNumberKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SkeletonView/SkeletonView.framework",
@@ -626,6 +630,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PagingTableView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PhoneNumberKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkeletonView.framework",
@@ -735,6 +740,7 @@
 				0B9E123320B2900100C66129 /* ConditionsListingTableViewCell.swift in Sources */,
 				A7F7502C20D970FF0012FE47 /* UIView+RoundCorner.swift in Sources */,
 				A7521A4C211DB66F00E870B8 /* Purchase.swift in Sources */,
+				A7DD00532215A95B0099284A /* PagingLoadingTableViewCell.swift in Sources */,
 				A77C543120F1E1D7003D5BCB /* UILabel+LetterSpacing.swift in Sources */,
 				0B9E123B20B3D44100C66129 /* ExploreViewController.swift in Sources */,
 				0B5504BF21D362D7003B8B23 /* MoreDetailsViewController.swift in Sources */,

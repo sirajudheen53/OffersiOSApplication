@@ -61,7 +61,7 @@ class Deal: NSObject {
         if let images = property["images"] as? [String] {
             requiredDeal.images = images
         }
-        if let isFavourite = property["isFavourited"] as? Bool {
+        if let isFavourite = property["is_favoured"] as? Bool {
             requiredDeal.isFavourited = isFavourite
         }
         if let currencySymbol = property["currency_symbol"] as? String {
