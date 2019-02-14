@@ -1,0 +1,11 @@
+framework module QpayPayment {
+  umbrella header "QpayPayment.h"
+
+  export *
+  module * { export * }
+}
+
+module QpayPayment.Swift {
+    header "QpayPayment-Swift.h"
+    requires objc
+}

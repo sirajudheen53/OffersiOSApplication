@@ -34,6 +34,8 @@
 		A7337DE6220B630E00CB73AE /* UITextField+Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7337DE5220B630E00CB73AE /* UITextField+Border.swift */; };
 		A73E8FBC2100E8E000008CD3 /* PurchaseDealsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73E8FBA2100E8E000008CD3 /* PurchaseDealsCollectionViewCell.swift */; };
 		A73E8FBD2100E8E000008CD3 /* PurchaseDealsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A73E8FBB2100E8E000008CD3 /* PurchaseDealsCollectionViewCell.xib */; };
+		A7459DBC2215EC5300015A74 /* QpayPayment.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7459DBB2215EC5200015A74 /* QpayPayment.framework */; };
+		A7459DBD2215EC5300015A74 /* QpayPayment.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A7459DBB2215EC5200015A74 /* QpayPayment.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A74EC1A321C4E1B700605A8A /* LocationSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74EC1A221C4E1B700605A8A /* LocationSelectionViewController.swift */; };
 		A7521A4A211CAE9700E870B8 /* FavouritesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7521A49211CAE9700E870B8 /* FavouritesListViewController.swift */; };
 		A7521A4C211DB66F00E870B8 /* Purchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7521A4B211DB66F00E870B8 /* Purchase.swift */; };
@@ -97,6 +99,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		A7459DBE2215EC5300015A74 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A7459DBD2215EC5300015A74 /* QpayPayment.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		02917333E0BB871C762B13F3 /* Pods_TestUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		08CFD44055D14123C98A65A8 /* Pods_DealsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DealsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -139,6 +155,7 @@
 		A7337DE5220B630E00CB73AE /* UITextField+Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Border.swift"; sourceTree = "<group>"; };
 		A73E8FBA2100E8E000008CD3 /* PurchaseDealsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseDealsCollectionViewCell.swift; sourceTree = "<group>"; };
 		A73E8FBB2100E8E000008CD3 /* PurchaseDealsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PurchaseDealsCollectionViewCell.xib; sourceTree = "<group>"; };
+		A7459DBB2215EC5200015A74 /* QpayPayment.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QpayPayment.framework; sourceTree = "<group>"; };
 		A74EC1A221C4E1B700605A8A /* LocationSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectionViewController.swift; sourceTree = "<group>"; };
 		A7521A49211CAE9700E870B8 /* FavouritesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesListViewController.swift; sourceTree = "<group>"; };
 		A7521A4B211DB66F00E870B8 /* Purchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Purchase.swift; sourceTree = "<group>"; };
@@ -198,6 +215,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A786578E20DAC8A300649410 /* CoreLocation.framework in Frameworks */,
+				A7459DBC2215EC5300015A74 /* QpayPayment.framework in Frameworks */,
 				94CA4C3EE0A170AE49DBCD07 /* Pods_Deals.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -245,6 +263,7 @@
 		0B67D09220AAA6D000FC39E5 = {
 			isa = PBXGroup;
 			children = (
+				A7459DBB2215EC5200015A74 /* QpayPayment.framework */,
 				0B67D09D20AAA6D000FC39E5 /* Deals */,
 				0B67D0B220AAA6D000FC39E5 /* DealsTests */,
 				0B67D0BD20AAA6D000FC39E5 /* DealsUITests */,
@@ -423,6 +442,7 @@
 				2F3964BFCE7ACF6AE0B5FCCB /* [CP] Embed Pods Frameworks */,
 				87B614786645C21757E3C028 /* [CP] Copy Pods Resources */,
 				A76A56B3220224E900475B7D /* ShellScript */,
+				A7459DBE2215EC5300015A74 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -936,7 +956,12 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 6R3U4523N6;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Deals/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -956,7 +981,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 6R3U4523N6;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Deals/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

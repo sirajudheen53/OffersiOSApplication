@@ -10,12 +10,14 @@ import UIKit
 import CoreGraphics
 import SVProgressHUD
 import CoreLocation
+import QpayPayment
 
-class DealDetailsViewController: BaseViewController {
+class DealDetailsViewController: BaseViewController, QPRequestProtocol {
 
     var deal : Deal?
     var dealCode : String?
-    
+    var qpRequestParams : QPRequestParameters!
+
     @IBOutlet weak var phoneContactButton: UIButton!
     @IBOutlet weak var buyMoreButton: UIButton!
     @IBOutlet weak var couponContactButton: UIButton!
@@ -57,6 +59,9 @@ class DealDetailsViewController: BaseViewController {
     @IBOutlet weak var dealInfoEnableLocationButton: UIButton!
     @IBOutlet weak var couponeLocationEnableButton: UIButton!
     override func viewDidLoad() {
+        qpRequestParams =   QPRequestParameters(viewController: self)
+        qpRequestParams.delegate = self 
+        
         analyticsScreenName = "Deal Details View"
         super.viewDidLoad()
         UIApplication.shared.isStatusBarHidden = true
@@ -387,49 +392,67 @@ class DealDetailsViewController: BaseViewController {
     
     // MARK: - IBAction Methods
     
+    func initiatePayment() {
+        qpRequestParams.gatewayId = "017146316"
+        qpRequestParams.secretKey = "2-LHwxDLOVHC3pB5"
+        qpRequestParams.name = "Dollor Deals"
+        qpRequestParams.address = "Dollor Deals - Qatar"
+        qpRequestParams.city = "Doha"
+        qpRequestParams.state = "Doha"
+        qpRequestParams.country  = "QA"
+        qpRequestParams.email = "info@dollordeals.com"
+        qpRequestParams.currency = "QAR"
+        qpRequestParams.referenceId = "1234"
+        qpRequestParams.phone = "8606806956"
+        qpRequestParams.amount = 101.3 //any float value
+        qpRequestParams.mode = "TEST"
+        qpRequestParams.productDescription = "Test product"
+        qpRequestParams.sendRequest()
+    }
+    
     @IBAction func buyNowButtonClicked(_ sender: UIButton) {
-        
-        
-        if let serverToken = User.getProfile()?.token {
-            guard let userPhoneNumber = User.getProfile()?.phoneNumber, userPhoneNumber != "" else {
-                self.performSegue(withIdentifier: "showPhoneNumberInput", sender: nil)
-                return
-            }
-            SVProgressHUD.show()
-            let userProfileFetchHeader = ["Authorization" : "Token \(serverToken)"]
-                BaseWebservice.performRequest(function: .makePurchase, requestMethod: .post, params: ["deal_id" : deal!.dealId as AnyObject], headers: userProfileFetchHeader, onCompletion: { (response, error) in
-                    SVProgressHUD.dismiss()
-                    if let error = error {
-                        UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
-                    } else if let response = response as? [String : Any?] {
-                        if response["status"] as? String == "success" {
-                            NotificationCenter.default.post(Notification.init(name: Notification.Name("userProfileUpdated")))
-                            if let purchase = response["purchase"] as? [String : Any] {
-                                if let code = purchase["code"] as? String {
-                                    self.deal?.purchaseCode = code
-                                }
-                                if let purchaseExpiry = purchase["expiry_date"] as? Double {
-                                    self.deal?.purchaseExpiry = Date(timeIntervalSince1970: purchaseExpiry)
-                                }
-                                self.deal!.numberOfPurchases += 1
-                                if self.deal!.numberOfPurchases < self.deal!.allowedSimultaneous {
-                                    self.buyMoreButton.isHidden = false
-                                } else {
-                                    self.buyMoreButton.isHidden = true
-                                }
-                            }
-                            self.showDealCodeView()
-
-                        } else {
-                            UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
-                        }
-                    } else {
-                        UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
-                    }
-                })
-        } else {
-            self.performSegue(withIdentifier: "showLoginPopup", sender: nil)
-        }
+        initiatePayment()
+//
+//        if let serverToken = User.getProfile()?.token {
+//            guard let userPhoneNumber = User.getProfile()?.phoneNumber, userPhoneNumber != "" else {
+//                self.performSegue(withIdentifier: "showPhoneNumberInput", sender: nil)
+//                return
+//            }
+//            SVProgressHUD.show()
+//            let userProfileFetchHeader = ["Authorization" : "Token \(serverToken)"]
+//                BaseWebservice.performRequest(function: .makePurchase, requestMethod: .post, params: ["deal_id" : deal!.dealId as AnyObject], headers: userProfileFetchHeader, onCompletion: { (response, error) in
+//                    SVProgressHUD.dismiss()
+//                    if let error = error {
+//                        UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
+//                    } else if let response = response as? [String : Any?] {
+//                        if response["status"] as? String == "success" {
+//                            NotificationCenter.default.post(Notification.init(name: Notification.Name("userProfileUpdated")))
+//                            if let purchase = response["purchase"] as? [String : Any] {
+//                                if let code = purchase["code"] as? String {
+//                                    self.deal?.purchaseCode = code
+//                                }
+//                                if let purchaseExpiry = purchase["expiry_date"] as? Double {
+//                                    self.deal?.purchaseExpiry = Date(timeIntervalSince1970: purchaseExpiry)
+//                                }
+//                                self.deal!.numberOfPurchases += 1
+//                                if self.deal!.numberOfPurchases < self.deal!.allowedSimultaneous {
+//                                    self.buyMoreButton.isHidden = false
+//                                } else {
+//                                    self.buyMoreButton.isHidden = true
+//                                }
+//                            }
+//                            self.showDealCodeView()
+//
+//                        } else {
+//                            UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+//                        }
+//                    } else {
+//                        UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+//                    }
+//                })
+//        } else {
+//            self.performSegue(withIdentifier: "showLoginPopup", sender: nil)
+//        }
     }
     
     
@@ -496,5 +519,10 @@ class DealDetailsViewController: BaseViewController {
                 destinationView.conditions = deal.conditons
             }
         }
+    }
+    
+    func qpResponse(_ response: NSDictionary) {
+        print("Response Inside customer app:",response)
+        //Perform your actions with the response
     }
 }

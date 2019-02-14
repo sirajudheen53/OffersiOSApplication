@@ -178,6 +178,9 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard indexPath.row < self.availableDeals.count else {
+            return
+        }
         DispatchQueue.main.async {
             self.performSegue(withIdentifier: "showDealDetailView", sender: self.availableDeals[indexPath.row])
         }
@@ -210,7 +213,7 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
         if let token = User.getProfile()?.token {
             tokenHeader = ["Authorization" : "Token \(token)"]
         }
-        BaseWebservice.performRequest(function: WebserviceFunction.search, requestMethod: .get, params: ["location" : location as AnyObject, "page" : currentPage as AnyObject, "search" : searchString as AnyObject], headers: tokenHeader) { (response, error) in
+        BaseWebservice.performRequest(function: WebserviceFunction.search, requestMethod: .get, params: ["location" : location as AnyObject, "page" : currentPage as AnyObject, "search" : searchString as AnyObject, "category" : categoriesTitleList as AnyObject], headers: tokenHeader) { (response, error) in
             self.isLoadingList = false
             
             if let error = error {
