@@ -10,9 +10,14 @@ import UIKit
 
 class ExploreViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
 
-    var availableDeals : [Deal]?
-    var filteredDeals : [Deal]?
+    var availableDeals = [Deal]()
     var filterCategories = [FilterCategories]()
+    let numberOfItemsInAPage = 10
+
+    var currentPage : Int = 1
+    var numberOfPages : Int = 1
+    var isLoadingList : Bool = false
+    var searchString = ""
     
     @IBOutlet weak var noDealsContentView: UIView!
     @IBOutlet weak var searchBackgroundView: UIView!
@@ -32,9 +37,9 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
         
         
         self.dealsListingTableView.contentInset = UIEdgeInsets(top: 5.0, left: 0, bottom: 0, right: 0)
-        if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
-            self.fetchAllDealsFromServerAndUpdateUI(location: selectedLocation)
-        }
+//        if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
+//            self.fetchAllDealsFromServerAndUpdateUI(location: selectedLocation)
+//        }
         self.navigationController?.navigationBar.isHidden = true
         let dealListingCellNib = UINib(nibName: "DealsListingTableViewCell", bundle: nil)
         self.dealsListingTableView.register(dealListingCellNib, forCellReuseIdentifier: "dealListingCell")
@@ -59,39 +64,18 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
     @objc func categoriesSelected(_ notification: Notification) {
         let selectedCategories = notification.object as! [FilterCategories]
         self.filterCategories = selectedCategories
-        self.searchUpdateUI()
-    }
-    
-    func searchUpdateUI() {
-        self.filterNumberLabel.text = "\(self.filterCategories.count)"
-        
-        let categoryFilteredDeals = self.selectedCategoryFilteredDeals()
-        if let currentText = searchTextField.text {
-            self.filteredDeals = self.searchDealsWithTerm(term: currentText, deals: categoryFilteredDeals)
-            if let filteredDeals = filteredDeals, filteredDeals.count == 0 {
-                dealsListingTableView.isHidden = true
-                noDealsContentView.isHidden = false
-            } else {
-                dealsListingTableView.isHidden = false
-                noDealsContentView.isHidden = true
-            }
+        if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
+            searchDealsFromServer(location: selectedLocation, searchString: searchString)
         }
-        self.dealsListingTableView.reloadData()
     }
     
     // MARK: - TextField Delegates
 
     @IBAction func textFieldChanged(_ sender: UITextField) {
-        let categoryFilteredDeals = self.selectedCategoryFilteredDeals()
         if let currentText = searchTextField.text {
-            self.filteredDeals = self.searchDealsWithTerm(term: currentText, deals: categoryFilteredDeals)
-            if self.filteredDeals?.count == 0 {
-                dealsListingTableView.isHidden = true
-                noDealsContentView.isHidden = false
-            } else {
-                dealsListingTableView.isHidden = false
-                noDealsContentView.isHidden = true
-                self.dealsListingTableView.reloadData()
+            searchString = currentText
+            if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
+                searchDealsFromServer(location: selectedLocation, searchString: searchString)
             }
         }
     }
@@ -118,19 +102,6 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
         }
     }
     
-    func selectedCategoryFilteredDeals() -> [Deal] {
-        let selectedCategoryNames = self.filterCategories.map { appropriateCategoryName(category: $0)}
-        if self.filterCategories.count == 0, let avaialbleDeals = self.availableDeals {
-            return avaialbleDeals
-        } else if let avaialbleDeals = self.availableDeals  {
-            return avaialbleDeals.filter {
-                selectedCategoryNames.contains($0.category!.name!)
-            }
-        } else {
-            return [Deal]()
-        }
-    }
-    
     func appropriateCategoryName(category : FilterCategories) -> String {
         switch category {
         case .Restaurent:
@@ -154,13 +125,13 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
     
     @objc func userLoggedIn(notification : Notification) {
         if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
-            self.fetchAllDealsFromServerAndUpdateUI(location: selectedLocation)
+            self.searchDealsFromServer(location: selectedLocation, searchString: searchString)
         }
     }
     
     @objc func userLoggedOut(notification : Notification) {
         if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
-            self.fetchAllDealsFromServerAndUpdateUI(location: selectedLocation)
+            self.searchDealsFromServer(location: selectedLocation, searchString: searchString)
         }
     }
     
@@ -169,18 +140,37 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
     // MARK: - TableView Delegates
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let filteredDeals = self.filteredDeals {
-            return filteredDeals.count;
+        let numberOfCells = availableDeals.count
+        if availableDeals.count == (numberOfPages-1) * numberOfItemsInAPage {
+            return numberOfCells + 1
         } else {
-            return 0;
+            return numberOfCells
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let dealListingCell = tableView.dequeueReusableCell(withIdentifier: "dealListingCell", for: indexPath) as! DealsListingTableViewCell
-        dealListingCell.customizeCell(deal: filteredDeals![indexPath.row])
-        dealListingCell.selectionStyle = .none
-        return dealListingCell;
+        var cell = UITableViewCell()
+        if indexPath.row == availableDeals.count && availableDeals.count > 0{
+            let pagingLoadingCell = tableView.dequeueReusableCell(withIdentifier: "pagingLoadingCell", for: indexPath) as! PagingLoadingTableViewCell
+            pagingLoadingCell.activityIndicator.startAnimating()
+            cell = pagingLoadingCell
+            
+            if !isLoadingList {
+                currentPage += 1
+                if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
+                    searchDealsFromServer(location: selectedLocation, searchString: searchString)
+                }
+            }
+            cell = pagingLoadingCell
+        } else if availableDeals.count > 0 {
+            let dealListingCell = tableView.dequeueReusableCell(withIdentifier: "dealListingCell", for: indexPath) as! DealsListingTableViewCell
+            dealListingCell.customizeCell(deal: availableDeals[indexPath.row])
+            dealListingCell.selectionStyle = .none
+            cell = dealListingCell
+        }
+        
+     
+        return cell;
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -189,7 +179,7 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         DispatchQueue.main.async {
-            self.performSegue(withIdentifier: "showDealDetailView", sender: self.filteredDeals![indexPath.row])
+            self.performSegue(withIdentifier: "showDealDetailView", sender: self.availableDeals[indexPath.row])
         }
     }
     
@@ -209,89 +199,64 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
     }
     
     
-    // MARK: - Private
-
-    func parseAllDealsResponseAndReloadView(allDealsResponse : [String : Any]) {
-        if let allDeals = allDealsResponse["deals"] as? [[String : Any]] {
-            self.availableDeals = Deal.dealObjectsFromProperties(properties: allDeals)
-            var favourites = [Deal]()
-            var purchases = [Deal]()
-            if let allFavoritedDeals = allDealsResponse["wishlist"] as? [[String : Any]] {
-                favourites = Deal.dealObjectsFromProperties(properties: allFavoritedDeals)
-            }
-            if let allPurchased = allDealsResponse["purchases"] as? [[String : Any]] {
-                for dealProperty in allPurchased {
-                    if let singleDeal = dealProperty["deal"] as? [String : Any] {
-                        let deal = Deal.dealObjectFromProperty(property: singleDeal)
-                        if let purchaseDate = dealProperty["purchase_date"] as? Double {
-                            deal.purchasedDate = Date(timeIntervalSince1970: purchaseDate)
-                        }
-                        if let purchaseExpiry = dealProperty["expiry_date"] as? Double {
-                            deal.purchaseExpiry = Date(timeIntervalSince1970: purchaseExpiry)
-                        }
-                        if let code = dealProperty["code"] as? String {
-                            deal.purchaseCode = code
-                        }
-                        if let isRedeemed = dealProperty["isRedeemed"] as? Bool {
-                            deal.isRedeemed = isRedeemed
-                        }
-                        purchases.append(deal)
-                    }
-                }
-            }
-            _ = favourites.map({ (deal) -> Deal in
-                let correspondingDeal = self.availableDeals?.filter({ $0.dealId == deal.dealId}).first
-                correspondingDeal?.isFavourited = true
-                return deal
-            })
-            
-            _ = purchases.map({ (deal) -> Deal in
-                if let correspondingDeal = self.availableDeals?.filter({ $0.dealId == deal.dealId}).first {
-                    correspondingDeal.numberOfPurchases += 1
-                    if let correspondingDealPurchseDate =  correspondingDeal.purchasedDate,
-                        let dealPurchaseDate = deal.purchasedDate,
-                        correspondingDealPurchseDate.timeIntervalSince1970 < dealPurchaseDate.timeIntervalSince1970 {
-                        correspondingDeal.purchasedDate = dealPurchaseDate
-                        correspondingDeal.purchaseCode = deal.purchaseCode
-                        correspondingDeal.purchaseExpiry = deal.purchaseExpiry
-                    } else if correspondingDeal.purchasedDate == nil {
-                        correspondingDeal.purchasedDate = deal.purchasedDate
-                        correspondingDeal.purchaseCode = deal.purchaseCode
-                        correspondingDeal.purchaseExpiry = deal.purchaseExpiry
-                    }
-                }
-                return deal
-            })
-        } else {
-            //Handle Error condition
+    func searchDealsFromServer(location : String, searchString : String) {
+        guard !isLoadingList else {
+            return
         }
-    }
-    
-    func fetchAllDealsFromServerAndUpdateUI(location : String) {
+        
+        isLoadingList = true
+        
         var tokenHeader = [String : String]()
         if let token = User.getProfile()?.token {
             tokenHeader = ["Authorization" : "Token \(token)"]
         }
-        BaseWebservice.performRequest(function: WebserviceFunction.fetchDealsList, requestMethod: .get, params: ["location" : location as AnyObject], headers: tokenHeader) { (response, error) in
-            if let response = response as? [String : Any] {
+        BaseWebservice.performRequest(function: WebserviceFunction.search, requestMethod: .get, params: ["location" : location as AnyObject, "page" : currentPage as AnyObject, "search" : searchString as AnyObject], headers: tokenHeader) { (response, error) in
+            self.isLoadingList = false
+            
+            if let error = error {
+                UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
+                self.noDealsContentView.isHidden = false
+                self.dealsListingTableView.isHidden = true
+            } else if let response = response as? [String : Any] {
                 if let status = response["status"] as? String {
                     if status=="success" {
                         if let allDealsProperties = response["data"] as? [String : Any] {
-                                self.parseAllDealsResponseAndReloadView(allDealsResponse: allDealsProperties)
-                                self.filteredDeals = self.availableDeals
-                                self.searchUpdateUI()
-                            } else {
-                                UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                            if let totalPages = allDealsProperties["total_pages"] as? Int {
+                                self.numberOfPages = totalPages
                             }
+                            
+                            if let allDeals = allDealsProperties["deals"] as? [[String : Any]] {
+                                self.availableDeals = Deal.dealObjectsFromProperties(properties: allDeals)
+                            }
+                            if self.availableDeals.count == 0{
+                                self.noDealsContentView.isHidden = false
+                                self.dealsListingTableView.isHidden = true
+                            } else {
+                                self.noDealsContentView.isHidden = true
+                                self.dealsListingTableView.isHidden = false
+                            }
+
+                            self.dealsListingTableView.reloadData()
                         } else {
+                            self.noDealsContentView.isHidden = false
+                            self.dealsListingTableView.isHidden = true
                             UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                         }
                     } else {
+                        self.noDealsContentView.isHidden = false
+                        self.dealsListingTableView.isHidden = true
                         UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                     }
                 } else {
+                    self.noDealsContentView.isHidden = false
+                    self.dealsListingTableView.isHidden = true
                     UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                 }
+            } else {
+                self.noDealsContentView.isHidden = false
+                self.dealsListingTableView.isHidden = true
+                UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+            }
         }
     }
 

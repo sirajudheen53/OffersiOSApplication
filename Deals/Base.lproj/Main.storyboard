@@ -2199,6 +2199,28 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Wgr-nJ-ehu">
                                 <rect key="frame" x="0.0" y="138" width="414" height="549"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="pagingLoadingCell" rowHeight="44" id="DdA-Jc-VrF" customClass="PagingLoadingTableViewCell" customModule="Dollor_Deals" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="DdA-Jc-VrF" id="ge5-zu-D2b">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Ooz-8c-ohO">
+                                                    <rect key="frame" x="197" y="12" width="20" height="20"/>
+                                                </activityIndicatorView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Ooz-8c-ohO" firstAttribute="centerY" secondItem="ge5-zu-D2b" secondAttribute="centerY" id="2KT-QS-UJD"/>
+                                                <constraint firstItem="Ooz-8c-ohO" firstAttribute="centerX" secondItem="ge5-zu-D2b" secondAttribute="centerX" id="nWU-Dk-aiB"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="activityIndicator" destination="Ooz-8c-ohO" id="YSt-By-zBG"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="QdU-Wb-EPU" id="PJe-vf-HVt"/>
                                     <outlet property="delegate" destination="QdU-Wb-EPU" id="3us-jT-Xy8"/>
@@ -2763,7 +2785,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="F0e-Pl-oRI"/>
         <segue reference="LFe-de-dCP"/>
-        <segue reference="A3n-xN-iaX"/>
-        <segue reference="Kwg-01-gCJ"/>
+        <segue reference="uwF-og-KTp"/>
+        <segue reference="OD9-Gk-d3K"/>
     </inferredMetricsTieBreakers>
 </document>
