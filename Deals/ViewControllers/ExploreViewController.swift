@@ -74,6 +74,7 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
     @IBAction func textFieldChanged(_ sender: UITextField) {
         if let currentText = searchTextField.text {
             searchString = currentText
+            numberOfPages = 1
             if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
                 searchDealsFromServer(location: selectedLocation, searchString: searchString)
             }
