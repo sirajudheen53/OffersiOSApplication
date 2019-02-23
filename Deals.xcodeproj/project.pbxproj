@@ -19,7 +19,6 @@
 		0B67D0BF20AAA6D000FC39E5 /* TestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B67D0BE20AAA6D000FC39E5 /* TestUITests.swift */; };
 		0B9E123320B2900100C66129 /* ConditionsListingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E123220B2900100C66129 /* ConditionsListingTableViewCell.swift */; };
 		0B9E123520B290A400C66129 /* DealDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E123420B290A400C66129 /* DealDetailsViewController.swift */; };
-		0B9E123720B29D4000C66129 /* MyOrdersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E123620B29D4000C66129 /* MyOrdersViewController.swift */; };
 		0B9E123B20B3D44100C66129 /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E123A20B3D44100C66129 /* ExploreViewController.swift */; };
 		0BB77F3121D1027C00BD925D /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB77F3021D1027C00BD925D /* PopupViewController.swift */; };
 		3F54C225E8FD3F0F3AF71CDF /* Pods_DealsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDC3F225C35034B28A04DD0C /* Pods_DealsTests.framework */; };
@@ -49,6 +48,7 @@
 		A76788DF2201E613006F616C /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76788DE2201E613006F616C /* BaseViewController.swift */; };
 		A769A3D22212901D00D07F06 /* CodeInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A769A3D12212901D00D07F06 /* CodeInputView.swift */; };
 		A77C543120F1E1D7003D5BCB /* UILabel+LetterSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C543020F1E1D7003D5BCB /* UILabel+LetterSpacing.swift */; };
+		A78628DE221DC87C00663C08 /* FeatureListingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78628DD221DC87C00663C08 /* FeatureListingTableViewCell.swift */; };
 		A786578C20DABFBC00649410 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A786578B20DABFBC00649410 /* Constants.swift */; };
 		A786578E20DAC8A300649410 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A786578D20DAC8A200649410 /* CoreLocation.framework */; };
 		A786579120DAD0E200649410 /* HotDealCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A786578F20DAD0E100649410 /* HotDealCollectionViewCell.swift */; };
@@ -61,6 +61,8 @@
 		A78D194F214CDE2B00E9F6BF /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A78D194E214CDE2B00E9F6BF /* SF-Pro-Text-Bold.otf */; };
 		A79CA1A11FF9B47600713DE3 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79CA1A01FF9B47600713DE3 /* Date+Extension.swift */; };
 		A7AFE6BD2102FC9F00D3322E /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AFE6BC2102FC9F00D3322E /* UserProfile.swift */; };
+		A7BD3282222118C000E9F6BD /* FeatureListingWithHeadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BD3281222118C000E9F6BD /* FeatureListingWithHeadingTableViewCell.swift */; };
+		A7BD3284222119FD00E9F6BD /* DealFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BD3283222119FD00E9F6BD /* DealFeature.swift */; };
 		A7C22C1121FC90B600BCF81C /* dollordeals_terms.html in Resources */ = {isa = PBXBuildFile; fileRef = A7C22C1021FC90B600BCF81C /* dollordeals_terms.html */; };
 		A7C22C1321FC933500BCF81C /* dollor_deals_privacy.html in Resources */ = {isa = PBXBuildFile; fileRef = A7C22C1221FC933500BCF81C /* dollor_deals_privacy.html */; };
 		A7C28A0120FE46A30071FC59 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C28A0020FE46A30071FC59 /* User.swift */; };
@@ -134,7 +136,6 @@
 		0B67D0C020AAA6D000FC39E5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B9E123220B2900100C66129 /* ConditionsListingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionsListingTableViewCell.swift; sourceTree = "<group>"; };
 		0B9E123420B290A400C66129 /* DealDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealDetailsViewController.swift; sourceTree = "<group>"; };
-		0B9E123620B29D4000C66129 /* MyOrdersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrdersViewController.swift; sourceTree = "<group>"; };
 		0B9E123A20B3D44100C66129 /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
 		0BB77F3021D1027C00BD925D /* PopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
 		0BCA3431220317C4004E6DE9 /* Dollor Deals.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Dollor Deals.entitlements"; sourceTree = "<group>"; };
@@ -169,6 +170,7 @@
 		A76788DE2201E613006F616C /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		A769A3D12212901D00D07F06 /* CodeInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeInputView.swift; sourceTree = "<group>"; };
 		A77C543020F1E1D7003D5BCB /* UILabel+LetterSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+LetterSpacing.swift"; sourceTree = "<group>"; };
+		A78628DD221DC87C00663C08 /* FeatureListingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureListingTableViewCell.swift; sourceTree = "<group>"; };
 		A786578B20DABFBC00649410 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A786578D20DAC8A200649410 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		A786578F20DAD0E100649410 /* HotDealCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotDealCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -181,6 +183,8 @@
 		A78D194E214CDE2B00E9F6BF /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
 		A79CA1A01FF9B47600713DE3 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Date+Extension.swift"; path = "Extensions/Date+Extension.swift"; sourceTree = "<group>"; };
 		A7AFE6BC2102FC9F00D3322E /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		A7BD3281222118C000E9F6BD /* FeatureListingWithHeadingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureListingWithHeadingTableViewCell.swift; sourceTree = "<group>"; };
+		A7BD3283222119FD00E9F6BD /* DealFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealFeature.swift; sourceTree = "<group>"; };
 		A7C22C1021FC90B600BCF81C /* dollordeals_terms.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = dollordeals_terms.html; sourceTree = "<group>"; };
 		A7C22C1221FC933500BCF81C /* dollor_deals_privacy.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = dollor_deals_privacy.html; sourceTree = "<group>"; };
 		A7C28A0020FE46A30071FC59 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -345,6 +349,8 @@
 			isa = PBXGroup;
 			children = (
 				0B9E123220B2900100C66129 /* ConditionsListingTableViewCell.swift */,
+				A78628DD221DC87C00663C08 /* FeatureListingTableViewCell.swift */,
+				A7BD3281222118C000E9F6BD /* FeatureListingWithHeadingTableViewCell.swift */,
 				A717A32220EF42770036A32E /* DealsListingTableViewCell.swift */,
 				A717A32320EF42770036A32E /* DealsListingTableViewCell.xib */,
 				A786578F20DAD0E100649410 /* HotDealCollectionViewCell.swift */,
@@ -370,7 +376,6 @@
 				0B06479D20AC419100AE8496 /* HomeViewController.swift */,
 				0B9E123420B290A400C66129 /* DealDetailsViewController.swift */,
 				A74EC1A221C4E1B700605A8A /* LocationSelectionViewController.swift */,
-				0B9E123620B29D4000C66129 /* MyOrdersViewController.swift */,
 				A7F7501B20D6C33F0012FE47 /* ExploreFilterViewController.swift */,
 				0B9E123A20B3D44100C66129 /* ExploreViewController.swift */,
 				0B1F18CE20DBA3630075C1FA /* ProfileViewController.swift */,
@@ -403,6 +408,7 @@
 			isa = PBXGroup;
 			children = (
 				A7F7501320D638E80012FE47 /* Deal.swift */,
+				A7BD3283222119FD00E9F6BD /* DealFeature.swift */,
 				A7F7501520D639290012FE47 /* Vendor.swift */,
 				A7F7501720D639320012FE47 /* Category.swift */,
 				A7521A4B211DB66F00E870B8 /* Purchase.swift */,
@@ -736,6 +742,7 @@
 			files = (
 				A7E6B71221C3834D00FA943B /* UIView+Extension.swift in Sources */,
 				A7521A50211DDFA400E870B8 /* UIImage+Noir.swift in Sources */,
+				A7BD3284222119FD00E9F6BD /* DealFeature.swift in Sources */,
 				A717A32420EF42770036A32E /* DealsListingTableViewCell.swift in Sources */,
 				0B67D0A120AAA6D000FC39E5 /* LoginViewController.swift in Sources */,
 				A786578C20DABFBC00649410 /* Constants.swift in Sources */,
@@ -743,7 +750,6 @@
 				A769A3D22212901D00D07F06 /* CodeInputView.swift in Sources */,
 				0B1F18CF20DBA3630075C1FA /* ProfileViewController.swift in Sources */,
 				A786579120DAD0E200649410 /* HotDealCollectionViewCell.swift in Sources */,
-				0B9E123720B29D4000C66129 /* MyOrdersViewController.swift in Sources */,
 				A757D17920EFDBD100E4A282 /* HomeExploreTableViewCell.swift in Sources */,
 				A72B2B2821FC4E08005A4532 /* TermsViewController.swift in Sources */,
 				A7337DE6220B630E00CB73AE /* UITextField+Border.swift in Sources */,
@@ -753,6 +759,7 @@
 				0B67D09F20AAA6D000FC39E5 /* AppDelegate.swift in Sources */,
 				0B9E123320B2900100C66129 /* ConditionsListingTableViewCell.swift in Sources */,
 				A7F7502C20D970FF0012FE47 /* UIView+RoundCorner.swift in Sources */,
+				A7BD3282222118C000E9F6BD /* FeatureListingWithHeadingTableViewCell.swift in Sources */,
 				A7521A4C211DB66F00E870B8 /* Purchase.swift in Sources */,
 				A7DD00532215A95B0099284A /* PagingLoadingTableViewCell.swift in Sources */,
 				A77C543120F1E1D7003D5BCB /* UILabel+LetterSpacing.swift in Sources */,
@@ -776,6 +783,7 @@
 				A757D17D20EFDD1C00E4A282 /* HomeExploreCollectionViewCell.swift in Sources */,
 				A74EC1A321C4E1B700605A8A /* LocationSelectionViewController.swift in Sources */,
 				A7F7501820D639320012FE47 /* Category.swift in Sources */,
+				A78628DE221DC87C00663C08 /* FeatureListingTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -951,7 +959,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 5DYFD9UMYF;
+				DEVELOPMENT_TEAM = 6R3U4523N6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -961,7 +969,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.firewheelstrading.dollordeals;
 				PRODUCT_NAME = "Dollor Deals";
-				PROVISIONING_PROFILE_SPECIFIER = Generic;
+				PROVISIONING_PROFILE_SPECIFIER = "Dollor Deals Development";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -976,7 +984,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 5DYFD9UMYF;
+				DEVELOPMENT_TEAM = 6R3U4523N6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -986,7 +994,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.firewheelstrading.dollordeals;
 				PRODUCT_NAME = "Dollor Deals";
-				PROVISIONING_PROFILE_SPECIFIER = Generic;
+				PROVISIONING_PROFILE_SPECIFIER = "Dollor Deals Development";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

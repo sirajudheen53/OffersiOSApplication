@@ -145,7 +145,9 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                         if response["status"] as? String == "success" {
                             deal.isFavourited = true
                             NotificationCenter.default.post(Notification.init(name: Notification.Name("userProfileUpdated")))
-                        } else {
+                        } else if let message = response["message"] as? String {
+                            UIView.showWarningMessage(title: "Oops !", message: message)
+                        }  else {
                             UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                         }
                     } else {
@@ -172,7 +174,9 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                         if response["status"] as? String == "success" {
                             deal.isFavourited = true
                             NotificationCenter.default.post(Notification.init(name: Notification.Name("userProfileUpdated")))
-                        } else {
+                        } else if let message = response["message"] as? String {
+                            UIView.showWarningMessage(title: "Oops !", message: message)
+                        }  else {
                             UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                         }
                     } else {

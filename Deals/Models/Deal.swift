@@ -31,6 +31,7 @@ class Deal: NSObject {
     var isRedeemed : Bool = false
     var allowedSimultaneous : Int = 1
     var conditons = [String]()
+    var features = [DealFeature]()
     
     static func dealObjectFromProperty(property : [String : Any]) -> Deal {
         let requiredDeal = Deal()
@@ -69,6 +70,23 @@ class Deal: NSObject {
         }
         if let conditions = property["conditions"] as? [String] {
             requiredDeal.conditons = conditions
+        }
+        if let features = property["features"] as? [[String : String]] {
+            requiredDeal.features = DealFeature.dealFeaturesFromProperties(arrayOfProperties: features)
+        }
+        if let recentPurchases = property["recent_purchase"] as? [String : Any] {
+            if let code = recentPurchases["code"] as? String {
+                requiredDeal.purchaseCode = code
+            }
+            if let purchaseDate = recentPurchases["purchase_date"] as? Double {
+                requiredDeal.purchasedDate = Date(timeIntervalSince1970: purchaseDate)
+            }
+            if let purchaseExpiryDate = recentPurchases["expiry_date"] as? Double {
+                requiredDeal.purchaseExpiry = Date(timeIntervalSince1970: purchaseExpiryDate)
+            }
+            if let isRedeemed = recentPurchases["isRedeemed"] as? Bool {
+                requiredDeal.isRedeemed = isRedeemed
+            }
         }
         return requiredDeal
     }

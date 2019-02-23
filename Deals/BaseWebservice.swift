@@ -29,6 +29,9 @@ enum WebserviceMethod {
 //let base_servive_url : String = "http://127.0.0.1:8000/"
 //let image_service_url : String = "http://127.0.0.1:8000/"
 
+//let base_servive_url : String = "http://192.168.43.54:8000/"
+//let image_service_url : String = "http://192.168.43.54:8000/"
+
 //let image_service_url : String = "https://q-deals.herokuapp.com/"
 //let base_servive_url : String = "https://q-deals.herokuapp.com/"
 

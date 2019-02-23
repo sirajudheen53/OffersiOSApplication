@@ -177,7 +177,9 @@ class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollecti
                     } else {
                         UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                     }
-                } else {
+                } else if let message = response["message"] as? String {
+                    UIView.showWarningMessage(title: "Oops !", message: message)
+                }  else {
                     if response["detail"] as? String == "Invalid token." {
                         self.profileContentView.isHidden = true
                         self.loginViewContent.isHidden = false

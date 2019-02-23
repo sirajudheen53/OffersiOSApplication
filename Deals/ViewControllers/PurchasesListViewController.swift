@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class PurchasesListViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -36,6 +37,36 @@ class PurchasesListViewController: BaseViewController, UITableViewDelegate, UITa
             }
         }
      }
+    
+    func enableLocationBlock() -> (()->()) {
+        return { // initialise a pop up for using later
+            let alertController = UIAlertController(title: "Dollor Deals", message: "Please go to Settings and turn on the permissions", preferredStyle: .alert)
+            let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
+                guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+                    return
+                }
+                if UIApplication.shared.canOpenURL(settingsUrl) {
+                    UIApplication.shared.open(settingsUrl, options: [:], completionHandler: { (success) in
+                        
+                    })
+                }
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+            alertController.addAction(cancelAction)
+            alertController.addAction(settingsAction)
+            
+            // check the permission status
+            switch(CLLocationManager.authorizationStatus()) {
+            case .authorizedAlways, .authorizedWhenInUse:
+                if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                    appDelegate.locationManager.startUpdatingLocation()
+                }
+            // get the user location
+            case .notDetermined, .restricted, .denied:
+                // redirect the users to settings
+                self.present(alertController, animated: true, completion: nil)
+            }}
+    }
     
     // MARK: - TableView Delegate Methods
 

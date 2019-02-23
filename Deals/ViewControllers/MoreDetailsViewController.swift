@@ -10,7 +10,7 @@ import UIKit
 
 class MoreDetailsViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
 
-    var conditions = [String]()
+    var deal : Deal?
     
     override func viewDidLoad() {
         analyticsScreenName = "More Details View"
@@ -25,16 +25,39 @@ class MoreDetailsViewController: BaseViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return conditions.count
+        if let deal = deal {
+            return deal.conditons.count + deal.features.count
+        }
+        return  0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "condtionsCell", for: indexPath) as? ConditionsListingTableViewCell {
-            cell.indexNumberLabel.text = "\(indexPath.row+1)."
-            cell.conditionTextLabel.text = "\(conditions[indexPath.row])"
-            return cell
+        var cell : UITableViewCell!
+        
+        if let deal = deal {
+            if indexPath.row < deal.features.count {
+                let feature = deal.features[indexPath.row]
+                if feature.featureTitle == "" {
+                    let listingCell = tableView.dequeueReusableCell(withIdentifier: "featureListingCell", for: indexPath) as! FeatureListingTableViewCell
+                    listingCell.contentLabel?.text = feature.featureDescription
+                    cell = listingCell
+                } else {
+                    let listingCellWithHeading = tableView.dequeueReusableCell(withIdentifier: "featuerListingWithHeaderCell", for: indexPath) as! FeatureListingWithHeadingTableViewCell
+                    listingCellWithHeading.contentHeadingLabel.text = feature.featureTitle
+                    listingCellWithHeading.contentLabel.text = feature.featureDescription
+                    cell = listingCellWithHeading
+                }
+            } else {
+                let conditionCell = tableView.dequeueReusableCell(withIdentifier: "condtionsCell", for: indexPath) as! ConditionsListingTableViewCell
+                    conditionCell.indexNumberLabel.text = "\(indexPath.row+1-deal.features.count)."
+                    conditionCell.conditionTextLabel.text = "\(deal.conditons[indexPath.row-deal.features.count])"
+                cell = conditionCell
+            }
+        } else {
+            cell = UITableViewCell()
         }
-        return UITableViewCell()
+ 
+        return cell
     }
 
     @IBAction func closeButtonClicked(_ sender: Any) {

@@ -116,8 +116,8 @@ class DealsListingTableViewCell: UITableViewCell {
         if deal.originalPrice > 0 {
             self.offerPercentValueLabel.text = "\(Int((Float(deal.originalPrice - deal.dealPrice)/Float(deal.originalPrice))*100))% off"
         }
-        if let images = deal.images {
-            self.dealImageView.af_setImage(withURL: URL(string: image_service_url + images.first!)!,
+        if let images = deal.images, let image = images.first {
+            self.dealImageView.af_setImage(withURL: URL(string: image_service_url + image)!,
                                            placeholderImage: UIImage(named: "logo_small"),
                                            filter: nil,
                                            progress: nil,
