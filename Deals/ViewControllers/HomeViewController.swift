@@ -251,7 +251,7 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             let exploreCell = tableView.dequeueReusableCell(withIdentifier: "exploreTableViewCell", for: indexPath) as! HomeExploreTableViewCell
             exploreCell.exploreCategorySelectionBlock = self.exploreCategorySelectionBlock()
             cell = exploreCell
-        } else if indexPath.row == availableDeals.count + numberOfExtraCells {
+        } else if (availableDeals.count > 0) && (indexPath.row == (availableDeals.count + numberOfExtraCells)) {
             let pagingLoadingCell = tableView.dequeueReusableCell(withIdentifier: "pagingLoadingCell", for: indexPath) as! PagingLoadingTableViewCell
             pagingLoadingCell.activityIndicator.startAnimating()
             cell = pagingLoadingCell

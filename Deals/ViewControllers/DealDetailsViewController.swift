@@ -10,13 +10,13 @@ import UIKit
 import CoreGraphics
 import SVProgressHUD
 import CoreLocation
-//import QpayPayment
+import QpayPayment
 
-class DealDetailsViewController: BaseViewController {
+class DealDetailsViewController: BaseViewController, QPRequestProtocol {
 
     var deal : Deal?
     var dealCode : String?
- //   var qpRequestParams : QPRequestParameters!
+    var qpRequestParams : QPRequestParameters!
 
     @IBOutlet weak var phoneContactButton: UIButton!
     @IBOutlet weak var buyMoreButton: UIButton!
@@ -68,8 +68,8 @@ class DealDetailsViewController: BaseViewController {
     
     
     override func viewDidLoad() {
-//        qpRequestParams =   QPRequestParameters(viewController: self)
-//        qpRequestParams.delegate = self 
+        qpRequestParams =   QPRequestParameters(viewController: self)
+        qpRequestParams.delegate = self
         
         analyticsScreenName = "Deal Details View"
         super.viewDidLoad()
@@ -430,68 +430,27 @@ class DealDetailsViewController: BaseViewController {
     // MARK: - IBAction Methods
     
     func initiatePayment() {
-//        qpRequestParams.gatewayId = "017146316"
-//        qpRequestParams.secretKey = "2-LHwxDLOVHC3pB5"
-//        qpRequestParams.name = "Dollor Deals"
-//        qpRequestParams.address = "Dollor Deals - Qatar"
-//        qpRequestParams.city = "Doha"
-//        qpRequestParams.state = "Doha"
-//        qpRequestParams.country  = "QA"
-//        qpRequestParams.email = "info@dollordeals.com"
-//        qpRequestParams.currency = "QAR"
-//        qpRequestParams.referenceId = UUID().uuidString
-//        qpRequestParams.phone = "\(User.getProfile()?.phoneNumber ?? "")"
-//        qpRequestParams.amount = Double(deal?.dealPrice ?? 1) //any float value
-//        qpRequestParams.mode = "TEST"
-//        qpRequestParams.productDescription = "A Deal from Dollor Deals"
-//        qpRequestParams.sendRequest()
+        qpRequestParams.gatewayId = "017146316"
+        qpRequestParams.secretKey = "2-LHwxDLOVHC3pB5"
+        qpRequestParams.name = "Dollor Deals"
+        qpRequestParams.address = "Dollor Deals - Qatar"
+        qpRequestParams.city = "Doha"
+        qpRequestParams.state = "Doha"
+        qpRequestParams.country  = "QA"
+        qpRequestParams.email = "info@dollordeals.com"
+        qpRequestParams.currency = "QAR"
+        qpRequestParams.referenceId = UUID().uuidString
+        qpRequestParams.phone = "\(User.getProfile()?.phoneNumber ?? "")"
+        qpRequestParams.amount = Double(deal?.dealPrice ?? 1) //any float value
+        qpRequestParams.mode = "TEST"
+        qpRequestParams.productDescription = "A Deal from Dollor Deals"
+        qpRequestParams.sendRequest()
     }
     
     @IBAction func buyNowButtonClicked(_ sender: UIButton) {
-     //   initiatePayment()
+        initiatePayment()
 
-        if let serverToken = User.getProfile()?.token {
-            guard let userPhoneNumber = User.getProfile()?.phoneNumber, userPhoneNumber != "" else {
-                self.performSegue(withIdentifier: "showPhoneNumberInput", sender: nil)
-                return
-            }
-            SVProgressHUD.show()
-            let userProfileFetchHeader = ["Authorization" : "Token \(serverToken)"]
-                BaseWebservice.performRequest(function: .makePurchase, requestMethod: .post, params: ["deal_id" : deal!.dealId as AnyObject], headers: userProfileFetchHeader, onCompletion: { (response, error) in
-                    SVProgressHUD.dismiss()
-                    if let error = error {
-                        UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
-                    } else if let response = response as? [String : Any?] {
-                        if response["status"] as? String == "success" {
-                            NotificationCenter.default.post(Notification.init(name: Notification.Name("userProfileUpdated")))
-                            if let purchase = response["purchase"] as? [String : Any] {
-                                if let code = purchase["code"] as? String {
-                                    self.deal?.purchaseCode = code
-                                }
-                                if let purchaseExpiry = purchase["expiry_date"] as? Double {
-                                    self.deal?.purchaseExpiry = Date(timeIntervalSince1970: purchaseExpiry)
-                                }
-                                self.deal!.numberOfPurchases += 1
-                                if self.deal!.numberOfPurchases < self.deal!.allowedSimultaneous {
-                                    self.buyMoreButton.isHidden = false
-                                } else {
-                                    self.buyMoreButton.isHidden = true
-                                }
-                            }
-                            self.showDealCodeView()
 
-                        } else if let message = response["message"] as? String {
-                            UIView.showWarningMessage(title: "Oops !", message: message)
-                        } else {
-                            UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
-                        }
-                    } else {
-                        UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
-                    }
-                })
-        } else {
-            self.performSegue(withIdentifier: "showLoginPopup", sender: nil)
-        }
     }
     
     
@@ -562,11 +521,60 @@ class DealDetailsViewController: BaseViewController {
         }
     }
     
+    func makePurchase() {
+        if let serverToken = User.getProfile()?.token {
+            guard let userPhoneNumber = User.getProfile()?.phoneNumber, userPhoneNumber != "" else {
+                self.performSegue(withIdentifier: "showPhoneNumberInput", sender: nil)
+                return
+            }
+            SVProgressHUD.show()
+            let userProfileFetchHeader = ["Authorization" : "Token \(serverToken)"]
+            BaseWebservice.performRequest(function: .makePurchase, requestMethod: .post, params: ["deal_id" : deal!.dealId as AnyObject], headers: userProfileFetchHeader, onCompletion: { (response, error) in
+                SVProgressHUD.dismiss()
+                if let error = error {
+                    UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
+                } else if let response = response as? [String : Any?] {
+                    if response["status"] as? String == "success" {
+                        NotificationCenter.default.post(Notification.init(name: Notification.Name("userProfileUpdated")))
+                        if let purchase = response["purchase"] as? [String : Any] {
+                            if let code = purchase["code"] as? String {
+                                self.deal?.purchaseCode = code
+                            }
+                            if let purchaseExpiry = purchase["expiry_date"] as? Double {
+                                self.deal?.purchaseExpiry = Date(timeIntervalSince1970: purchaseExpiry)
+                            }
+                            self.deal!.numberOfPurchases += 1
+                            if self.deal!.numberOfPurchases < self.deal!.allowedSimultaneous {
+                                self.buyMoreButton.isHidden = false
+                            } else {
+                                self.buyMoreButton.isHidden = true
+                            }
+                        }
+                        self.showDealCodeView()
+                        
+                    } else if let message = response["message"] as? String {
+                        UIView.showWarningMessage(title: "Oops !", message: message)
+                    } else {
+                        UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                    }
+                } else {
+                    UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                }
+            })
+        } else {
+            self.performSegue(withIdentifier: "showLoginPopup", sender: nil)
+        }
+    }
+    
     func qpResponse(_ response: NSDictionary) {
         if let response = response as? [String : Any] {
-            
+            if let status = response["status"] as? String, let amount = response["amount"] as? Double, status == "success", amount == Double(deal!.dealPrice) {
+                makePurchase()
+            } else {
+                UIView.showWarningMessage(title: "Warning", message: "Something went wrong with your payment. Please contract our customer care.")
+            }
+        } else {
+            UIView.showWarningMessage(title: "Warning", message: "Something went wrong with your payment. Please contract our customer care.")
         }
-        
-        //Perform your actions with the response
     }
 }

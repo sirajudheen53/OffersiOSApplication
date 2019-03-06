@@ -13,9 +13,10 @@ import FBSDKCoreKit
 import Firebase
 import Crashlytics
 import Fabric
+import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLocationManagerDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLocationManagerDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
     let locationManager = CLLocationManager()
@@ -43,6 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLoca
 
         FirebaseApp.configure()
         Fabric.with([Crashlytics.self])
+        registerForRemoteNotification()
         
         UserDefaults.standard.set("Qatar", forKey: "SelectedLocation")
 
@@ -73,7 +75,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLoca
         return googleHandler || facebookHandler
     }
 
-   
+    func registerForRemoteNotification() {
+        if #available(iOS 10.0, *) {
+            // For iOS 10 display notification (sent via APNS)
+            UNUserNotificationCenter.current().delegate = self
+            
+            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+            UNUserNotificationCenter.current().requestAuthorization(
+                options: authOptions,
+                completionHandler: {_, _ in })
+        } else {
+            let settings: UIUserNotificationSettings =
+                UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            UIApplication.shared.registerUserNotificationSettings(settings)
+        }
+    }
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!,
               withError error: Error!) {
@@ -154,6 +170,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLoca
         NotificationCenter.default.post(name: NSNotification.Name("locationUpdated"), object: nil)
         
 
+    }
+
+    
+    private func application(application: UIApplication,
+                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let dToken = deviceToken.base64EncodedString()
+        
+        let isTokenSent = UserDefaults.standard.bool(forKey: "isTokenSent")
+        if !isTokenSent {
+            if let token = User.getProfile()?.token {
+                let tokenHeader = ["Authorization" : "Token \(token)"]
+                BaseWebservice.performRequest(function: WebserviceFunction.registerToken, requestMethod: .post, params: ["token" : dToken as AnyObject], headers: tokenHeader) { (response, error) in
+                    guard let _ = error else {
+                        if let response = response as? [String : String] {
+                            if response["status"] == "success" {
+                                UserDefaults.standard.set(true, forKey: "isTokenSent")
+                            }
+                        }
+                        return
+                    }
+                }
+            }
+        }
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print(error.localizedDescription)
     }
 
 

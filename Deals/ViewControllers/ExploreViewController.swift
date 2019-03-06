@@ -69,6 +69,8 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
         if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
             searchDealsFromServer(location: selectedLocation, _searchString: searchString)
         }
+        self.filterNumberLabel.text = "\(self.filterCategories.count)"
+
     }
     
     // MARK: - TextField Delegates
@@ -169,7 +171,7 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell : UITableViewCell
-        print("\(indexPath.row)")
+        print("Explore index --- \(indexPath.row)")
         if isLoadingList && indexPath.row == 0 && availableDeals.count > 0 {
             let pagingLoadingCell = tableView.dequeueReusableCell(withIdentifier: "pagingLoadingCell", for: indexPath) as! PagingLoadingTableViewCell
             pagingLoadingCell.activityIndicator.startAnimating()
@@ -241,7 +243,13 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
         if let token = User.getProfile()?.token {
             tokenHeader = ["Authorization" : "Token \(token)"]
         }
-        BaseWebservice.performRequest(function: WebserviceFunction.search, requestMethod: .get, params: ["location" : location as AnyObject, "page" : nextPageToLoad as AnyObject, "search" : _searchString as AnyObject, "category" : categoriesTitleList as AnyObject], headers: tokenHeader) { (response, error) in
+        
+        var categories = [String]()
+        for selectedCategory in filterCategories {
+            categories.append(appropriateCategoryName(category: selectedCategory))
+        }
+        
+        BaseWebservice.performRequest(function: WebserviceFunction.search, requestMethod: .get, params: ["location" : location as AnyObject, "page" : nextPageToLoad as AnyObject, "search" : _searchString as AnyObject, "category" : categories as AnyObject], headers: tokenHeader) { (response, error) in
             self.isLoadingList = false
             if let error = error {
                 UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
@@ -255,19 +263,20 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
                                 self.numberOfPages = totalPages
                             }
                             if let allDeals = allDealsProperties["deals"] as? [[String : Any]] {
-                                if self.lastLoadedSearchString != _searchString && self.searchString == _searchString {
+                                if self.nextPageToLoad == 1 && self.searchString == _searchString {
                                     self.availableDeals = Deal.dealObjectsFromProperties(properties: allDeals)
                                     self.dealsListingTableView.reloadData()
                                     let indexPath = IndexPath(item: 0, section: 0)
                                     self.dealsListingTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+                                    self.lastLoadedSearchString = _searchString
                                 } else if self.lastLoadedSearchString == _searchString {
                                     self.availableDeals.append(contentsOf: Deal.dealObjectsFromProperties(properties: allDeals))
                                     self.dealsListingTableView.reloadData()
+                                    self.lastLoadedSearchString = _searchString
                                 }
                             }
-                            self.lastLoadedSearchString = _searchString
 
-                            if self.availableDeals.count == 0{
+                            if self.availableDeals.count == 0 {
                                 self.noDealsContentView.isHidden = false
                                 self.dealsListingTableView.isHidden = true
                             } else {
