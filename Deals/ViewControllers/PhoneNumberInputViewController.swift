@@ -112,6 +112,15 @@ class PhoneNumberInputViewController: UIViewController, UIGestureRecognizerDeleg
     }
     
     func makeOTPApiCall() {
+        var requiredNumber : String = "";
+        do {
+            let parsedNumber = try phoneNumberKit.parse(textFieldText)
+            requiredNumber = "+\(parsedNumber.countryCode)" + "\(parsedNumber.nationalNumber)"
+        }
+        catch {
+            print("Generic parser error")
+        }
+        if let serverToken = User.getProfile()?.token {
         let userProfileFetchHeader = ["Authorization" : "Token \(serverToken)"]
         BaseWebservice.performRequest(function: .verifyPhoneNumber, requestMethod: .post, params: ["phone_number" :  requiredNumber as AnyObject, "otp" : inputOTP as AnyObject], headers: userProfileFetchHeader) { (response, error) in
             SVProgressHUD.dismiss()
@@ -133,8 +142,12 @@ class PhoneNumberInputViewController: UIViewController, UIGestureRecognizerDeleg
             } else {
                 UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
             }
+            }
+            
+        } else {
+            self.performSegue(withIdentifier: "showLoginPopup", sender: nil)
         }
-    }
+        }}
     
     @IBAction func resendButtonClicked(_ sender: Any) {
             makeOTPApiCall()
