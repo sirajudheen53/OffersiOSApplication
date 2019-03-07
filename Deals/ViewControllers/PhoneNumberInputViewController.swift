@@ -18,6 +18,8 @@ class PhoneNumberInputViewController: UIViewController, UIGestureRecognizerDeleg
     
     
     
+    @IBOutlet weak var resentOTPButton: UIButton!
+    @IBOutlet weak var attemptNumberLabel: UILabel!
     @IBOutlet weak var invalidOTPErrorMessagLabel: UILabel!
     @IBOutlet weak var codeInputView: UIView!
     @IBOutlet weak var inputViewVerticalCenterConstraint: NSLayoutConstraint!
@@ -34,6 +36,7 @@ class PhoneNumberInputViewController: UIViewController, UIGestureRecognizerDeleg
     let phoneNumberKit = PhoneNumberKit()
     var _codeInputView : CodeInputView!
     var inputOTP = ""
+    var numberOfOTPAttempts = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,6 +81,9 @@ class PhoneNumberInputViewController: UIViewController, UIGestureRecognizerDeleg
         self.view.endEditing(true)
     }
     
+    @IBAction func resendButtonClicked(_ sender: Any) {
+        doneWithNumberPad()
+    }
     
     func verifyOTPWithServer() {
         guard let textFieldText = phoneNumberTextField.text else {
@@ -104,53 +110,32 @@ class PhoneNumberInputViewController: UIViewController, UIGestureRecognizerDeleg
         
         if let serverToken = User.getProfile()?.token {
             SVProgressHUD.show()
-            makeOTPApiCall()
-            
-        } else {
-            self.performSegue(withIdentifier: "showLoginPopup", sender: nil)
-        }
-    }
-    
-    func makeOTPApiCall() {
-        var requiredNumber : String = "";
-        do {
-            let parsedNumber = try phoneNumberKit.parse(textFieldText)
-            requiredNumber = "+\(parsedNumber.countryCode)" + "\(parsedNumber.nationalNumber)"
-        }
-        catch {
-            print("Generic parser error")
-        }
-        if let serverToken = User.getProfile()?.token {
-        let userProfileFetchHeader = ["Authorization" : "Token \(serverToken)"]
-        BaseWebservice.performRequest(function: .verifyPhoneNumber, requestMethod: .post, params: ["phone_number" :  requiredNumber as AnyObject, "otp" : inputOTP as AnyObject], headers: userProfileFetchHeader) { (response, error) in
-            SVProgressHUD.dismiss()
-            if let error = error {
-                UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
-            }
-            if let response = response as? [String : String] {
-                if response["status"] == "success" {
-                    if let user = User.getProfile() {
-                        user.phoneNumber = requiredNumber
-                        user.saveToUserDefaults()
-                        self.dismiss(animated: false, completion: self.phoneNumberChangeActionBlock)
+
+            let userProfileFetchHeader = ["Authorization" : "Token \(serverToken)"]
+            BaseWebservice.performRequest(function: .verifyPhoneNumber, requestMethod: .post, params: ["phone_number" :  requiredNumber as AnyObject, "otp" : inputOTP as AnyObject], headers: userProfileFetchHeader) { (response, error) in
+                SVProgressHUD.dismiss()
+                if let error = error {
+                    UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
+                }
+                if let response = response as? [String : String] {
+                    if response["status"] == "success" {
+                        if let user = User.getProfile() {
+                            user.phoneNumber = requiredNumber
+                            user.saveToUserDefaults()
+                            self.dismiss(animated: false, completion: self.phoneNumberChangeActionBlock)
+                        }
+                    } else if response["status"] == "failed" {
+                        self.invalidOTPErrorMessagLabel.isHidden = false
+                    }  else {
+                        UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                     }
-                } else if response["status"] == "failed" {
-                    self.invalidOTPErrorMessagLabel.isHidden = false
-                }  else {
+                } else {
                     UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                 }
-            } else {
-                UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
             }
-            }
-            
         } else {
             self.performSegue(withIdentifier: "showLoginPopup", sender: nil)
         }
-        }}
-    
-    @IBAction func resendButtonClicked(_ sender: Any) {
-            makeOTPApiCall()
     }
     
     @objc func doneWithNumberPad() {
@@ -196,7 +181,16 @@ class PhoneNumberInputViewController: UIViewController, UIGestureRecognizerDeleg
                             self.phoneNumberInputView.isHidden = true
                             self.otpInputView.isHidden = false
                             self._codeInputView.becomeFirstResponder()
-
+                            self.numberOfOTPAttempts += 1
+                        if self.numberOfOTPAttempts == 2 {
+                            self.attemptNumberLabel.text = "1 Attempt remaining"
+                        } else if self.numberOfOTPAttempts == 1 {
+                            self.attemptNumberLabel.text = "2 Attempts remaining"
+                        } else {
+                            self.attemptNumberLabel.isHidden = true
+                            self.resentOTPButton.isHidden = true
+                        }
+                        UIView.showSuccessMessage(title: "", message: "OTP Sent to your phone number")
                     } else {
                             UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
                     }

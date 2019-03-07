@@ -2809,9 +2809,15 @@
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
                                         <state key="normal" title="Resend OTP"/>
                                         <connections>
-                                            <action selector="resendButtonClicked:" destination="WN4-Pv-tL4" eventType="touchUpInside" id="AwZ-nH-RfX"/>
+                                            <action selector="resendButtonClicked:" destination="WN4-Pv-tL4" eventType="touchUpInside" id="zSZ-gb-bBa"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qIZ-nn-jhw">
+                                        <rect key="frame" x="293" y="114" width="31" height="14.333333333333343"/>
+                                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter a valid phone number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NBk-aW-b3w">
                                         <rect key="frame" x="35" y="126" width="179" height="13"/>
                                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="11"/>
@@ -2833,10 +2839,12 @@
                                     <constraint firstItem="NBk-aW-b3w" firstAttribute="leading" secondItem="3l1-Ye-KTW" secondAttribute="leading" id="Iik-mA-d1G"/>
                                     <constraint firstItem="3l1-Ye-KTW" firstAttribute="leading" secondItem="0Pe-Sc-K1m" secondAttribute="leading" id="Qg4-79-t7z"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="NBk-aW-b3w" secondAttribute="trailing" constant="20" id="Svs-Es-9Xk"/>
+                                    <constraint firstItem="qIZ-nn-jhw" firstAttribute="top" secondItem="lHJ-cZ-kfm" secondAttribute="bottom" constant="5" id="dp8-fk-ibI"/>
                                     <constraint firstItem="3l1-Ye-KTW" firstAttribute="top" secondItem="0Pe-Sc-K1m" secondAttribute="bottom" constant="20" id="hWj-vP-EMR"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0Pe-Sc-K1m" secondAttribute="trailing" constant="20" id="ldw-rw-o2s"/>
                                     <constraint firstItem="lHJ-cZ-kfm" firstAttribute="centerY" secondItem="3l1-Ye-KTW" secondAttribute="centerY" id="na1-NW-qyZ"/>
                                     <constraint firstItem="NBk-aW-b3w" firstAttribute="top" secondItem="3l1-Ye-KTW" secondAttribute="bottom" constant="10" id="sMY-Je-TkT"/>
+                                    <constraint firstItem="qIZ-nn-jhw" firstAttribute="centerX" secondItem="lHJ-cZ-kfm" secondAttribute="centerX" id="tJZ-Aa-o9s"/>
                                     <constraint firstAttribute="height" constant="159" id="tS8-F6-isR"/>
                                 </constraints>
                             </view>
@@ -2859,6 +2867,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="attemptNumberLabel" destination="qIZ-nn-jhw" id="ysu-T5-k7d"/>
                         <outlet property="codeInputView" destination="3l1-Ye-KTW" id="89n-RL-J4W"/>
                         <outlet property="errorMessageLabel" destination="Gr3-SV-eBl" id="R9f-7F-B8R"/>
                         <outlet property="inputViewBottomConstraint" destination="mwX-sR-A4K" id="7pk-IK-zDy"/>
@@ -2868,6 +2877,7 @@
                         <outlet property="phoneNumberInputInfoTitle" destination="qjQ-h7-aqm" id="LLx-eY-xuK"/>
                         <outlet property="phoneNumberInputView" destination="FHg-15-WLb" id="Kek-H9-hP8"/>
                         <outlet property="phoneNumberTextField" destination="hg5-eL-HTU" id="2Jt-QP-pd8"/>
+                        <outlet property="resentOTPButton" destination="lHJ-cZ-kfm" id="nmo-Rq-H2l"/>
                         <outlet property="verificationCodeInputInfoLabel" destination="0Pe-Sc-K1m" id="gRB-2X-4Ki"/>
                         <segue destination="HRl-OZ-FPz" kind="presentation" identifier="showLoginPopup" modalPresentationStyle="overFullScreen" id="0Vr-Db-7PL"/>
                     </connections>
