@@ -219,7 +219,11 @@ class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollecti
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showFavouritesList" {
             let favouritesListViewController = segue.destination as! FavouritesListViewController
-            favouritesListViewController.favourites = self.userProfile!.wishList
+            if let wishlist = self.userProfile?.wishList {
+                favouritesListViewController.favourites = wishlist
+            } else {
+                favouritesListViewController.favourites = [Deal]()
+            }
         } else if segue.identifier == "showPurchasesList" {
             let purchasesListViewController = segue.destination as! PurchasesListViewController
             purchasesListViewController.purchasesList = self.userProfile!.purchases
