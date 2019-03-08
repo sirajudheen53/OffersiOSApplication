@@ -31,30 +31,25 @@ class DealsListingTableViewCell: UITableViewCell {
     var makeFavouriteActionBlock : ((_ deal : Deal)->())?
     var enableLocationBlock : (()->())?
     
+    
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.userLocationUpdated(notification:)), name: NSNotification.Name("locationUpdated"), object: nil)
 
-        self.offerTagView.transform  = CGAffineTransform(rotationAngle: (.pi/4)*7)
-        self.backgroundColor = UIColor.clear
+        offerTagView.transform  = CGAffineTransform(rotationAngle: (.pi/4)*7)
         
-        self.dealContentView.layer.cornerRadius = 6.0
-        
-        self.dealContentView.layer.shadowColor = Constants.blackDarkColor.cgColor
-        self.dealContentView.layer.shadowOpacity = 0.14
-        self.dealContentView.layer.shadowOffset = CGSize.zero
-        self.dealContentView.layer.shadowRadius = 6.0
-        self.dealContentView.layer.cornerRadius = 6.0
-        self.dealContentView.clipsToBounds = false
-        
-        self.dealImageContentView.layer.cornerRadius = 6.0
-        self.dealImageContentView.clipsToBounds = true
-        
-        
+        dealContentView.layer.cornerRadius = 6.0
+        dealContentView.layer.masksToBounds = true
+        backgroundColor = .clear
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.2
+        layer.shadowOffset = .init(width: 0, height: 4)
+        layer.shadowRadius = 12
         
         showLoadingAnimation()
-        
     }
     
     @objc func userLocationUpdated(notification : Notification) {
@@ -195,5 +190,63 @@ class DealsListingTableViewCell: UITableViewCell {
             makeFavouriteActionBlock(deal!)
         }
         self.favouriteButton.setBackgroundImage(UIImage(named: "make_favourite"), for: UIControlState.normal)
+    }
+    
+    //MARK: - Animations
+    
+    var disabledHighlightedAnimation = false
+    
+    func resetTransform() {
+        transform = .identity
+    }
+    
+    func freezeAnimations() {
+        disabledHighlightedAnimation = true
+        layer.removeAllAnimations()
+    }
+    
+    func unfreezeAnimations() {
+        disabledHighlightedAnimation = false
+    }
+    
+    // Make it appears very responsive to touch
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        animate(isHighlighted: true)
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        animate(isHighlighted: false)
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesCancelled(touches, with: event)
+        animate(isHighlighted: false)
+    }
+    
+    private func animate(isHighlighted: Bool, completion: ((Bool) -> Void)?=nil) {
+        if disabledHighlightedAnimation {
+            return
+        }
+        let animationOptions: UIViewAnimationOptions = GlobalConstants.isEnabledAllowsUserInteractionWhileHighlightingCard
+            ? [.allowUserInteraction] : []
+        if isHighlighted {
+            UIView.animate(withDuration: 0.5,
+                           delay: 0,
+                           usingSpringWithDamping: 1,
+                           initialSpringVelocity: 0,
+                           options: animationOptions, animations: {
+                            self.transform = .init(scaleX: GlobalConstants.cardHighlightedFactor, y: GlobalConstants.cardHighlightedFactor)
+            }, completion: completion)
+        } else {
+            UIView.animate(withDuration: 0.5,
+                           delay: 0,
+                           usingSpringWithDamping: 1,
+                           initialSpringVelocity: 0,
+                           options: animationOptions, animations: {
+                            self.transform = .identity
+            }, completion: completion)
+        }
     }
 }

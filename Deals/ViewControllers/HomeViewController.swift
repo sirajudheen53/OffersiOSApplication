@@ -15,6 +15,8 @@ import SwiftMessages
 
 class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, GIDSignInUIDelegate, SkeletonTableViewDataSource {
 
+    private var transition: CardTransition?
+    
     var availableDeals = [Deal]()
     var hotDeals : [Deal]?
 
@@ -307,20 +309,72 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         return height
     }
     
+    func showDealDetailView(selectedIndex : Int, selectedIndexPath : IndexPath) {
+        DispatchQueue.main.async {
+            
+            // Get tapped cell location
+            let cell = self.dealsListingTableView.cellForRow(at: selectedIndexPath) as! DealsListingTableViewCell
+            
+            // Freeze highlighted state (or else it will bounce back)
+            cell.freezeAnimations()
+            
+            // Get current frame on screen
+            let currentCellFrame = cell.layer.presentation()!.frame
+            
+            // Convert current frame to screen's coordinates
+            let cardPresentationFrameOnScreen = cell.superview!.convert(currentCellFrame, to: nil)
+            
+            // Get card frame without transform in screen's coordinates  (for the dismissing back later to original location)
+            let cardFrameWithoutTransform = { () -> CGRect in
+                let center = cell.center
+                let size = cell.bounds.size
+                let r = CGRect(
+                    x: center.x - size.width / 2,
+                    y: center.y - size.height / 2,
+                    width: size.width,
+                    height: size.height
+                )
+                return cell.superview!.convert(r, to: nil)
+            }()
+            
+            let deal = self.availableDeals[selectedIndex]
+            
+            // Set up card detail view controller
+            let vc = self.storyboard!.instantiateViewController(withIdentifier: "DealsDetailsViewController") as! DealDetailsViewController
+            vc.deal = deal
+
+            let params = CardTransition.Params(fromCardFrame: cardPresentationFrameOnScreen,
+                                               fromCardFrameWithoutTransform: cardFrameWithoutTransform,
+                                               fromCell: cell)
+            self.transition = CardTransition(params: params)
+            vc.transitioningDelegate = self.transition
+            
+            // If `modalPresentationStyle` is not `.fullScreen`, this should be set to true to make status bar depends on presented vc.
+            vc.modalPresentationCapturesStatusBarAppearance = true
+            vc.modalPresentationStyle = .custom
+            
+            self.present(vc, animated: true, completion: { [unowned cell] in
+                // Unfreeze
+                cell.unfreezeAnimations()
+            })
+        }
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 || indexPath.row == 1 || indexPath.row == 2
             || indexPath.row == 7 || indexPath.row == availableDeals.count + numberOfExtraCells{
             return
         }
-        DispatchQueue.main.async {
-            var index = 0
-            if indexPath.row < 7 {
-                index = indexPath.row - 3
-            } else {
-                index = indexPath.row - self.numberOfExtraCells
-            }
-            self.performSegue(withIdentifier: "showDetailsView", sender: self.availableDeals[index])
+        
+        var index = 0
+        if indexPath.row < 7 {
+            index = indexPath.row - 3
+        } else {
+            index = indexPath.row - self.numberOfExtraCells
         }
+        
+        showDealDetailView(selectedIndex: index, selectedIndexPath: indexPath);
+        
     }
     
     // MARK: - Private Methods

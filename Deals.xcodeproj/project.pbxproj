@@ -67,6 +67,17 @@
 		A7C22C1321FC933500BCF81C /* dollor_deals_privacy.html in Resources */ = {isa = PBXBuildFile; fileRef = A7C22C1221FC933500BCF81C /* dollor_deals_privacy.html */; };
 		A7C28A0120FE46A30071FC59 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C28A0020FE46A30071FC59 /* User.swift */; };
 		A7D9F25A20AB56B6005B08BE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A7D9F25920AB56B6005B08BE /* GoogleService-Info.plist */; };
+		A7DBE53E2232C6C3006DA42D /* GlobalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DBE53D2232C6C2006DA42D /* GlobalConstants.swift */; };
+		A7DBE54A2232CBE1006DA42D /* DismissCardAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DBE5462232CBE0006DA42D /* DismissCardAnimator.swift */; };
+		A7DBE54B2232CBE1006DA42D /* CardTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DBE5472232CBE0006DA42D /* CardTransition.swift */; };
+		A7DBE54C2232CBE1006DA42D /* PresentCardAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DBE5482232CBE0006DA42D /* PresentCardAnimator.swift */; };
+		A7DBE54D2232CBE1006DA42D /* CardPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DBE5492232CBE0006DA42D /* CardPresentationController.swift */; };
+		A7DBE5562232CFBE006DA42D /* StatusBarAnimatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DBE54F2232CFBD006DA42D /* StatusBarAnimatable.swift */; };
+		A7DBE5572232CFBE006DA42D /* UIView+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DBE5502232CFBD006DA42D /* UIView+AutoLayout.swift */; };
+		A7DBE5582232CFBE006DA42D /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DBE5512232CFBD006DA42D /* Utils.swift */; };
+		A7DBE55A2232CFBE006DA42D /* StatusBarAnimatableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DBE5532232CFBD006DA42D /* StatusBarAnimatableViewController.swift */; };
+		A7DBE55B2232CFBE006DA42D /* ShowTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DBE5542232CFBD006DA42D /* ShowTime.swift */; };
+		A7DBE55C2232CFBE006DA42D /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DBE5552232CFBD006DA42D /* NibLoadable.swift */; };
 		A7DD00532215A95B0099284A /* PagingLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DD00522215A95B0099284A /* PagingLoadingTableViewCell.swift */; };
 		A7E6B71221C3834D00FA943B /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E6B71121C3834D00FA943B /* UIView+Extension.swift */; };
 		A7F7501220D4FF040012FE47 /* BaseWebservice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F7501120D4FF040012FE47 /* BaseWebservice.swift */; };
@@ -189,6 +200,17 @@
 		A7C22C1221FC933500BCF81C /* dollor_deals_privacy.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = dollor_deals_privacy.html; sourceTree = "<group>"; };
 		A7C28A0020FE46A30071FC59 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A7D9F25920AB56B6005B08BE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		A7DBE53D2232C6C2006DA42D /* GlobalConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalConstants.swift; sourceTree = "<group>"; };
+		A7DBE5462232CBE0006DA42D /* DismissCardAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DismissCardAnimator.swift; path = Transition/DismissCardAnimator.swift; sourceTree = "<group>"; };
+		A7DBE5472232CBE0006DA42D /* CardTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardTransition.swift; path = Transition/CardTransition.swift; sourceTree = "<group>"; };
+		A7DBE5482232CBE0006DA42D /* PresentCardAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PresentCardAnimator.swift; path = Transition/PresentCardAnimator.swift; sourceTree = "<group>"; };
+		A7DBE5492232CBE0006DA42D /* CardPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardPresentationController.swift; path = Transition/CardPresentationController.swift; sourceTree = "<group>"; };
+		A7DBE54F2232CFBD006DA42D /* StatusBarAnimatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StatusBarAnimatable.swift; path = Deals/Animation/Misc/StatusBarAnimatable.swift; sourceTree = SOURCE_ROOT; };
+		A7DBE5502232CFBD006DA42D /* UIView+AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+AutoLayout.swift"; path = "Deals/Animation/Misc/UIView+AutoLayout.swift"; sourceTree = SOURCE_ROOT; };
+		A7DBE5512232CFBD006DA42D /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utils.swift; path = Deals/Animation/Misc/Utils.swift; sourceTree = SOURCE_ROOT; };
+		A7DBE5532232CFBD006DA42D /* StatusBarAnimatableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StatusBarAnimatableViewController.swift; path = Deals/Animation/Misc/StatusBarAnimatableViewController.swift; sourceTree = SOURCE_ROOT; };
+		A7DBE5542232CFBD006DA42D /* ShowTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShowTime.swift; path = Deals/Animation/Misc/ShowTime.swift; sourceTree = SOURCE_ROOT; };
+		A7DBE5552232CFBD006DA42D /* NibLoadable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NibLoadable.swift; path = Deals/Animation/Misc/NibLoadable.swift; sourceTree = SOURCE_ROOT; };
 		A7DD00522215A95B0099284A /* PagingLoadingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingLoadingTableViewCell.swift; sourceTree = "<group>"; };
 		A7E6B71121C3834D00FA943B /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIView+Extension.swift"; path = "Extensions/UIView+Extension.swift"; sourceTree = "<group>"; };
 		A7F7501120D4FF040012FE47 /* BaseWebservice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseWebservice.swift; sourceTree = "<group>"; };
@@ -299,6 +321,7 @@
 				A7D9F25920AB56B6005B08BE /* GoogleService-Info.plist */,
 				0B67D09E20AAA6D000FC39E5 /* AppDelegate.swift */,
 				A7F7501120D4FF040012FE47 /* BaseWebservice.swift */,
+				A7DBE53F2232C98D006DA42D /* Animation */,
 				A786578B20DABFBC00649410 /* Constants.swift */,
 				0B67D0A220AAA6D000FC39E5 /* Main.storyboard */,
 				0B67D0A520AAA6D000FC39E5 /* Assets.xcassets */,
@@ -418,6 +441,33 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		A7DBE53F2232C98D006DA42D /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				A7DBE5492232CBE0006DA42D /* CardPresentationController.swift */,
+				A7DBE5472232CBE0006DA42D /* CardTransition.swift */,
+				A7DBE5462232CBE0006DA42D /* DismissCardAnimator.swift */,
+				A7DBE5482232CBE0006DA42D /* PresentCardAnimator.swift */,
+				A7DBE53D2232C6C2006DA42D /* GlobalConstants.swift */,
+				A7DBE54E2232CFA3006DA42D /* Misc */,
+			);
+			path = Animation;
+			sourceTree = "<group>";
+		};
+		A7DBE54E2232CFA3006DA42D /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				A7DBE5552232CFBD006DA42D /* NibLoadable.swift */,
+				A7DBE5542232CFBD006DA42D /* ShowTime.swift */,
+				A7DBE54F2232CFBD006DA42D /* StatusBarAnimatable.swift */,
+				A7DBE5532232CFBD006DA42D /* StatusBarAnimatableViewController.swift */,
+				A7DBE5502232CFBD006DA42D /* UIView+AutoLayout.swift */,
+				A7DBE5512232CFBD006DA42D /* Utils.swift */,
+			);
+			name = Misc;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		A7F7501F20D9547A0012FE47 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -511,6 +561,9 @@
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -741,15 +794,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				A7E6B71221C3834D00FA943B /* UIView+Extension.swift in Sources */,
+				A7DBE5572232CFBE006DA42D /* UIView+AutoLayout.swift in Sources */,
 				A7521A50211DDFA400E870B8 /* UIImage+Noir.swift in Sources */,
 				A7BD3284222119FD00E9F6BD /* DealFeature.swift in Sources */,
 				A717A32420EF42770036A32E /* DealsListingTableViewCell.swift in Sources */,
 				0B67D0A120AAA6D000FC39E5 /* LoginViewController.swift in Sources */,
 				A786578C20DABFBC00649410 /* Constants.swift in Sources */,
+				A7DBE55B2232CFBE006DA42D /* ShowTime.swift in Sources */,
 				A7C28A0120FE46A30071FC59 /* User.swift in Sources */,
+				A7DBE55C2232CFBE006DA42D /* NibLoadable.swift in Sources */,
 				A769A3D22212901D00D07F06 /* CodeInputView.swift in Sources */,
 				0B1F18CF20DBA3630075C1FA /* ProfileViewController.swift in Sources */,
 				A786579120DAD0E200649410 /* HotDealCollectionViewCell.swift in Sources */,
+				A7DBE54C2232CBE1006DA42D /* PresentCardAnimator.swift in Sources */,
 				A757D17920EFDBD100E4A282 /* HomeExploreTableViewCell.swift in Sources */,
 				A72B2B2821FC4E08005A4532 /* TermsViewController.swift in Sources */,
 				A7337DE6220B630E00CB73AE /* UITextField+Border.swift in Sources */,
@@ -765,23 +822,30 @@
 				A77C543120F1E1D7003D5BCB /* UILabel+LetterSpacing.swift in Sources */,
 				0B9E123B20B3D44100C66129 /* ExploreViewController.swift in Sources */,
 				0B5504BF21D362D7003B8B23 /* MoreDetailsViewController.swift in Sources */,
+				A7DBE54D2232CBE1006DA42D /* CardPresentationController.swift in Sources */,
 				A73E8FBC2100E8E000008CD3 /* PurchaseDealsCollectionViewCell.swift in Sources */,
 				0BB77F3121D1027C00BD925D /* PopupViewController.swift in Sources */,
 				A7AFE6BD2102FC9F00D3322E /* UserProfile.swift in Sources */,
+				A7DBE5582232CFBE006DA42D /* Utils.swift in Sources */,
 				0B06479E20AC419100AE8496 /* HomeViewController.swift in Sources */,
 				A79CA1A11FF9B47600713DE3 /* Date+Extension.swift in Sources */,
 				A76788DF2201E613006F616C /* BaseViewController.swift in Sources */,
+				A7DBE5562232CFBE006DA42D /* StatusBarAnimatable.swift in Sources */,
+				A7DBE54A2232CBE1006DA42D /* DismissCardAnimator.swift in Sources */,
 				A7F7502E20D971220012FE47 /* RoundedView.swift in Sources */,
 				A7521A4A211CAE9700E870B8 /* FavouritesListViewController.swift in Sources */,
 				A72B2B2621FC4DC8005A4532 /* FeedbackViewController.swift in Sources */,
 				A7F7501620D639290012FE47 /* Vendor.swift in Sources */,
 				A7F7501420D638E80012FE47 /* Deal.swift in Sources */,
 				0B9E123520B290A400C66129 /* DealDetailsViewController.swift in Sources */,
+				A7DBE55A2232CFBE006DA42D /* StatusBarAnimatableViewController.swift in Sources */,
+				A7DBE53E2232C6C3006DA42D /* GlobalConstants.swift in Sources */,
 				A7F7501220D4FF040012FE47 /* BaseWebservice.swift in Sources */,
 				A7F7501C20D6C33F0012FE47 /* ExploreFilterViewController.swift in Sources */,
 				A7521A4E211DBAD400E870B8 /* PurchasesListViewController.swift in Sources */,
 				A757D17D20EFDD1C00E4A282 /* HomeExploreCollectionViewCell.swift in Sources */,
 				A74EC1A321C4E1B700605A8A /* LocationSelectionViewController.swift in Sources */,
+				A7DBE54B2232CBE1006DA42D /* CardTransition.swift in Sources */,
 				A7F7501820D639320012FE47 /* Category.swift in Sources */,
 				A78628DE221DC87C00663C08 /* FeatureListingTableViewCell.swift in Sources */,
 			);

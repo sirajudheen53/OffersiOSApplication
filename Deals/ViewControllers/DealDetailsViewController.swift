@@ -12,12 +12,13 @@ import SVProgressHUD
 import CoreLocation
 import QpayPayment
 
-class DealDetailsViewController: BaseViewController, QPRequestProtocol {
+class DealDetailsViewController: StatusBarAnimatableViewController, QPRequestProtocol {
 
     var deal : Deal?
     var dealCode : String?
     var qpRequestParams : QPRequestParameters!
 
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var phoneContactButton: UIButton!
     @IBOutlet weak var buyMoreButton: UIButton!
     @IBOutlet weak var couponContactButton: UIButton!
@@ -71,7 +72,7 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
         qpRequestParams =   QPRequestParameters(viewController: self)
         qpRequestParams.delegate = self
         
-        analyticsScreenName = "Deal Details View"
+ //       analyticsScreenName = "Deal Details View"
         super.viewDidLoad()
         UIApplication.shared.isStatusBarHidden = true
         self.navigationController?.isNavigationBarHidden = true
@@ -585,4 +586,6 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
             UIView.showWarningMessage(title: "Warning", message: "Something went wrong with your payment. Please contract our customer care.")
         }
     }
+    
+    
 }
