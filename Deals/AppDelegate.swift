@@ -30,18 +30,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLoca
         
         // 1
         if let notification = notificationOption as? [String: AnyObject] {
-            NSLog("Notification\n\n\n\n--------%@------\n\n\n\n", notification)
-            
-            print()
             if let aps = notification["aps"] as? [String : Any] {
                 if let category = aps["category"] as? String, category == "DEAL_NOTIFICATION", let deal_id = notification["deal_id"] {
-
-                    let detailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DealDetailsView") as! DealDetailsViewController
-                    detailsViewController.dealId = Int(deal_id as! String)
-                    if let rootViewController = window?.rootViewController {
-                        NSLog("Notification\n\n\n\nhahahahahaIn root view")
-                        rootViewController.present(detailsViewController, animated: false, completion: nil)
-                    }
+                    UserDefaults.standard.set(true, forKey: "isOpenedFromNotification")
+                    UserDefaults.standard.set(deal_id, forKey: "notifiedDeal")
                 }
             }
         }

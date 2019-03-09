@@ -37,6 +37,10 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 
         super.viewDidLoad()
         
+        if UserDefaults.standard.bool(forKey: "isOpenedFromNotification") {
+            openDealDetailsViewForNotifiedDeal()
+        }
+        
         GIDSignIn.sharedInstance().uiDelegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.notificationDealRecieved(notification:)), name: NSNotification.Name("notificationDealRecieved"), object: nil)
@@ -66,6 +70,17 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
 
+    }
+    
+    func openDealDetailsViewForNotifiedDeal() {
+        if let deal_id = UserDefaults.standard.value(forKey: "notifiedDeal") {
+            self.performSegue(withIdentifier: "showDetailsView", sender: ["deal_id" : deal_id])
+        }
+        
+        UserDefaults.standard.set(false, forKey: "isOpenedFromNotification")
+        UserDefaults.standard.set(nil, forKey: "notifiedDeal")
+        
+        
     }
     
     func enableLocationBlock() -> (()->()) {
@@ -134,7 +149,7 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     func hotDealCellSelectionActionBlock() -> ((_ deal : Deal) -> ()) {
         return {(deal) in
             DispatchQueue.main.async {
-                self.performSegue(withIdentifier: "showDetailsView", sender: deal)
+                self.performSegue(withIdentifier: "showDetailsView", sender: ["deal" : deal])
             }
         }
     }
