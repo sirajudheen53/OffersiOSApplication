@@ -140,7 +140,7 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                 let flag = deal.isFavourited ? "false" : "true"
                 BaseWebservice.performRequest(function: .makeFavourite, requestMethod: .post, params: ["deal_id" : deal.dealId as AnyObject, "flag" : flag as AnyObject], headers: userProfileFetchHeader, onCompletion: { (response, error) in
                     if let error = error {
-                        UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
+                        UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
                     } else if let response = response as? [String : Any?] {
                         if response["status"] as? String == "success" {
                             deal.isFavourited = true
@@ -148,10 +148,10 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                         } else if let message = response["message"] as? String {
                             UIView.showWarningMessage(title: "Oops !", message: message)
                         }  else {
-                            UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                            UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                         }
                     } else {
-                        UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                        UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                     }
                 })
             }
@@ -169,7 +169,7 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                 let flag = deal.isFavourited ? "false" : "true"
                 BaseWebservice.performRequest(function: .makeFavourite, requestMethod: .post, params: ["deal_id" : deal.dealId as AnyObject, "flag" : flag as AnyObject], headers: userProfileFetchHeader, onCompletion: { (response, error) in
                     if let error = error {
-                        UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
+                        UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
                     } else if let response = response as? [String : Any?] {
                         if response["status"] as? String == "success" {
                             deal.isFavourited = true
@@ -177,10 +177,10 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                         } else if let message = response["message"] as? String {
                             UIView.showWarningMessage(title: "Oops !", message: message)
                         }  else {
-                            UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                            UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                         }
                     } else {
-                        UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                        UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                     }
                 })
             }
@@ -198,7 +198,9 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetailsView" {
             if let detailsView = segue.destination as? DealDetailsViewController {
-                detailsView.deal = sender as? Deal
+                if let sender = sender as? Deal {
+                    detailsView.deal = sender
+                }
             }
         } else if segue.identifier == "showLoginPopup" {
             if let popupView = segue.destination as? PopupViewController {
@@ -340,7 +342,7 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             self.isLoadingList = false
 
             if let error = error {
-                UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
+                UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
                 self.noDealsContentView.isHidden = false
                 self.dealsListingTableView.isHidden = true
             } else if let response = response as? [String : Any] {
@@ -362,22 +364,22 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                         } else {
                             self.noDealsContentView.isHidden = false
                             self.dealsListingTableView.isHidden = true
-                            UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                            UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                         }
                     } else {
                         self.noDealsContentView.isHidden = false
                         self.dealsListingTableView.isHidden = true
-                        UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                        UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                     }
                 } else {
                     self.noDealsContentView.isHidden = false
                     self.dealsListingTableView.isHidden = true
-                    UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                    UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                 }
             } else {
                 self.noDealsContentView.isHidden = false
                 self.dealsListingTableView.isHidden = true
-                UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
             }
         }
     }

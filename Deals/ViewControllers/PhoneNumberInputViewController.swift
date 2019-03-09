@@ -115,7 +115,7 @@ class PhoneNumberInputViewController: UIViewController, UIGestureRecognizerDeleg
             BaseWebservice.performRequest(function: .verifyPhoneNumber, requestMethod: .post, params: ["phone_number" :  requiredNumber as AnyObject, "otp" : inputOTP as AnyObject], headers: userProfileFetchHeader) { (response, error) in
                 SVProgressHUD.dismiss()
                 if let error = error {
-                    UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
+                    UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
                 }
                 if let response = response as? [String : String] {
                     if response["status"] == "success" {
@@ -127,10 +127,10 @@ class PhoneNumberInputViewController: UIViewController, UIGestureRecognizerDeleg
                     } else if response["status"] == "failed" {
                         self.invalidOTPErrorMessagLabel.isHidden = false
                     }  else {
-                        UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                        UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                     }
                 } else {
-                    UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                    UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                 }
             }
         } else {
@@ -172,7 +172,7 @@ class PhoneNumberInputViewController: UIViewController, UIGestureRecognizerDeleg
                 if let response = response as? [String : String] {
                     SVProgressHUD.dismiss()
                     if let error = error {
-                        UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
+                        UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
                     }
                     if response["status"] == "success" {
                             if let formattedText = self.phoneNumberTextField.text {
@@ -192,7 +192,7 @@ class PhoneNumberInputViewController: UIViewController, UIGestureRecognizerDeleg
                         }
                         UIView.showSuccessMessage(title: "", message: "OTP Sent to your phone number")
                     } else {
-                            UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                            UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                     }
                 }
             }

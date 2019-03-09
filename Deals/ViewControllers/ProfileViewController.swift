@@ -166,7 +166,7 @@ class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollecti
         let userProfileFetchHeader = ["Authorization" : "Token \(User.getProfile()!.token!)"]
         BaseWebservice.performRequest(function: WebserviceFunction.fetchUserProfile, requestMethod: .get, params: nil, headers: userProfileFetchHeader) { (response, error) in
             if let error = error {
-                UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
+                UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
             } else if let response = response as? [String : Any] {
                 if response["status"] as? String == "success" {
                     if let userProfileProperties = response["user"] as? [String : Any] {
@@ -175,7 +175,7 @@ class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollecti
                         self.userProfile?.saveToUserDefaults()
                         self.displayProfileData()
                     } else {
-                        UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                        UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                     }
                 } else if let message = response["message"] as? String {
                     UIView.showWarningMessage(title: "Oops !", message: message)
@@ -184,11 +184,11 @@ class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollecti
                         self.profileContentView.isHidden = true
                         self.loginViewContent.isHidden = false
                     } else {
-                        UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                        UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                     }
                 }
             } else {
-                UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
             }
         }
     }
@@ -266,7 +266,7 @@ class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollecti
         loginManager.logIn(readPermissions: [.publicProfile, .email], viewController: self, completion: {loginResult in
             switch loginResult {
             case .failed(let error):
-                UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
+                UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
             case .cancelled:
                 print("User cancelled login.")
             case .success(_, _, let accessToken):
@@ -274,7 +274,7 @@ class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollecti
                 BaseWebservice.performRequest(function: WebserviceFunction.login, requestMethod: .post, params: ["id_token" : accessToken.authenticationToken as AnyObject, "provider" : "facebook" as AnyObject], headers: nil) { (response, error) in
                     SVProgressHUD.dismiss()
                     if let error = error {
-                        UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
+                        UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
 
                     } else if let response = response as? [String : Any] {
                         if let status = response["status"] as? String {
@@ -284,16 +284,16 @@ class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollecti
                                     userObject.saveToUserDefaults()
                                     NotificationCenter.default.post(name: NSNotification.Name("userLoggedIn"), object: userProperties)
                                 } else {
-                                    UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                                    UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                                 }
                             } else {
-                                UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                                UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                             }
                         } else {
-                            UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                            UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                         }
                     } else {
-                        UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                        UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                     }
                 }            }
         })

@@ -348,7 +348,7 @@
                                         <color key="textColor" red="0.16078431372549018" green="0.80000000000000004" blue="0.58823529411764708" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Ec-K3-T3V">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Ec-K3-T3V">
                                         <rect key="frame" x="20" y="201" width="374" height="254"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v6w-JK-MEf">
@@ -432,6 +432,17 @@
                                                 <state key="normal" title="Locate">
                                                     <color key="titleColor" red="0.4431372549" green="0.46274509800000002" blue="0.47843137250000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                        <color key="value" red="0.63921568630000003" green="0.63921568630000003" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                        <real key="value" value="1"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="4"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="locateButtonClicked:" destination="wsw-En-rJQ" eventType="touchUpInside" id="tLw-T5-BqL"/>
                                                 </connections>
@@ -467,7 +478,7 @@
                                                 <color key="textColor" red="0.63921568627450975" green="0.63921568627450975" blue="0.63921568627450975" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Valid Upto: 6 Jun 2018" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HMb-p4-W7H">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Valid Upto: 6 Jun 2018" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HMb-p4-W7H">
                                                 <rect key="frame" x="123.00000000000001" y="168" width="128.33333333333337" height="14"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
                                                 <color key="textColor" red="0.44313725490196076" green="0.47843137254901957" blue="0.46274509803921571" alpha="1" colorSpace="calibratedRGB"/>
@@ -568,7 +579,7 @@
                                             <constraint firstItem="LKj-qg-qMx" firstAttribute="centerY" secondItem="SlP-J0-DaS" secondAttribute="centerY" id="Urg-rO-OAh"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AAm-94-6bs">
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AAm-94-6bs">
                                         <rect key="frame" x="0.0" y="201" width="414" height="254"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="address" translatesAutoresizingMaskIntoConstraints="NO" id="bNK-Ho-v0U">
@@ -954,6 +965,8 @@
                     <tabBarItem key="tabBarItem" title="Item" id="9ic-Ct-RND"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="addressIconImageView" destination="heH-nI-zal" id="z9U-db-94e"/>
+                        <outlet property="boughtPeopelIconImageView" destination="q8O-Dq-Mfd" id="0Bm-dR-vLf"/>
                         <outlet property="buyMoreButton" destination="4OC-tr-7dr" id="yPS-yx-rkI"/>
                         <outlet property="buyNowButton" destination="pYP-t7-G1q" id="55t-DO-SLr"/>
                         <outlet property="coupnInfoView" destination="AAm-94-6bs" id="i7V-3p-Tkb"/>
@@ -972,8 +985,10 @@
                         <outlet property="dealInfoView" destination="0Ec-K3-T3V" id="geK-ff-YJs"/>
                         <outlet property="dealLocateButton" destination="6Z2-f4-npe" id="q57-xm-Smu"/>
                         <outlet property="distanceValueLabel" destination="hUA-9p-lbO" id="eNv-tK-4yP"/>
+                        <outlet property="locateButtonImageView" destination="agF-2C-ijE" id="rEX-7T-j9z"/>
                         <outlet property="makeFavouriteButton" destination="5Fa-At-Uef" id="2dD-zi-aNb"/>
                         <outlet property="maskedView" destination="efM-UJ-rbH" id="FFF-Hj-4WR"/>
+                        <outlet property="moreDetailsRightArrowButton" destination="crI-xL-8cx" id="huX-bL-aCS"/>
                         <outlet property="numberOfPeoplePurchased" destination="8iq-AP-7H0" id="V3M-Am-2FI"/>
                         <outlet property="numberOfPeopleViewedValueLabel" destination="eEX-OE-tx8" id="UpR-cq-QxN"/>
                         <outlet property="offerDetailsHeightContstraint" destination="d5N-Ld-9Pe" id="Rb3-3c-hMo"/>
@@ -985,11 +1000,14 @@
                         <outlet property="offerTitleLabel" destination="T84-1p-H9N" id="nQo-Ok-fXw"/>
                         <outlet property="originalPriceValuLabel" destination="Kag-BS-0T7" id="I4Q-kM-Rbw"/>
                         <outlet property="phoneContactButton" destination="BVh-8e-Esy" id="nqd-5Z-Udh"/>
+                        <outlet property="phoneContactImageView" destination="scB-ge-YBq" id="Z8f-uq-gkd"/>
+                        <outlet property="priceTitleLabel" destination="Yv9-Bj-8xE" id="ko6-Qz-Rld"/>
                         <outlet property="purchasesTitleLabel" destination="YWd-XC-kOJ" id="zkZ-7q-CPN"/>
                         <outlet property="shareButton" destination="SzV-5N-iaB" id="tYn-hV-AGa"/>
                         <outlet property="validUptoValueLabel" destination="HMb-p4-W7H" id="7Ca-gR-VAN"/>
                         <outlet property="vendorAddressValueLabel" destination="397-OV-QUA" id="BCi-td-ocE"/>
                         <outlet property="vendorNameLabel" destination="ugq-Yn-mcj" id="TkN-d8-TgZ"/>
+                        <outlet property="viewedPeopleIconImageView" destination="UOO-EM-KbP" id="PA7-0T-D0I"/>
                         <outlet property="viewsTitleLabel" destination="mut-Ej-UDQ" id="WC3-lu-dBo"/>
                         <segue destination="HRl-OZ-FPz" kind="presentation" identifier="showLoginPopup" animates="NO" modalPresentationStyle="overFullScreen" id="A3n-xN-iaX"/>
                         <segue destination="WN4-Pv-tL4" kind="presentation" identifier="showPhoneNumberInput" animates="NO" modalPresentationStyle="overFullScreen" id="F0e-Pl-oRI"/>

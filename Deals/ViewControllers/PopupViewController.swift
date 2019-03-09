@@ -46,7 +46,7 @@ class PopupViewController: BaseViewController, GIDSignInUIDelegate {
         loginManager.logIn(readPermissions: [.publicProfile, .email], viewController: self, completion: {loginResult in
             switch loginResult {
             case .failed(let error):
-                UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
+                UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
             case .cancelled:
                 print("User cancelled login.")
             case .success(_, _, let accessToken):
@@ -54,7 +54,7 @@ class PopupViewController: BaseViewController, GIDSignInUIDelegate {
                 BaseWebservice.performRequest(function: WebserviceFunction.login, requestMethod: .post, params: ["id_token" : accessToken.authenticationToken as AnyObject, "provider" : "facebook" as AnyObject], headers: nil) { (response, error) in
                     SVProgressHUD.dismiss()
                     if let error = error {
-                        UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
+                        UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
                         
                     } else if let response = response as? [String : Any] {
                         if let status = response["status"] as? String {
@@ -64,16 +64,16 @@ class PopupViewController: BaseViewController, GIDSignInUIDelegate {
                                     userObject.saveToUserDefaults()
                                     NotificationCenter.default.post(name: NSNotification.Name("userLoggedIn"), object: userProperties)
                                 } else {
-                                    UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                                    UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                                 }
                             } else {
-                                UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                                UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                             }
                         } else {
-                            UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                            UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                         }
                     } else {
-                        UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                        UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                     }
                 }            }
         })

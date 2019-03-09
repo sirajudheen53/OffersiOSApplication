@@ -258,7 +258,7 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
         BaseWebservice.performRequest(function: WebserviceFunction.search, requestMethod: .get, params: ["location" : location as AnyObject, "page" : nextPageToLoad as AnyObject, "search" : _searchString as AnyObject, "category" : categories as AnyObject], headers: tokenHeader) { (response, error) in
             self.isLoadingList = false
             if let error = error {
-                UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
+                UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
                 self.noDealsContentView.isHidden = false
                 self.dealsListingTableView.isHidden = true
             } else if let response = response as? [String : Any] {
@@ -293,14 +293,14 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
 
                             self.noDealsContentView.isHidden = false
                             self.dealsListingTableView.isHidden = true
-                            UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                            UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                             self.lastLoadedSearchString = _searchString
 
                         }
                     } else {
                         self.noDealsContentView.isHidden = false
                         self.dealsListingTableView.isHidden = true
-                        UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                        UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                         self.lastLoadedSearchString = _searchString
 
                     }
@@ -312,14 +312,14 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
                 }  else {
                     self.noDealsContentView.isHidden = false
                     self.dealsListingTableView.isHidden = true
-                    UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                    UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                     self.lastLoadedSearchString = _searchString
 
                 }
             } else {
                 self.noDealsContentView.isHidden = false
                 self.dealsListingTableView.isHidden = true
-                UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                 self.lastLoadedSearchString = _searchString
 
             }

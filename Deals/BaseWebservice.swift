@@ -20,6 +20,7 @@ enum WebserviceFunction : String {
     case userView = "deals/user_view"
     case search = "deals/search"
     case registerToken = "accounts/device_register"
+    case fetchDeal = "deals/deal"
 }
 
 enum WebserviceMethod {

@@ -24,7 +24,7 @@ class FeedbackViewController: BaseViewController, MFMailComposeViewControllerDel
         if MFMailComposeViewController.canSendMail() {
             self.present(mailComposeViewController, animated: true, completion: nil)
         } else {
-            UIView.showWarningMessage(title: "Warning", message: "Could not send email from your phone")
+            UIView.showWarningMessage(title: "Sorry !!!", message: "Could not send email from your phone")
 
         }
     }

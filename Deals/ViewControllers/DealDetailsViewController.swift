@@ -14,10 +14,15 @@ import QpayPayment
 
 class DealDetailsViewController: BaseViewController, QPRequestProtocol {
 
+    var dealId : Int?
     var deal : Deal?
     var dealCode : String?
     var qpRequestParams : QPRequestParameters!
 
+    @IBOutlet weak var addressIconImageView: UIImageView!
+    @IBOutlet weak var boughtPeopelIconImageView: UIImageView!
+    @IBOutlet weak var viewedPeopleIconImageView: UIImageView!
+    @IBOutlet weak var locateButtonImageView: UIImageView!
     @IBOutlet weak var phoneContactButton: UIButton!
     @IBOutlet weak var buyMoreButton: UIButton!
     @IBOutlet weak var couponContactButton: UIButton!
@@ -30,17 +35,17 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
     @IBOutlet weak var numberOfPeoplePurchased: UILabel!
     @IBOutlet weak var viewsTitleLabel: UILabel!
     @IBOutlet weak var distanceValueLabel: UILabel!
-    
+    @IBOutlet weak var phoneContactImageView: UIImageView!
     @IBOutlet weak var dealImageView: UIImageView!
     @IBOutlet weak var offerPercentageStripLabel: UILabel!
     @IBOutlet weak var offerDetailsView: UIView!
     @IBOutlet weak var offerTitleLabel: UILabel!
     @IBOutlet weak var dealDetailsButton: UIButton!
     @IBOutlet weak var dashedView: UIView!
-
+    @IBOutlet weak var moreDetailsRightArrowButton: UIButton!
+    @IBOutlet weak var priceTitleLabel: UILabel!
     @IBOutlet weak var buyNowButton: UIButton!
     @IBOutlet weak var purchasesTitleLabel: UILabel!
-    
     @IBOutlet weak var maskedView: UIView!
     @IBOutlet weak var couponVendorAddressLabel: UILabel!
     @IBOutlet weak var couponDistanceValueLabel: UILabel!
@@ -48,25 +53,17 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
     @IBOutlet weak var couponCodeLabelView: UILabel!
     @IBOutlet weak var couponExpiresValueLabel: UILabel!
     @IBOutlet weak var dealInfoView: UIView!
-    
     @IBOutlet weak var offerDetailsHeightContstraint: NSLayoutConstraint!
     @IBOutlet weak var makeFavouriteButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var offerStrinp: UIImageView!
     @IBOutlet weak var offerExpiredView: UIView!
     @IBOutlet weak var coupnInfoView: UIView!
-    
     @IBOutlet weak var dealInfoEnableLocationButton: UIButton!
     @IBOutlet weak var couponeLocationEnableButton: UIButton!
-    
-    
-    
     @IBOutlet weak var dealLocateButton: UIButton!
     @IBOutlet weak var couponLocateButton: UIButton!
-    
-    
-    
-    
+
     override func viewDidLoad() {
         qpRequestParams =   QPRequestParameters(viewController: self)
         qpRequestParams.delegate = self
@@ -75,12 +72,19 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
 
-        
-        
-        self.configureUIElements()
+        if let _ = deal {
+            self.configureUIElements()
+        } else {
+            fetchDealDetailsFromServer()
+        }
+
         self.title = "Details"
         drawDottedLine(start: CGPoint(x: dashedView.bounds.minX, y: dashedView.bounds.minY),
                        end: CGPoint(x: dashedView.bounds.maxX, y: dashedView.bounds.minY), view: dashedView)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     override func didReceiveMemoryWarning() {
@@ -223,6 +227,70 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
         return requiredString
     }
     
+    func showDealDetailsLoadingAnimation() {
+        offerPriceValueLabel.isHidden = true
+        originalPriceValuLabel.isHidden = true
+        priceTitleLabel.isHidden = true
+        moreDetailsRightArrowButton.isHidden = true
+        dealDetailsButton.isHidden = true
+        buyNowButton.isHidden = true
+        dealInfoEnableLocationButton.isHidden = true
+        locateButtonImageView.isHidden = true
+        phoneContactImageView.isHidden = true
+        dealLocateButton.isHidden = true
+        phoneContactButton.isHidden = true
+        numberOfPeopleViewedValueLabel.isHidden = true
+        numberOfPeoplePurchased.isHidden = true
+        viewedPeopleIconImageView.isHidden = true
+        boughtPeopelIconImageView.isHidden = true
+        shareButton.isHidden = true
+        makeFavouriteButton.isHidden = true
+        offerPercentageStripLabel.isHidden = true
+        buyMoreButton.isHidden = true
+        addressIconImageView.isHidden = true
+        offerStrinp.isHidden = true
+        dealImageView.showAnimatedGradientSkeleton()
+        validUptoValueLabel.showAnimatedGradientSkeleton()
+        viewsTitleLabel.showAnimatedGradientSkeleton()
+        purchasesTitleLabel.showAnimatedGradientSkeleton()
+        vendorAddressValueLabel.showAnimatedGradientSkeleton()
+        vendorNameLabel.showAnimatedGradientSkeleton()
+        distanceValueLabel.showAnimatedGradientSkeleton()
+        offerTitleLabel.showGradientSkeleton()
+  }
+    
+    func stopDealDetailsLoadingAnimation() {
+        offerPriceValueLabel.isHidden = false
+        originalPriceValuLabel.isHidden = false
+        priceTitleLabel.isHidden = false
+        moreDetailsRightArrowButton.isHidden = false
+        dealDetailsButton.isHidden = false
+        buyNowButton.isHidden = false
+        dealInfoEnableLocationButton.isHidden = false
+        locateButtonImageView.isHidden = false
+        phoneContactImageView.isHidden = false
+        dealLocateButton.isHidden = false
+        phoneContactButton.isHidden = false
+        numberOfPeopleViewedValueLabel.isHidden = false
+        numberOfPeoplePurchased.isHidden = false
+        viewedPeopleIconImageView.isHidden = false
+        boughtPeopelIconImageView.isHidden = false
+        shareButton.isHidden = false
+        makeFavouriteButton.isHidden = false
+        offerPercentageStripLabel.isHidden = false
+        buyMoreButton.isHidden = false
+        addressIconImageView.isHidden = false
+        offerStrinp.isHidden = false
+        dealImageView.hideSkeleton()
+        validUptoValueLabel.hideSkeleton()
+        viewsTitleLabel.hideSkeleton()
+        purchasesTitleLabel.hideSkeleton()
+        vendorAddressValueLabel.hideSkeleton()
+        vendorNameLabel.hideSkeleton()
+        distanceValueLabel.hideSkeleton()
+        offerStrinp.hideSkeleton()
+        offerTitleLabel.hideSkeleton()
+ }
 
     func configureUIElements() {
         makeViewedAPI()
@@ -456,17 +524,17 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
                 deal.isFavourited = !deal.isFavourited
                 BaseWebservice.performRequest(function: .makeFavourite, requestMethod: .post, params: ["deal_id" : deal.dealId as AnyObject, "flag" : flag as AnyObject], headers: userProfileFetchHeader, onCompletion: { (response, error) in
                     if let error = error {
-                        UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
+                        UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
                     } else if let response = response as? [String : Any?] {
                         if response["status"] as? String == "success" {
                             NotificationCenter.default.post(Notification.init(name: Notification.Name("userProfileUpdated")))
                         } else if let message = response["message"] as? String {
                             UIView.showWarningMessage(title: "Oops !", message: message)
                         }  else {
-                            UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                            UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                         }
                     } else {
-                        UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                        UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                     }
                 })
             }
@@ -488,6 +556,52 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
         }
     }
     
+    func fetchDealDetailsFromServer() {
+        
+
+        showDealDetailsLoadingAnimation()
+        
+        guard let dealId = self.dealId else {
+            UIView.showWarningMessage(title: "Sorry !!!", message: "We could not find deal you are searching for...")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.dismiss(animated: false, completion: nil)
+                self.stopDealDetailsLoadingAnimation()
+            }
+            return
+        }
+        
+        var tokenHeader = [String : String]()
+        if let token = User.getProfile()?.token {
+            tokenHeader = ["Authorization" : "Token \(token)"]
+        }
+  
+        BaseWebservice.performRequest(function: WebserviceFunction.fetchDeal, requestMethod: .get, params: ["deal_id" : dealId as AnyObject], headers: tokenHeader) { (response, error) in
+            self.stopDealDetailsLoadingAnimation()
+            if let response = response as? [String : Any] {
+                if let status = response["status"] as? String, status == "success" {
+                    if let dealProperties = response["deal"] as? [String : Any] {
+                        self.deal = Deal.dealObjectFromProperty(property: dealProperties)
+                        self.configureUIElements()
+                    } else {
+                        self.dismiss(animated: true, completion: nil)
+                        UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
+                    }
+                } else {
+                    if let message = response["Sorry !!!"] as? String {
+                        self.dismiss(animated: true, completion: nil)
+                        UIView.showWarningMessage(title: "Sorry !!!", message: message)
+                    } else {
+                        self.dismiss(animated: true, completion: nil)
+                        UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
+                    }
+                }
+            } else {
+                self.dismiss(animated: true, completion: nil)
+                UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
+            }
+        }
+    }
+    
     func makePurchase(orderId : Any, transactionId : Any) {
         if let serverToken = User.getProfile()?.token {
             guard let userPhoneNumber = User.getProfile()?.phoneNumber, userPhoneNumber != "" else {
@@ -504,7 +618,7 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
             BaseWebservice.performRequest(function: .makePurchase, requestMethod: .post, params: params, headers: header, onCompletion: { (response, error) in
                 SVProgressHUD.dismiss()
                 if let error = error {
-                    UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
+                    UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
                 } else if let response = response as? [String : Any?] {
                     if response["status"] as? String == "success" {
                         NotificationCenter.default.post(Notification.init(name: Notification.Name("userProfileUpdated")))
@@ -524,13 +638,13 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
                         }
                         self.showDealCodeView()
                         
-                    } else if let message = response["message"] as? String {
+                    } else if let message = response["Sorry !!!"] as? String {
                         UIView.showWarningMessage(title: "Oops !", message: message)
                     } else {
-                        UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                        UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                     }
                 } else {
-                    UIView.showWarningMessage(title: "Warning", message: "Something went wrong with server. Please try after sometime")
+                    UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                 }
             })
         } else {
@@ -543,10 +657,10 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
             if let status = response["status"] as? String, let amount = response["amount"] as? Double, status == "success", amount == Double(deal!.dealPrice), let transactionId = response["transactionId"], let orderId = response["orderId"] {
                 makePurchase(orderId: orderId, transactionId: transactionId)
             } else {
-                UIView.showWarningMessage(title: "Warning", message: "Something went wrong with your payment. Please contract our customer care.")
+                UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with your payment. Please contract our customer care.")
             }
         } else {
-            UIView.showWarningMessage(title: "Warning", message: "Something went wrong with your payment. Please contract our customer care.")
+            UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with your payment. Please contract our customer care.")
         }
     }
 }
