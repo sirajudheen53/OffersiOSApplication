@@ -14,9 +14,10 @@ import Firebase
 import Crashlytics
 import Fabric
 import UserNotifications
+import FirebaseMessaging
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLocationManagerDelegate, UNUserNotificationCenterDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLocationManagerDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
 
     var window: UIWindow?
     let locationManager = CLLocationManager()
@@ -44,9 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLoca
         FirebaseApp.configure()
         Fabric.with([Crashlytics.self])
         registerForPushNotifications()
-        DispatchQueue.main.async {
-            UIApplication.shared.registerForRemoteNotifications()
-        }
+        
         UserDefaults.standard.set("Qatar", forKey: "SelectedLocation")
 
         UITabBar.appearance().barTintColor = UIColor(red: 248.0/255.0, green: 248.0/255.0, blue: 248.0/255.0, alpha: 0.82)
@@ -77,10 +76,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLoca
     }
 
     func registerForPushNotifications() {
+        Messaging.messaging().delegate = self
+
         UNUserNotificationCenter.current() // 1
             .requestAuthorization(options: [.alert, .sound, .badge]) { // 2
                 granted, error in
                 print("Permission granted: \(granted)") // 3
+        }
+        DispatchQueue.main.async {
+            UIApplication.shared.registerForRemoteNotifications()
         }
     }
     
@@ -164,32 +168,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLoca
         
 
     }
-
     
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        let dToken = deviceToken.base64EncodedString()
-        
-        let isTokenSent = UserDefaults.standard.bool(forKey: "isTokenSent")
-        if !isTokenSent {
-            if let token = User.getProfile()?.token {
-                let tokenHeader = ["Authorization" : "Token \(token)"]
-                BaseWebservice.performRequest(function: WebserviceFunction.registerToken, requestMethod: .post, params: ["token" : dToken as AnyObject], headers: tokenHeader) { (response, error) in
-                    guard let _ = error else {
-                        if let response = response as? [String : String] {
-                            if response["status"] == "success" {
-                                UserDefaults.standard.set(true, forKey: "isTokenSent")
-                            }
+    func sendFCMTokenToServer(fcmToken : String) {
+        if let token = User.getProfile()?.token {
+            let tokenHeader = ["Authorization" : "Token \(token)"]
+            BaseWebservice.performRequest(function: WebserviceFunction.registerToken, requestMethod: .post, params: ["token" : fcmToken as AnyObject], headers: tokenHeader) { (response, error) in
+                guard let _ = error else {
+                    if let response = response as? [String : String] {
+                        if response["status"] == "success" {
+                            UserDefaults.standard.set(fcmToken, forKey: "FCMToken")
                         }
-                        return
                     }
+                    return
                 }
             }
         }
     }
+
     
-    
-    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        print(error.localizedDescription)
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+        if let currentToken = UserDefaults.standard.value(forKey: "FCMToken") as? String {
+            if currentToken != fcmToken {
+                sendFCMTokenToServer(fcmToken: fcmToken)
+            }
+        } else {
+            sendFCMTokenToServer(fcmToken: fcmToken)
+        }
     }
 
 
