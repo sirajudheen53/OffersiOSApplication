@@ -39,6 +39,8 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         
         GIDSignIn.sharedInstance().uiDelegate = self
         
+        NotificationCenter.default.addObserver(self, selector: #selector(self.notificationDealRecieved(notification:)), name: NSNotification.Name("notificationDealRecieved"), object: nil)
+
         NotificationCenter.default.addObserver(self, selector: #selector(self.userLoggedIn(notification:)), name: NSNotification.Name("userLoggedIn"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.userLoggedOut(notification:)), name: NSNotification.Name("userLoggedOut"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.detailsViewDismissed(notification:)), name: NSNotification.Name("detailsViewDismissed"), object: nil)
@@ -97,6 +99,10 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     }
  
     // MARK: - Private Methods
+    
+    @objc func notificationDealRecieved(notification : Notification) {
+        self.performSegue(withIdentifier: "showDetailsView", sender: notification.object)
+    }
     
     @objc func userLoggedIn(notification : Notification) {
         if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
@@ -198,8 +204,10 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetailsView" {
             if let detailsView = segue.destination as? DealDetailsViewController {
-                if let sender = sender as? Deal {
-                    detailsView.deal = sender
+                if let sender = sender as? [String : Any], let deal = sender["deal"] as? Deal{
+                    detailsView.deal = deal
+                } else if let sender = sender as? [String : Any], let deal_id = sender["deal_id"] {
+                    detailsView.dealId = Int(deal_id as! String)
                 }
             }
         } else if segue.identifier == "showLoginPopup" {
@@ -321,7 +329,7 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             } else {
                 index = indexPath.row - self.numberOfExtraCells
             }
-            self.performSegue(withIdentifier: "showDetailsView", sender: self.availableDeals[index])
+            self.performSegue(withIdentifier: "showDetailsView", sender: ["deal" : self.availableDeals[index]])
         }
     }
     

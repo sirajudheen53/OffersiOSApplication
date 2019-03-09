@@ -557,11 +557,9 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
     }
     
     func fetchDealDetailsFromServer() {
-        
-
         showDealDetailsLoadingAnimation()
         
-        guard let dealId = self.dealId else {
+        guard let dealId = dealId else {
             UIView.showWarningMessage(title: "Sorry !!!", message: "We could not find deal you are searching for...")
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.dismiss(animated: false, completion: nil)

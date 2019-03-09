@@ -17,43 +17,78 @@ import UserNotifications
 import FirebaseMessaging
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLocationManagerDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLocationManagerDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
     let locationManager = CLLocationManager()
     var currentLocation : CLLocation?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        self.locationManager.requestWhenInUseAuthorization()
+        NSLog("appliction %@", "opened")
+        // Check if launched from notification
+        let notificationOption = launchOptions?[.remoteNotification]
         
-        if CLLocationManager.locationServicesEnabled() {
-            UserDefaults.standard.set(true, forKey: "UserAuthorizationForLocation")
+        // 1
+        if let notification = notificationOption as? [String: AnyObject] {
+            NSLog("Notification\n\n\n\n--------%@------\n\n\n\n", notification)
+            
+            print()
+            if let aps = notification["aps"] as? [String : Any] {
+                if let category = aps["category"] as? String, category == "DEAL_NOTIFICATION", let deal_id = notification["deal_id"] {
 
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            locationManager.startUpdatingLocation()
-
-        } else {
-            UserDefaults.standard.set(false, forKey: "UserAuthorizationForLocation")
+                    let detailsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DealDetailsView") as! DealDetailsViewController
+                    detailsViewController.dealId = Int(deal_id as! String)
+                    if let rootViewController = window?.rootViewController {
+                        NSLog("Notification\n\n\n\nhahahahahaIn root view")
+                        rootViewController.present(detailsViewController, animated: false, completion: nil)
+                    }
+                }
+            }
         }
         
-        GIDSignIn.sharedInstance().clientID = "575363958117-8tm13saonriclsrvmithkb3fhvrtk9s7.apps.googleusercontent.com"
-        GIDSignIn.sharedInstance().delegate = self
+        setApplicationLocationSettings()
        
-        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-
+        setSocialLoginTokens(application: application, launchOptions: launchOptions)
+        
         FirebaseApp.configure()
         Fabric.with([Crashlytics.self])
         registerForPushNotifications()
         
         UserDefaults.standard.set("Qatar", forKey: "SelectedLocation")
 
+        setApplicationTheme()
+        
+        return true
+    }
+    
+    func setSocialLoginTokens(application: UIApplication, launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
+        GIDSignIn.sharedInstance().clientID = "575363958117-8tm13saonriclsrvmithkb3fhvrtk9s7.apps.googleusercontent.com"
+        GIDSignIn.sharedInstance().delegate = self
+        
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+    }
+    
+    func setApplicationLocationSettings() {
+        self.locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            UserDefaults.standard.set(true, forKey: "UserAuthorizationForLocation")
+            
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+            
+        } else {
+            UserDefaults.standard.set(false, forKey: "UserAuthorizationForLocation")
+        }
+    }
+    
+    func setApplicationTheme() {
         UITabBar.appearance().barTintColor = UIColor(red: 248.0/255.0, green: 248.0/255.0, blue: 248.0/255.0, alpha: 0.82)
         UINavigationBar.appearance().backgroundColor = UIColor.white
         UINavigationBar.appearance().isTranslucent = false
         UINavigationBar.appearance().largeTitleTextAttributes =
             [NSAttributedStringKey.font: Constants.boldProDisplayWithSize(size: 32.0)]
-        return true
     }
     
     
@@ -76,6 +111,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLoca
     }
 
     func registerForPushNotifications() {
+        UNUserNotificationCenter.current().delegate = self
+
         Messaging.messaging().delegate = self
 
         UNUserNotificationCenter.current() // 1
@@ -184,7 +221,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLoca
             }
         }
     }
-
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
         if let currentToken = UserDefaults.standard.value(forKey: "FCMToken") as? String {
@@ -195,5 +231,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLoca
             sendFCMTokenToServer(fcmToken: fcmToken)
         }
     }
+    
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
+        Messaging.messaging().appDidReceiveMessage(userInfo)
+
+        if let aps = userInfo["aps"] as? [String : Any] {
+            if let category = aps["category"] as? String, category == "DEAL_NOTIFICATION", let deal_id = userInfo["deal_id"] as? Int {
+                NotificationCenter.default.post(name: NSNotification.Name("notificationDealRecieved"), object: ["deal_id":deal_id as AnyObject])
+            }
+        }
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void)
+    {
+        completionHandler([.alert, .badge, .sound])
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+         Messaging.messaging().appDidReceiveMessage(userInfo)
+        
+        if let aps = userInfo["aps"] as? [String : Any] {
+            if let category = aps["category"] as? String, category == "DEAL_NOTIFICATION", let deal_id = userInfo["deal_id"] {
+                NotificationCenter.default.post(name: NSNotification.Name("notificationDealRecieved"), object: ["deal_id":deal_id as AnyObject])
+            }
+
+        }
+        
+        completionHandler(UIBackgroundFetchResult.newData)
+    }
 }
+
 
