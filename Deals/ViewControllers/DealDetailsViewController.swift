@@ -529,15 +529,20 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
         }
     }
     
-    func makePurchase() {
+    func makePurchase(orderId : Any, transactionId : Any) {
         if let serverToken = User.getProfile()?.token {
             guard let userPhoneNumber = User.getProfile()?.phoneNumber, userPhoneNumber != "" else {
                 self.performSegue(withIdentifier: "showPhoneNumberInput", sender: nil)
                 return
             }
             SVProgressHUD.show()
-            let userProfileFetchHeader = ["Authorization" : "Token \(serverToken)"]
-            BaseWebservice.performRequest(function: .makePurchase, requestMethod: .post, params: ["deal_id" : deal!.dealId as AnyObject], headers: userProfileFetchHeader, onCompletion: { (response, error) in
+            let header = ["Authorization" : "Token \(serverToken)"]
+            
+            var params = ["deal_id" : deal!.dealId as AnyObject];
+            params["transaction_id"] = transactionId as AnyObject
+            params["order_id"] = orderId as AnyObject
+            
+            BaseWebservice.performRequest(function: .makePurchase, requestMethod: .post, params: params, headers: header, onCompletion: { (response, error) in
                 SVProgressHUD.dismiss()
                 if let error = error {
                     UIView.showWarningMessage(title: "Warning", message: error.localizedDescription)
@@ -576,8 +581,8 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
     
     func qpResponse(_ response: NSDictionary) {
         if let response = response as? [String : Any] {
-            if let status = response["status"] as? String, let amount = response["amount"] as? Double, status == "success", amount == Double(deal!.dealPrice) {
-                makePurchase()
+            if let status = response["status"] as? String, let amount = response["amount"] as? Double, status == "success", amount == Double(deal!.dealPrice), let transactionId = response["transactionId"], let orderId = response["orderId"] {
+                makePurchase(orderId: orderId, transactionId: transactionId)
             } else {
                 UIView.showWarningMessage(title: "Warning", message: "Something went wrong with your payment. Please contract our customer care.")
             }
