@@ -73,19 +73,10 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
         
         analyticsScreenName = "Deal Details View"
         super.viewDidLoad()
-        UIApplication.shared.isStatusBarHidden = true
         self.navigationController?.isNavigationBarHidden = true
 
-        if let deal = deal, deal.purchaseCode != "" && deal.endDate > Date() {
-            showDealCodeView()
-        } else {
-            dealInfoView.isHidden = false
-            coupnInfoView.isHidden = true
-        }
-        NotificationCenter.default.addObserver(self, selector: #selector(self.userLocationUpdated(notification:)), name: NSNotification.Name("locationUpdated"), object: nil)
-
         
-        makeViewedAPI()
+        
         self.configureUIElements()
         self.title = "Details"
         drawDottedLine(start: CGPoint(x: dashedView.bounds.minX, y: dashedView.bounds.minY),
@@ -108,26 +99,7 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
         return requiredString
     }
     
-    func createQRFromString(_ str: String, size: CGSize) -> UIImage {
-        let stringData = str.data(using: .utf8)
-        
-        let qrFilter = CIFilter(name: "CIQRCodeGenerator")!
-        qrFilter.setValue(stringData, forKey: "inputMessage")
-        qrFilter.setValue("H", forKey: "inputCorrectionLevel")
-        
-        let minimalQRimage = qrFilter.outputImage!
-        // NOTE that a QR code is always square, so minimalQRimage..width === .height
-        let minimalSideLength = minimalQRimage.extent.width
-        
-        let smallestOutputExtent = (size.width < size.height) ? size.width : size.height
-        let scaleFactor = smallestOutputExtent / minimalSideLength
-        let scaledImage = minimalQRimage.transformed(
-            by: CGAffineTransform(scaleX: scaleFactor, y: scaleFactor))
-        
-        return UIImage(ciImage: scaledImage,
-                       scale: UIScreen.main.scale,
-                       orientation: .up)
-    }
+    
     
     func moreDetailsAttributedText(title : String) -> NSAttributedString {
         let paragraphStyle = NSMutableParagraphStyle()
@@ -253,6 +225,13 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
     
 
     func configureUIElements() {
+        makeViewedAPI()
+       if let deal = deal, deal.purchaseCode != "" && deal.endDate > Date() {
+            showDealCodeView()
+        } else {
+            dealInfoView.isHidden = false
+            coupnInfoView.isHidden = true
+        }
         if let deal = self.deal {
             if let vendor = deal.vendor {
                 makeFavouriteButton.isSelected = deal.isFavourited
@@ -315,26 +294,6 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
         
         let offerPercent : Double = (Double(deal!.originalPrice - deal!.dealPrice)/Double(self.deal!.originalPrice)*100)
         self.offerPercentageStripLabel.attributedText = offerPercentageStripValueAttributedString(value: "\(Int(offerPercent)) % off")
-        
-        phoneContactButton.layer.borderColor = Constants.darkGrey.cgColor
-        phoneContactButton.layer.borderWidth = 1.0
-        phoneContactButton.layer.cornerRadius = 4.0
-        phoneContactButton.clipsToBounds = true
-        
-        couponContactButton.layer.borderColor = Constants.darkGrey.cgColor
-        couponContactButton.layer.borderWidth = 1.0
-        couponContactButton.layer.cornerRadius = 4.0
-        couponContactButton.clipsToBounds = true
-        
-        couponLocateButton.layer.borderColor = Constants.darkGrey.cgColor
-        couponLocateButton.layer.borderWidth = 1.0
-        couponLocateButton.layer.cornerRadius = 4.0
-        couponLocateButton.clipsToBounds = true
-        
-        dealLocateButton.layer.borderColor = Constants.darkGrey.cgColor
-        dealLocateButton.layer.borderWidth = 1.0
-        dealLocateButton.layer.cornerRadius = 4.0
-        dealLocateButton.clipsToBounds = true
         
         updateDistanceValue()
     }
@@ -424,7 +383,7 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
             }
         }
         
-        couponQRCodeImageView.image = createQRFromString(deal?.purchaseCode ?? "", size: couponQRCodeImageView.frame.size)
+        couponQRCodeImageView.image = UIView.createQRFromString(deal?.purchaseCode ?? "", size: couponQRCodeImageView.frame.size)
     }
     
     // MARK: - IBAction Methods
@@ -437,7 +396,7 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
         qpRequestParams.city = "Doha"
         qpRequestParams.state = "Doha"
         qpRequestParams.country  = "QA"
-        qpRequestParams.email = "info@dollordeals.com"
+        qpRequestParams.email = User.getProfile()?.email ?? "info@dollordeals.com"
         qpRequestParams.currency = "QAR"
         qpRequestParams.referenceId = UUID().uuidString
         qpRequestParams.phone = "\(User.getProfile()?.phoneNumber ?? "")"

@@ -195,7 +195,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLoca
             sendFCMTokenToServer(fcmToken: fcmToken)
         }
     }
-
-
 }
 
