@@ -636,7 +636,7 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
                         }
                         self.showDealCodeView()
                         
-                    } else if let message = response["Sorry !!!"] as? String {
+                    } else if let message = response["message"] as? String {
                         UIView.showWarningMessage(title: "Oops !", message: message)
                     } else {
                         UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
