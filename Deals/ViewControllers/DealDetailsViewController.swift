@@ -24,7 +24,7 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
 
     var animationInProgress = false
     @IBOutlet weak var imageSliderView : UIView!
-    @IBOutlet weak var imageSlider : UISlider!
+    @IBOutlet weak var imageSlider : UIPageControl!
     @IBOutlet weak var imageSliderCollectionView : UICollectionView!
 
     @IBOutlet weak var addressIconImageView: UIImageView!
@@ -44,7 +44,6 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     @IBOutlet weak var viewsTitleLabel: UILabel!
     @IBOutlet weak var distanceValueLabel: UILabel!
     @IBOutlet weak var phoneContactImageView: UIImageView!
-    @IBOutlet weak var dealImageView: UIImageView!
     @IBOutlet weak var offerPercentageStripLabel: UILabel!
     @IBOutlet weak var offerDetailsView: UIView!
     @IBOutlet weak var offerTitleLabel: UILabel!
@@ -83,7 +82,7 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         analyticsScreenName = "Deal Details View"
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
-
+        imageSlider.isHidden = true
         if let _ = deal {
             self.configureUIElements()
         } else {
@@ -115,61 +114,60 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     @objc func infoViewDragged(panGesture : UIPanGestureRecognizer){
         let translation  = panGesture.translation(in: self.dealInfoView)
         let velocity = panGesture.velocity(in: self.dealInfoView)
-        
+        self.imageSliderCollectionView.collectionViewLayout.invalidateLayout()
+
         if self.animationInProgress {
             return
         }
         
         if velocity.y > 1000  {
+            //Full view
             if self.offerDetailsViewBottomConstraint.constant != -300 {
                 offerDetailsViewBottomConstraint.constant = -300
+                if let images = deal?.images, images.count > 1 {
+                    self.imageSlider.isHidden = false
+                }
                 animationInProgress = true
-                print("In If Velocity")
-
                 UIView.animate(withDuration: 0.5, animations: {
                     self.view.layoutIfNeeded()
                 }) { (status) in
-//                    self.imageSliderView.isHidden = false
-//                    self.imageSliderCollectionView.collectionViewLayout.invalidateLayout()
-
                     self.animationInProgress = false
                 }
             }
             return
         } else if velocity.y < -1000  {
+            //Deal full view
             if self.offerDetailsViewBottomConstraint.constant != 0 {
-                print("In Else Velocity --- \(offerDetailsViewBottomConstraint.constant)")
                 offerDetailsViewBottomConstraint.constant = 0
-            
+                self.imageSlider.isHidden = true
                 animationInProgress = true
-                print("In Else Velocity")
                 UIView.animate(withDuration: 0.5, animations: {
                     self.view.layoutIfNeeded()
                 }) { (status) in
                     self.animationInProgress = false
-//                    self.imageSliderView.isHidden = true
                 }
             }
-            
             return
         }
         
         if(panGesture.state == UIGestureRecognizerState.ended)
         {
-            print("Constant --- \(self.offerDetailsViewBottomConstraint.constant)");
             if translation.y < 300 {
-                    self.offerDetailsViewBottomConstraint.constant = 0
-                    
+                //Deal full view
+                self.offerDetailsViewBottomConstraint.constant = 0
+                self.imageSlider.isHidden = true
                 animationInProgress = true
                 UIView.animate(withDuration: 0.5, animations: {
                     self.view.layoutIfNeeded()
                 }) { (status) in
                     self.animationInProgress = false
                 }
-                
             } else {
-            
+                //Full Screen
                 self.offerDetailsViewBottomConstraint.constant = -300
+                if let images = deal?.images, images.count > 1 {
+                    self.imageSlider.isHidden = false
+                }
                 animationInProgress = true
                 UIView.animate(withDuration: 0.5, animations: {
                     self.view.layoutIfNeeded()
@@ -180,23 +178,18 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         } else {
             if translation.y > 0 {
                 if translation.y > 300 {
-                    print("In Animation : if")
-//                    self.imageSliderView.isHidden = false
-//                    self.imageSliderCollectionView.collectionViewLayout.invalidateLayout()
-
+                    //Full Screen
+                    if let images = deal?.images, images.count > 1 {
+                        self.imageSlider.isHidden = false
+                    }
                     offerDetailsViewBottomConstraint.constant = -300
                 } else if offerDetailsViewBottomConstraint.constant != -300 {
-                    print("In Animation : else")
-                    print("const --- : \(offerDetailsViewBottomConstraint.constant)")
-
+                    self.imageSlider.isHidden = true
                     offerDetailsViewBottomConstraint.constant = -translation.y
                 }
             } else if translation.y > -300 && offerDetailsViewBottomConstraint.constant != 0 {
-                print("y ---:\(translation.y)")
-                print("const --- : \(offerDetailsViewBottomConstraint.constant)")
-                print("In Negative Animation : else")
-//                self.imageSliderView.isHidden = true
-
+                self.imageSlider.isHidden = true
+                //Dragging up
                 offerDetailsViewBottomConstraint.constant = -(300 + translation.y)
             }
 
@@ -362,7 +355,6 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         buyMoreButton.isHidden = true
         addressIconImageView.isHidden = true
         offerStrinp.isHidden = true
-        dealImageView.showAnimatedGradientSkeleton()
         validUptoValueLabel.showAnimatedGradientSkeleton()
         viewsTitleLabel.showAnimatedGradientSkeleton()
         purchasesTitleLabel.showAnimatedGradientSkeleton()
@@ -394,7 +386,6 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         buyMoreButton.isHidden = false
         addressIconImageView.isHidden = false
         offerStrinp.isHidden = false
-        dealImageView.hideSkeleton()
         validUptoValueLabel.hideSkeleton()
         viewsTitleLabel.hideSkeleton()
         purchasesTitleLabel.hideSkeleton()
@@ -440,8 +431,10 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
                     self.numberOfPeopleViewedValueLabel.text = "-"
                 }
                 
-                if let images = deal.images, let image = images.first,deal.endDate > Date() {
-                    self.dealImageView?.af_setImage(withURL: URL(string: image_service_url + image)!)
+                if let images = deal.images {
+                    imageSlider.hidesForSinglePage = true
+                    imageSlider.numberOfPages = images.count
+                    imageSlider.isHidden = true
                 }
                 
                 if deal.numberOfPurchases == 0 {
@@ -778,6 +771,9 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let dealImages = deal?.images {
+            if dealImages.count == 0 {
+                return 1
+            }
             return dealImages.count
         } else {
             return 1
@@ -793,9 +789,20 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         return imageCell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
-    {
-        return CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.height)
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        imageSlider.currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10.0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.size.width - 10, height: collectionView.frame.size.height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsetsMake(0, 5, 0, 5)
     }
 }
 
