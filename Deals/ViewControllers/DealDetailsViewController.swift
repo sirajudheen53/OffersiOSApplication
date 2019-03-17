@@ -19,6 +19,11 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
     var dealCode : String?
     var qpRequestParams : QPRequestParameters!
 
+    @IBOutlet weak var offerDetailsViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var dealImageViewBottomConstraint: NSLayoutConstraint!
+
+    var animationInProgress = false
+    
     @IBOutlet weak var addressIconImageView: UIImageView!
     @IBOutlet weak var boughtPeopelIconImageView: UIImageView!
     @IBOutlet weak var viewedPeopleIconImageView: UIImageView!
@@ -64,6 +69,10 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
     @IBOutlet weak var dealLocateButton: UIButton!
     @IBOutlet weak var couponLocateButton: UIButton!
 
+    
+    var dealInfoViewDragging = UIPanGestureRecognizer()
+    var couponInfoViewDragging = UIPanGestureRecognizer()
+    var linesConvergingAnimation : UIViewPropertyAnimator = UIViewPropertyAnimator()
     override func viewDidLoad() {
         qpRequestParams =   QPRequestParameters(viewController: self)
         qpRequestParams.delegate = self
@@ -81,6 +90,14 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
         self.title = "Details"
         drawDottedLine(start: CGPoint(x: dashedView.bounds.minX, y: dashedView.bounds.minY),
                        end: CGPoint(x: dashedView.bounds.maxX, y: dashedView.bounds.minY), view: dashedView)
+        
+        dealInfoViewDragging = UIPanGestureRecognizer(target: self, action: #selector(self.infoViewDragged(panGesture:)))
+        couponInfoViewDragging = UIPanGestureRecognizer(target: self, action: #selector(self.infoViewDragged(panGesture:)))
+        offerDetailsView.isUserInteractionEnabled = true
+        offerDetailsView.addGestureRecognizer(dealInfoViewDragging)
+        
+//        dealInfoView.isUserInteractionEnabled = true
+//        dealInfoView.addGestureRecognizer(couponInfoViewDragging)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -90,6 +107,88 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @objc func infoViewDragged(panGesture : UIPanGestureRecognizer){
+        let translation  = panGesture.translation(in: self.dealInfoView)
+        let velocity = panGesture.velocity(in: self.dealInfoView)
+        
+        if self.animationInProgress {
+            return
+        }
+        
+        if velocity.y > 1000  {
+            if self.offerDetailsViewBottomConstraint.constant != -300 {
+                offerDetailsViewBottomConstraint.constant = -300
+                animationInProgress = true
+                print("In If Velocity")
+
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.view.layoutIfNeeded()
+                }) { (status) in
+                    self.animationInProgress = false
+                }
+            }
+            return
+        } else if velocity.y < -1000  {
+            if self.offerDetailsViewBottomConstraint.constant != 0 {
+                print("In Else Velocity --- \(offerDetailsViewBottomConstraint.constant)")
+                offerDetailsViewBottomConstraint.constant = 0
+                animationInProgress = true
+                print("In Else Velocity")
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.view.layoutIfNeeded()
+                }) { (status) in
+                    self.animationInProgress = false
+                }
+            }
+            
+            return
+        }
+        
+        if(panGesture.state == UIGestureRecognizerState.ended)
+        {
+            print("Constant --- \(self.offerDetailsViewBottomConstraint.constant)");
+            if translation.y < 300 {
+                    self.offerDetailsViewBottomConstraint.constant = 0
+                    
+                animationInProgress = true
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.view.layoutIfNeeded()
+                }) { (status) in
+                    self.animationInProgress = false
+                }
+                
+            } else {
+            
+                self.offerDetailsViewBottomConstraint.constant = -300
+                animationInProgress = true
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.view.layoutIfNeeded()
+                }) { (status) in
+                    self.animationInProgress = false
+                }
+            }
+        } else {
+            if translation.y > 0 {
+                if translation.y > 300 {
+                    print("In Animation : if")
+                    offerDetailsViewBottomConstraint.constant = -300
+                } else if offerDetailsViewBottomConstraint.constant != -300 {
+                    print("In Animation : else")
+                    print("const --- : \(offerDetailsViewBottomConstraint.constant)")
+                    offerDetailsViewBottomConstraint.constant = -translation.y
+                }
+            } else if translation.y > -300 && offerDetailsViewBottomConstraint.constant != 0 {
+                print("y ---:\(translation.y)")
+                print("const --- : \(offerDetailsViewBottomConstraint.constant)")
+                print("In Negative Animation : else")
+                offerDetailsViewBottomConstraint.constant = -(300 + translation.y)
+            }
+
+        }
+
+        
     }
     
     func titleAttributedText(title : String) -> NSAttributedString {

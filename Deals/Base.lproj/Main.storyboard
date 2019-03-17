@@ -315,11 +315,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy_deal" translatesAutoresizingMaskIntoConstraints="NO" id="onM-EA-TqW">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="438"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="450"/>
                                 <color key="backgroundColor" red="0.21568627450980393" green="0.22745098039215686" blue="0.23921568627450979" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="438" id="2m1-yI-VLO"/>
-                                </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0FG-pH-1Il" customClass="RoundedView" customModule="Dollor_Deals" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="281" width="414" height="455"/>
@@ -858,9 +855,9 @@
                                     <constraint firstItem="0Ec-K3-T3V" firstAttribute="top" secondItem="H78-sz-bMb" secondAttribute="bottom" constant="20" id="bOx-st-s2J"/>
                                     <constraint firstItem="Yv9-Bj-8xE" firstAttribute="leading" secondItem="T84-1p-H9N" secondAttribute="leading" id="ch7-mU-G2g"/>
                                     <constraint firstItem="Kag-BS-0T7" firstAttribute="centerY" secondItem="Yv9-Bj-8xE" secondAttribute="centerY" id="cxx-DV-d1l"/>
-                                    <constraint firstAttribute="height" constant="455" id="d5N-Ld-9Pe"/>
                                     <constraint firstItem="crI-xL-8cx" firstAttribute="centerY" secondItem="H78-sz-bMb" secondAttribute="centerY" constant="1" id="dLQ-oh-CdI"/>
                                     <constraint firstItem="AAm-94-6bs" firstAttribute="leading" secondItem="0FG-pH-1Il" secondAttribute="leading" id="dPD-7S-Kti"/>
+                                    <constraint firstAttribute="height" constant="455" id="dhp-RW-Nfe"/>
                                     <constraint firstItem="uKi-rC-MVD" firstAttribute="centerY" secondItem="Kag-BS-0T7" secondAttribute="centerY" id="e2F-vp-dLN"/>
                                     <constraint firstAttribute="trailing" secondItem="T84-1p-H9N" secondAttribute="trailing" constant="20" id="elz-08-6Zc"/>
                                     <constraint firstAttribute="bottom" secondItem="0Ec-K3-T3V" secondAttribute="bottom" id="iWo-oR-znK"/>
@@ -928,14 +925,14 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="offer_strip" translatesAutoresizingMaskIntoConstraints="NO" id="9XK-8O-Yld">
-                                <rect key="frame" x="-22" y="182" width="161" height="74"/>
+                                <rect key="frame" x="-22" y="124" width="161" height="74"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="74" id="88U-hL-Fkx"/>
                                     <constraint firstAttribute="width" constant="161" id="pPp-ZG-MdA"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="32 % off" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tuQ-NR-qo0">
-                                <rect key="frame" x="24" y="208.66666666666666" width="64.666666666666671" height="21"/>
+                                <rect key="frame" x="24" y="150.66666666666666" width="64.666666666666671" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -947,18 +944,19 @@
                             <constraint firstItem="Ohj-6H-OuN" firstAttribute="trailing" secondItem="onM-EA-TqW" secondAttribute="trailing" id="AZa-Yi-UYT"/>
                             <constraint firstItem="9XK-8O-Yld" firstAttribute="leading" secondItem="Ohj-6H-OuN" secondAttribute="leading" constant="-22" id="Ai5-Qx-FmQ"/>
                             <constraint firstItem="SzV-5N-iaB" firstAttribute="top" secondItem="Ohj-6H-OuN" secondAttribute="top" constant="14" id="D32-Oi-6bu"/>
-                            <constraint firstItem="0FG-pH-1Il" firstAttribute="top" secondItem="9XK-8O-Yld" secondAttribute="bottom" constant="25" id="Fod-Zq-GgC"/>
                             <constraint firstItem="rJU-zc-Anq" firstAttribute="leading" secondItem="Ohj-6H-OuN" secondAttribute="leading" constant="16" id="HDx-uX-Zoj"/>
                             <constraint firstItem="Ohj-6H-OuN" firstAttribute="trailing" secondItem="0FG-pH-1Il" secondAttribute="trailing" id="JQR-8Y-G38"/>
                             <constraint firstItem="5Fa-At-Uef" firstAttribute="top" secondItem="SzV-5N-iaB" secondAttribute="top" id="Mx3-ys-srm"/>
                             <constraint firstItem="SzV-5N-iaB" firstAttribute="leading" secondItem="5Fa-At-Uef" secondAttribute="trailing" constant="12" id="Usg-QH-0wI"/>
                             <constraint firstItem="Ohj-6H-OuN" firstAttribute="bottom" secondItem="0FG-pH-1Il" secondAttribute="bottom" id="hMU-RO-0Bx"/>
+                            <constraint firstItem="9XK-8O-Yld" firstAttribute="top" secondItem="rJU-zc-Anq" secondAttribute="bottom" constant="50" id="jb5-CM-Ma2"/>
                             <constraint firstItem="onM-EA-TqW" firstAttribute="leading" secondItem="Ohj-6H-OuN" secondAttribute="leading" id="lVb-1j-W6V"/>
                             <constraint firstItem="Ohj-6H-OuN" firstAttribute="trailing" secondItem="SzV-5N-iaB" secondAttribute="trailing" constant="16" id="py9-DL-Ibg"/>
                             <constraint firstItem="tuQ-NR-qo0" firstAttribute="leading" secondItem="Ohj-6H-OuN" secondAttribute="leading" constant="24" id="qrn-JD-QqV"/>
                             <constraint firstItem="tuQ-NR-qo0" firstAttribute="centerY" secondItem="9XK-8O-Yld" secondAttribute="centerY" id="rkl-3v-Z7a"/>
                             <constraint firstItem="rJU-zc-Anq" firstAttribute="top" secondItem="5Fa-At-Uef" secondAttribute="top" id="uKn-ED-Frc"/>
                             <constraint firstItem="0FG-pH-1Il" firstAttribute="leading" secondItem="Ohj-6H-OuN" secondAttribute="leading" id="xok-p7-xdj"/>
+                            <constraint firstItem="0FG-pH-1Il" firstAttribute="top" secondItem="onM-EA-TqW" secondAttribute="bottom" constant="-169" id="zWb-uk-Pmp"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ohj-6H-OuN"/>
                     </view>
@@ -981,6 +979,7 @@
                         <outlet property="dashedView" destination="S5H-td-bjH" id="dA9-re-RqH"/>
                         <outlet property="dealDetailsButton" destination="H78-sz-bMb" id="Doe-T5-3IW"/>
                         <outlet property="dealImageView" destination="onM-EA-TqW" id="vH4-2T-UbN"/>
+                        <outlet property="dealImageViewBottomConstraint" destination="zWb-uk-Pmp" id="NGg-QF-Ksb"/>
                         <outlet property="dealInfoEnableLocationButton" destination="zJi-cI-ANg" id="Pvd-qt-azx"/>
                         <outlet property="dealInfoView" destination="0Ec-K3-T3V" id="geK-ff-YJs"/>
                         <outlet property="dealLocateButton" destination="6Z2-f4-npe" id="q57-xm-Smu"/>
@@ -991,8 +990,8 @@
                         <outlet property="moreDetailsRightArrowButton" destination="crI-xL-8cx" id="huX-bL-aCS"/>
                         <outlet property="numberOfPeoplePurchased" destination="8iq-AP-7H0" id="V3M-Am-2FI"/>
                         <outlet property="numberOfPeopleViewedValueLabel" destination="eEX-OE-tx8" id="UpR-cq-QxN"/>
-                        <outlet property="offerDetailsHeightContstraint" destination="d5N-Ld-9Pe" id="Rb3-3c-hMo"/>
                         <outlet property="offerDetailsView" destination="0FG-pH-1Il" id="FPa-iu-PW5"/>
+                        <outlet property="offerDetailsViewBottomConstraint" destination="hMU-RO-0Bx" id="J2g-Kf-XXF"/>
                         <outlet property="offerExpiredView" destination="SlP-J0-DaS" id="FCZ-uc-Fqg"/>
                         <outlet property="offerPercentageStripLabel" destination="tuQ-NR-qo0" id="ZE1-ri-GEI"/>
                         <outlet property="offerPriceValueLabel" destination="uKi-rC-MVD" id="XLw-zK-4X5"/>
