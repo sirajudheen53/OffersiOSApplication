@@ -61,6 +61,7 @@
 		A78D194F214CDE2B00E9F6BF /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A78D194E214CDE2B00E9F6BF /* SF-Pro-Text-Bold.otf */; };
 		A79CA1A11FF9B47600713DE3 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79CA1A01FF9B47600713DE3 /* Date+Extension.swift */; };
 		A7AFE6BD2102FC9F00D3322E /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AFE6BC2102FC9F00D3322E /* UserProfile.swift */; };
+		A7B49427223DE3D600DAADA7 /* ImageSliderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B49426223DE3D600DAADA7 /* ImageSliderCollectionViewCell.swift */; };
 		A7BD3282222118C000E9F6BD /* FeatureListingWithHeadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BD3281222118C000E9F6BD /* FeatureListingWithHeadingTableViewCell.swift */; };
 		A7BD3284222119FD00E9F6BD /* DealFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BD3283222119FD00E9F6BD /* DealFeature.swift */; };
 		A7C22C1121FC90B600BCF81C /* dollordeals_terms.html in Resources */ = {isa = PBXBuildFile; fileRef = A7C22C1021FC90B600BCF81C /* dollordeals_terms.html */; };
@@ -183,6 +184,7 @@
 		A78D194E214CDE2B00E9F6BF /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
 		A79CA1A01FF9B47600713DE3 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Date+Extension.swift"; path = "Extensions/Date+Extension.swift"; sourceTree = "<group>"; };
 		A7AFE6BC2102FC9F00D3322E /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		A7B49426223DE3D600DAADA7 /* ImageSliderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSliderCollectionViewCell.swift; sourceTree = "<group>"; };
 		A7BD3281222118C000E9F6BD /* FeatureListingWithHeadingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureListingWithHeadingTableViewCell.swift; sourceTree = "<group>"; };
 		A7BD3283222119FD00E9F6BD /* DealFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealFeature.swift; sourceTree = "<group>"; };
 		A7C22C1021FC90B600BCF81C /* dollordeals_terms.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = dollordeals_terms.html; sourceTree = "<group>"; };
@@ -364,6 +366,7 @@
 				A73E8FBA2100E8E000008CD3 /* PurchaseDealsCollectionViewCell.swift */,
 				A73E8FBB2100E8E000008CD3 /* PurchaseDealsCollectionViewCell.xib */,
 				A7DD00522215A95B0099284A /* PagingLoadingTableViewCell.swift */,
+				A7B49426223DE3D600DAADA7 /* ImageSliderCollectionViewCell.swift */,
 			);
 			path = "Custom Cells";
 			sourceTree = "<group>";
@@ -764,6 +767,7 @@
 				0B67D09F20AAA6D000FC39E5 /* AppDelegate.swift in Sources */,
 				0B9E123320B2900100C66129 /* ConditionsListingTableViewCell.swift in Sources */,
 				A7F7502C20D970FF0012FE47 /* UIView+RoundCorner.swift in Sources */,
+				A7B49427223DE3D600DAADA7 /* ImageSliderCollectionViewCell.swift in Sources */,
 				A7BD3282222118C000E9F6BD /* FeatureListingWithHeadingTableViewCell.swift in Sources */,
 				A7521A4C211DB66F00E870B8 /* Purchase.swift in Sources */,
 				A7DD00532215A95B0099284A /* PagingLoadingTableViewCell.swift in Sources */,

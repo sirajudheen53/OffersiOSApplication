@@ -318,6 +318,62 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="450"/>
                                 <color key="backgroundColor" red="0.21568627450980393" green="0.22745098039215686" blue="0.23921568627450979" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PZa-8a-YOp">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="350"/>
+                                <subviews>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fNf-vG-pv8">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="350"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="veN-og-ckd">
+                                            <size key="itemSize" width="50" height="50"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                        <cells>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" reuseIdentifier="ImageCell" id="9Pp-RS-bM0" customClass="ImageSliderCollectionViewCell" customModule="Dollor_Deals" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy_deal" translatesAutoresizingMaskIntoConstraints="NO" id="bWz-3O-l7K">
+                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                        </imageView>
+                                                    </subviews>
+                                                </view>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="bWz-3O-l7K" secondAttribute="trailing" id="0Mb-lE-Eo6"/>
+                                                    <constraint firstAttribute="bottom" secondItem="bWz-3O-l7K" secondAttribute="bottom" id="gHl-bO-RxY"/>
+                                                    <constraint firstItem="bWz-3O-l7K" firstAttribute="leading" secondItem="9Pp-RS-bM0" secondAttribute="leading" id="gJM-b2-OMz"/>
+                                                    <constraint firstItem="bWz-3O-l7K" firstAttribute="top" secondItem="9Pp-RS-bM0" secondAttribute="top" id="xXL-ch-bAU"/>
+                                                </constraints>
+                                                <connections>
+                                                    <outlet property="dealImageView" destination="bWz-3O-l7K" id="qoO-0u-kIh"/>
+                                                </connections>
+                                            </collectionViewCell>
+                                        </cells>
+                                        <connections>
+                                            <outlet property="dataSource" destination="wsw-En-rJQ" id="c2o-kV-xgh"/>
+                                            <outlet property="delegate" destination="wsw-En-rJQ" id="GgB-QM-YiW"/>
+                                        </connections>
+                                    </collectionView>
+                                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="Cbp-LH-Sfi">
+                                        <rect key="frame" x="187.66666666666666" y="213" width="39" height="37"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </pageControl>
+                                </subviews>
+                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <constraints>
+                                    <constraint firstItem="fNf-vG-pv8" firstAttribute="leading" secondItem="PZa-8a-YOp" secondAttribute="leading" id="0JP-Wq-vsj"/>
+                                    <constraint firstAttribute="bottom" secondItem="Cbp-LH-Sfi" secondAttribute="bottom" constant="100" id="9Db-Nc-xmR"/>
+                                    <constraint firstItem="fNf-vG-pv8" firstAttribute="top" secondItem="PZa-8a-YOp" secondAttribute="top" id="Bg5-WE-Cbl"/>
+                                    <constraint firstAttribute="bottom" secondItem="fNf-vG-pv8" secondAttribute="bottom" id="SBo-Mf-Dq2"/>
+                                    <constraint firstAttribute="trailing" secondItem="fNf-vG-pv8" secondAttribute="trailing" id="kBS-8o-ZI4"/>
+                                    <constraint firstItem="Cbp-LH-Sfi" firstAttribute="centerX" secondItem="PZa-8a-YOp" secondAttribute="centerX" id="n2q-x2-qxI"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0FG-pH-1Il" customClass="RoundedView" customModule="Dollor_Deals" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="281" width="414" height="455"/>
                                 <subviews>
@@ -925,14 +981,14 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="offer_strip" translatesAutoresizingMaskIntoConstraints="NO" id="9XK-8O-Yld">
-                                <rect key="frame" x="-22" y="124" width="161" height="74"/>
+                                <rect key="frame" x="-22" y="94" width="161" height="74"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="74" id="88U-hL-Fkx"/>
                                     <constraint firstAttribute="width" constant="161" id="pPp-ZG-MdA"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="32 % off" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tuQ-NR-qo0">
-                                <rect key="frame" x="24" y="150.66666666666666" width="64.666666666666671" height="21"/>
+                                <rect key="frame" x="24" y="120.66666666666669" width="64.666666666666671" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -948,8 +1004,12 @@
                             <constraint firstItem="Ohj-6H-OuN" firstAttribute="trailing" secondItem="0FG-pH-1Il" secondAttribute="trailing" id="JQR-8Y-G38"/>
                             <constraint firstItem="5Fa-At-Uef" firstAttribute="top" secondItem="SzV-5N-iaB" secondAttribute="top" id="Mx3-ys-srm"/>
                             <constraint firstItem="SzV-5N-iaB" firstAttribute="leading" secondItem="5Fa-At-Uef" secondAttribute="trailing" constant="12" id="Usg-QH-0wI"/>
+                            <constraint firstItem="PZa-8a-YOp" firstAttribute="bottom" secondItem="onM-EA-TqW" secondAttribute="bottom" constant="-100" id="WKt-71-vAk"/>
+                            <constraint firstItem="PZa-8a-YOp" firstAttribute="leading" secondItem="onM-EA-TqW" secondAttribute="leading" id="XyG-OE-z88"/>
+                            <constraint firstItem="PZa-8a-YOp" firstAttribute="trailing" secondItem="onM-EA-TqW" secondAttribute="trailing" id="eA3-y9-BsY"/>
+                            <constraint firstItem="PZa-8a-YOp" firstAttribute="top" secondItem="onM-EA-TqW" secondAttribute="top" id="hAG-yq-3oj"/>
                             <constraint firstItem="Ohj-6H-OuN" firstAttribute="bottom" secondItem="0FG-pH-1Il" secondAttribute="bottom" id="hMU-RO-0Bx"/>
-                            <constraint firstItem="9XK-8O-Yld" firstAttribute="top" secondItem="rJU-zc-Anq" secondAttribute="bottom" constant="50" id="jb5-CM-Ma2"/>
+                            <constraint firstItem="9XK-8O-Yld" firstAttribute="top" secondItem="rJU-zc-Anq" secondAttribute="bottom" constant="20" id="jb5-CM-Ma2"/>
                             <constraint firstItem="onM-EA-TqW" firstAttribute="leading" secondItem="Ohj-6H-OuN" secondAttribute="leading" id="lVb-1j-W6V"/>
                             <constraint firstItem="Ohj-6H-OuN" firstAttribute="trailing" secondItem="SzV-5N-iaB" secondAttribute="trailing" constant="16" id="py9-DL-Ibg"/>
                             <constraint firstItem="tuQ-NR-qo0" firstAttribute="leading" secondItem="Ohj-6H-OuN" secondAttribute="leading" constant="24" id="qrn-JD-QqV"/>
@@ -984,6 +1044,8 @@
                         <outlet property="dealInfoView" destination="0Ec-K3-T3V" id="geK-ff-YJs"/>
                         <outlet property="dealLocateButton" destination="6Z2-f4-npe" id="q57-xm-Smu"/>
                         <outlet property="distanceValueLabel" destination="hUA-9p-lbO" id="eNv-tK-4yP"/>
+                        <outlet property="imageSliderCollectionView" destination="fNf-vG-pv8" id="LCx-LZ-JIK"/>
+                        <outlet property="imageSliderView" destination="PZa-8a-YOp" id="2aW-gO-f0o"/>
                         <outlet property="locateButtonImageView" destination="agF-2C-ijE" id="rEX-7T-j9z"/>
                         <outlet property="makeFavouriteButton" destination="5Fa-At-Uef" id="2dD-zi-aNb"/>
                         <outlet property="maskedView" destination="efM-UJ-rbH" id="FFF-Hj-4WR"/>

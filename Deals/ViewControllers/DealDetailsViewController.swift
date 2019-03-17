@@ -12,7 +12,7 @@ import SVProgressHUD
 import CoreLocation
 import QpayPayment
 
-class DealDetailsViewController: BaseViewController, QPRequestProtocol {
+class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     var dealId : Int?
     var deal : Deal?
@@ -23,7 +23,10 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
     @IBOutlet weak var dealImageViewBottomConstraint: NSLayoutConstraint!
 
     var animationInProgress = false
-    
+    @IBOutlet weak var imageSliderView : UIView!
+    @IBOutlet weak var imageSlider : UISlider!
+    @IBOutlet weak var imageSliderCollectionView : UICollectionView!
+
     @IBOutlet weak var addressIconImageView: UIImageView!
     @IBOutlet weak var boughtPeopelIconImageView: UIImageView!
     @IBOutlet weak var viewedPeopleIconImageView: UIImageView!
@@ -126,6 +129,9 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
                 UIView.animate(withDuration: 0.5, animations: {
                     self.view.layoutIfNeeded()
                 }) { (status) in
+//                    self.imageSliderView.isHidden = false
+//                    self.imageSliderCollectionView.collectionViewLayout.invalidateLayout()
+
                     self.animationInProgress = false
                 }
             }
@@ -134,12 +140,14 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
             if self.offerDetailsViewBottomConstraint.constant != 0 {
                 print("In Else Velocity --- \(offerDetailsViewBottomConstraint.constant)")
                 offerDetailsViewBottomConstraint.constant = 0
+            
                 animationInProgress = true
                 print("In Else Velocity")
                 UIView.animate(withDuration: 0.5, animations: {
                     self.view.layoutIfNeeded()
                 }) { (status) in
                     self.animationInProgress = false
+//                    self.imageSliderView.isHidden = true
                 }
             }
             
@@ -173,16 +181,22 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
             if translation.y > 0 {
                 if translation.y > 300 {
                     print("In Animation : if")
+//                    self.imageSliderView.isHidden = false
+//                    self.imageSliderCollectionView.collectionViewLayout.invalidateLayout()
+
                     offerDetailsViewBottomConstraint.constant = -300
                 } else if offerDetailsViewBottomConstraint.constant != -300 {
                     print("In Animation : else")
                     print("const --- : \(offerDetailsViewBottomConstraint.constant)")
+
                     offerDetailsViewBottomConstraint.constant = -translation.y
                 }
             } else if translation.y > -300 && offerDetailsViewBottomConstraint.constant != 0 {
                 print("y ---:\(translation.y)")
                 print("const --- : \(offerDetailsViewBottomConstraint.constant)")
                 print("In Negative Animation : else")
+//                self.imageSliderView.isHidden = true
+
                 offerDetailsViewBottomConstraint.constant = -(300 + translation.y)
             }
 
@@ -393,6 +407,7 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
 
     func configureUIElements() {
         makeViewedAPI()
+        imageSliderCollectionView.reloadData()
        if let deal = deal, deal.purchaseCode != "" && deal.endDate > Date() {
             showDealCodeView()
         } else {
@@ -760,4 +775,28 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol {
             UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with your payment. Please contract our customer care.")
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if let dealImages = deal?.images {
+            return dealImages.count
+        } else {
+            return 1
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as! ImageSliderCollectionViewCell
+        if let images = deal?.images {
+            imageCell.imageUrl = images[indexPath.row]
+            imageCell.loadImage()
+        }
+        return imageCell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
+    {
+        return CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.height)
+    }
 }
+
+
