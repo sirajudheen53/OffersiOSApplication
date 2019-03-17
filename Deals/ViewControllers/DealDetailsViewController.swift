@@ -23,6 +23,8 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     @IBOutlet weak var dealImageViewBottomConstraint: NSLayoutConstraint!
 
     var animationInProgress = false
+    var showingSheltonAnimation = false
+    
     @IBOutlet weak var imageSliderView : UIView!
     @IBOutlet weak var imageSlider : UIPageControl!
     @IBOutlet weak var imageSliderCollectionView : UICollectionView!
@@ -78,7 +80,8 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     override func viewDidLoad() {
         qpRequestParams =   QPRequestParameters(viewController: self)
         qpRequestParams.delegate = self
-        
+        deal = nil
+        dealId = 55;
         analyticsScreenName = "Deal Details View"
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
@@ -334,6 +337,9 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     }
     
     func showDealDetailsLoadingAnimation() {
+        showingSheltonAnimation = true
+        imageSliderCollectionView.reloadData()
+
         offerPriceValueLabel.isHidden = true
         originalPriceValuLabel.isHidden = true
         priceTitleLabel.isHidden = true
@@ -365,6 +371,9 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
   }
     
     func stopDealDetailsLoadingAnimation() {
+        showingSheltonAnimation = false
+        imageSliderCollectionView.reloadData()
+        
         offerPriceValueLabel.isHidden = false
         originalPriceValuLabel.isHidden = false
         priceTitleLabel.isHidden = false
@@ -784,6 +793,9 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as! ImageSliderCollectionViewCell
         if let images = deal?.images {
             imageCell.imageUrl = images[indexPath.row]
+            imageCell.loadImage()
+        } else if showingSheltonAnimation {
+            imageCell.showSkeltonAnimation = showingSheltonAnimation
             imageCell.loadImage()
         }
         return imageCell

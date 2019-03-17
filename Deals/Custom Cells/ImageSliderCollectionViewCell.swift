@@ -12,13 +12,18 @@ class ImageSliderCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var dealImageView: UIImageView!
 
+    var showSkeltonAnimation = false
     var imageUrl : String?
     
     func loadImage() {
         guard let imageUrlString = imageUrl else {
+            if showSkeltonAnimation {
+                dealImageView.showGradientSkeleton()
+            }
             return
         }
-        
+        dealImageView.hideSkeleton()
+
         self.dealImageView.af_setImage(withURL: URL(string: image_service_url + imageUrlString)!,
                                        placeholderImage: UIImage(named: "logo_small"),
                                        filter: nil,
