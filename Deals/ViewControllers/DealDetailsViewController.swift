@@ -78,7 +78,8 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     var couponInfoViewDragging = UIPanGestureRecognizer()
     var linesConvergingAnimation : UIViewPropertyAnimator = UIViewPropertyAnimator()
     override func viewDidLoad() {
-        qpRequestParams =   QPRequestParameters(viewController: self)
+        self.offerDetailsViewBottomConstraint.constant = -300
+       qpRequestParams =   QPRequestParameters(viewController: self)
         qpRequestParams.delegate = self
         analyticsScreenName = "Deal Details View"
         super.viewDidLoad()
