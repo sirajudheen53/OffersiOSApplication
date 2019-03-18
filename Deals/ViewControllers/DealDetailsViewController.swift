@@ -84,7 +84,6 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         analyticsScreenName = "Deal Details View"
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
-        imageSlider.isHidden = true
         if let _ = deal {
             self.configureUIElements()
         } else {
@@ -441,9 +440,8 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
                 }
                 
                 if let images = deal.images {
-                    imageSlider.hidesForSinglePage = true
                     imageSlider.numberOfPages = images.count
-                    imageSlider.isHidden = true
+                    imageSlider.hidesForSinglePage = true
                 }
                 
                 if deal.numberOfPurchases == 0 {
