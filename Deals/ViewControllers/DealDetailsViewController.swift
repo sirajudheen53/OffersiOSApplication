@@ -80,8 +80,6 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     override func viewDidLoad() {
         qpRequestParams =   QPRequestParameters(viewController: self)
         qpRequestParams.delegate = self
-        deal = nil
-        dealId = 55;
         analyticsScreenName = "Deal Details View"
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true

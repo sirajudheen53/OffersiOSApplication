@@ -70,6 +70,7 @@
 		A7D9F25A20AB56B6005B08BE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A7D9F25920AB56B6005B08BE /* GoogleService-Info.plist */; };
 		A7DD00532215A95B0099284A /* PagingLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DD00522215A95B0099284A /* PagingLoadingTableViewCell.swift */; };
 		A7E6B71221C3834D00FA943B /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E6B71121C3834D00FA943B /* UIView+Extension.swift */; };
+		A7E81588223FF00200AD785F /* PopAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E81587223FF00200AD785F /* PopAnimator.swift */; };
 		A7F7501220D4FF040012FE47 /* BaseWebservice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F7501120D4FF040012FE47 /* BaseWebservice.swift */; };
 		A7F7501420D638E80012FE47 /* Deal.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F7501320D638E80012FE47 /* Deal.swift */; };
 		A7F7501620D639290012FE47 /* Vendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F7501520D639290012FE47 /* Vendor.swift */; };
@@ -193,6 +194,7 @@
 		A7D9F25920AB56B6005B08BE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		A7DD00522215A95B0099284A /* PagingLoadingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingLoadingTableViewCell.swift; sourceTree = "<group>"; };
 		A7E6B71121C3834D00FA943B /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIView+Extension.swift"; path = "Extensions/UIView+Extension.swift"; sourceTree = "<group>"; };
+		A7E81587223FF00200AD785F /* PopAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PopAnimator.swift; path = Extensions/PopAnimator.swift; sourceTree = "<group>"; };
 		A7F7501120D4FF040012FE47 /* BaseWebservice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseWebservice.swift; sourceTree = "<group>"; };
 		A7F7501320D638E80012FE47 /* Deal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deal.swift; sourceTree = "<group>"; };
 		A7F7501520D639290012FE47 /* Vendor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vendor.swift; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 				A7C22C1221FC933500BCF81C /* dollor_deals_privacy.html */,
 				A7F9AD3922061F12001BE5D2 /* country_code.json */,
 				A7E6B71121C3834D00FA943B /* UIView+Extension.swift */,
+				A7E81587223FF00200AD785F /* PopAnimator.swift */,
 			);
 			path = Deals;
 			sourceTree = "<group>";
@@ -751,6 +754,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7E81588223FF00200AD785F /* PopAnimator.swift in Sources */,
 				A7E6B71221C3834D00FA943B /* UIView+Extension.swift in Sources */,
 				A7521A50211DDFA400E870B8 /* UIImage+Noir.swift in Sources */,
 				A7BD3284222119FD00E9F6BD /* DealFeature.swift in Sources */,
@@ -968,7 +972,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Deals/Dollor Deals.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
@@ -982,7 +986,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.firewheelstrading.dollordeals;
 				PRODUCT_NAME = "Dollor Deals";
-				PROVISIONING_PROFILE_SPECIFIER = "Dollor Deals Distribution";
+				PROVISIONING_PROFILE_SPECIFIER = "Dollor Deals Development";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -995,7 +999,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Deals/Dollor Deals.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 6R3U4523N6;
@@ -1008,7 +1012,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.firewheelstrading.dollordeals;
 				PRODUCT_NAME = "Dollor Deals";
-				PROVISIONING_PROFILE_SPECIFIER = "Dollor Deals Distribution";
+				PROVISIONING_PROFILE_SPECIFIER = "Dollor Deals Development";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

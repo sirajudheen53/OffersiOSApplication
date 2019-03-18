@@ -89,6 +89,9 @@ class HotDealTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollect
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let _ = hotDeals else {
+            return
+        }
         self.hotDealsCellSelectionActionBlock!(self.hotDeals![indexPath.row])
     }
     

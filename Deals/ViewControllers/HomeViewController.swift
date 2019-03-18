@@ -15,8 +15,12 @@ import SwiftMessages
 
 class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, GIDSignInUIDelegate, SkeletonTableViewDataSource {
 
+    let transition = PopAnimator()
+    
     var availableDeals = [Deal]()
     var hotDeals : [Deal]?
+    
+    var selectedTableViewCell : UITableViewCell!
 
     @IBOutlet weak var locationNameLabel: UILabel!
     
@@ -149,6 +153,7 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     func hotDealCellSelectionActionBlock() -> ((_ deal : Deal) -> ()) {
         return {(deal) in
             DispatchQueue.main.async {
+                self.selectedTableViewCell = self.dealsListingTableView.visibleCells[0]
                 self.performSegue(withIdentifier: "showDetailsView", sender: ["deal" : deal])
             }
         }
@@ -219,6 +224,7 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetailsView" {
             if let detailsView = segue.destination as? DealDetailsViewController {
+                detailsView.transitioningDelegate = self
                 if let sender = sender as? [String : Any], let deal = sender["deal"] as? Deal{
                     detailsView.deal = deal
                 } else if let sender = sender as? [String : Any], let deal_id = sender["deal_id"] {
@@ -333,6 +339,10 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if availableDeals.count == 0{
+            return
+        }
+        selectedTableViewCell = tableView.cellForRow(at: indexPath)
         if indexPath.row == 0 || indexPath.row == 1 || indexPath.row == 2
             || indexPath.row == 7 || indexPath.row == availableDeals.count + numberOfExtraCells{
             return
@@ -411,4 +421,28 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     func collectionSkeletonView(_ skeletonView: UITableView, cellIdentifierForRowAt indexPath: IndexPath) -> ReusableCellIdentifier {
         return "dealListingCell"
     }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        coordinator.animate(alongsideTransition: { context in
+            self.view.alpha = (size.width>size.height) ? 0.25 : 0.55
+        }, completion: nil)
+    }
 }
+
+extension HomeViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.originFrame = selectedTableViewCell!.superview!.convert(selectedTableViewCell!.frame, to: nil)
+        
+        transition.presenting = true
+        
+        return transition
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.presenting = false
+        return transition
+    }
+}
+
