@@ -121,38 +121,39 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
             return
         }
         
-        if velocity.y > 1000  {
-            //Full view
-            if self.offerDetailsViewBottomConstraint.constant != -300 {
-                offerDetailsViewBottomConstraint.constant = -300
-                if let images = deal?.images, images.count > 1 {
-                    self.imageSlider.isHidden = false
-                }
-                animationInProgress = true
-                UIView.animate(withDuration: 0.5, animations: {
-                    self.view.layoutIfNeeded()
-                }) { (status) in
-                    self.animationInProgress = false
-                }
-            }
-            return
-        } else if velocity.y < -1000  {
-            //Deal full view
-            if self.offerDetailsViewBottomConstraint.constant != 0 {
-                offerDetailsViewBottomConstraint.constant = 0
-                self.imageSlider.isHidden = true
-                animationInProgress = true
-                UIView.animate(withDuration: 0.5, animations: {
-                    self.view.layoutIfNeeded()
-                }) { (status) in
-                    self.animationInProgress = false
-                }
-            }
-            return
-        }
         
         if(panGesture.state == UIGestureRecognizerState.ended)
         {
+            if velocity.y > 1000  {
+                //Full view
+                if self.offerDetailsViewBottomConstraint.constant != -300 {
+                    offerDetailsViewBottomConstraint.constant = -300
+                    if let images = deal?.images, images.count > 1 {
+                        self.imageSlider.isHidden = false
+                    }
+                    animationInProgress = true
+                    UIView.animate(withDuration: 0.5, animations: {
+                        self.view.layoutIfNeeded()
+                    }) { (status) in
+                        self.animationInProgress = false
+                    }
+                }
+                return
+            } else if velocity.y < -1000  {
+                //Deal full view
+                if self.offerDetailsViewBottomConstraint.constant != 0 {
+                    offerDetailsViewBottomConstraint.constant = 0
+                    self.imageSlider.isHidden = true
+                    animationInProgress = true
+                    UIView.animate(withDuration: 0.5, animations: {
+                        self.view.layoutIfNeeded()
+                    }) { (status) in
+                        self.animationInProgress = false
+                    }
+                }
+                return
+            }
+            
             if translation.y < 300 {
                 //Deal full view
                 self.offerDetailsViewBottomConstraint.constant = 0
