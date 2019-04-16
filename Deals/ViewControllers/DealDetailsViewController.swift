@@ -99,8 +99,6 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         offerDetailsView.isUserInteractionEnabled = true
         offerDetailsView.addGestureRecognizer(dealInfoViewDragging)
         
-//        dealInfoView.isUserInteractionEnabled = true
-//        dealInfoView.addGestureRecognizer(couponInfoViewDragging)
     }
     
     override func viewWillAppear(_ animated: Bool) {
