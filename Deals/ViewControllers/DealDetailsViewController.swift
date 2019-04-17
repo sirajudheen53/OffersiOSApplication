@@ -569,8 +569,8 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     // MARK: - IBAction Methods
     
     func initiatePayment() {
-        qpRequestParams.gatewayId = "017146316"
-        qpRequestParams.secretKey = "2-LHwxDLOVHC3pB5"
+        qpRequestParams.gatewayId = "017824682"
+        qpRequestParams.secretKey = "2-ZLCwqYdo+zE+hS"
         qpRequestParams.name = "Dollor Deals"
         qpRequestParams.address = "Dollor Deals - Qatar"
         qpRequestParams.city = "Doha"
@@ -581,7 +581,7 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         qpRequestParams.referenceId = UUID().uuidString
         qpRequestParams.phone = "\(User.getProfile()?.phoneNumber ?? "")"
         qpRequestParams.amount = Double(deal?.dealPrice ?? 1) //any float value
-        qpRequestParams.mode = "TEST"
+        qpRequestParams.mode = "live"
         qpRequestParams.productDescription = "A Deal from Dollor Deals"
         qpRequestParams.sendRequest()
     }
