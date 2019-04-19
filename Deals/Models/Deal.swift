@@ -34,6 +34,7 @@ class Deal: NSObject {
     var features = [DealFeature]()
     
     static func dealObjectFromProperty(property : [String : Any]) -> Deal {
+        print(property);
         let requiredDeal = Deal()
         requiredDeal.title = property["title"] as? String ?? ""
         requiredDeal.dealId = property["id"] as? Int ?? 0
@@ -86,6 +87,9 @@ class Deal: NSObject {
             }
             if let isRedeemed = recentPurchases["isRedeemed"] as? Bool {
                 requiredDeal.isRedeemed = isRedeemed
+            }
+            if let purchasesCount = recentPurchases["purchase_count"] as? Int {
+                requiredDeal.numberOfPurchases = purchasesCount
             }
         }
         return requiredDeal

@@ -405,7 +405,7 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     func configureUIElements() {
         makeViewedAPI()
         imageSliderCollectionView.reloadData()
-       if let deal = deal, deal.purchaseCode != "" && deal.endDate > Date() {
+       if let deal = deal, deal.purchaseCode != "" {
             showDealCodeView()
         } else {
             dealInfoView.isHidden = false
@@ -557,8 +557,8 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
                 
                 let calender:Calendar = Calendar.current
                 let components: DateComponents = calender.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date2, to: expiryDate)
-                if let hour = components.hour, let minuites = components.minute {
-                    self.couponExpiresValueLabel.text = "Expires in \(hour) h \(minuites) m"
+                if let hour = components.hour, let minuites = components.minute, let days = components.day {
+                    self.couponExpiresValueLabel.text = "Expires in \(days) d \(hour) h \(minuites) m"
                 }
             }
         }

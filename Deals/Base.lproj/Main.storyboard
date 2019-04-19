@@ -699,6 +699,17 @@
                                                 <state key="normal" title="Locate">
                                                     <color key="titleColor" red="0.4431372549" green="0.46274509800000002" blue="0.47843137250000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                        <color key="value" red="0.63921568627450975" green="0.63921568627450975" blue="0.63921568627450975" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                        <integer key="value" value="1"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <integer key="value" value="4"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="locateButtonClicked:" destination="wsw-En-rJQ" eventType="touchUpInside" id="s5I-vx-534"/>
                                                 </connections>
@@ -1045,6 +1056,7 @@
                         <outlet property="moreDetailsRightArrowButton" destination="crI-xL-8cx" id="huX-bL-aCS"/>
                         <outlet property="numberOfPeoplePurchased" destination="8iq-AP-7H0" id="V3M-Am-2FI"/>
                         <outlet property="numberOfPeopleViewedValueLabel" destination="eEX-OE-tx8" id="UpR-cq-QxN"/>
+                        <outlet property="offerDetailsHeightContstraint" destination="dhp-RW-Nfe" id="h0h-1b-gM9"/>
                         <outlet property="offerDetailsView" destination="0FG-pH-1Il" id="FPa-iu-PW5"/>
                         <outlet property="offerDetailsViewBottomConstraint" destination="hMU-RO-0Bx" id="J2g-Kf-XXF"/>
                         <outlet property="offerExpiredView" destination="SlP-J0-DaS" id="FCZ-uc-Fqg"/>
