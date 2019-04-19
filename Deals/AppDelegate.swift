@@ -53,6 +53,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLoca
         return true
     }
     
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+        if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
+            _ = userActivity.webpageURL!
+        }
+        return true
+    }
+    
+//    func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: @escaping ([AnyObject]?) -> Void) -> Bool {
+//        if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
+//            _ = userActivity.webpageURL!
+//            //handle url
+//        }
+//        return true
+//    }
+    
     func setSocialLoginTokens(application: UIApplication, launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
         GIDSignIn.sharedInstance().clientID = "575363958117-8tm13saonriclsrvmithkb3fhvrtk9s7.apps.googleusercontent.com"
         GIDSignIn.sharedInstance().delegate = self
