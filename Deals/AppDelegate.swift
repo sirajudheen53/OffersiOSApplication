@@ -55,18 +55,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLoca
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
         if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
-            _ = userActivity.webpageURL!
+            if let url = userActivity.webpageURL, let dealId = getQueryStringParameter(url: url.absoluteString, param: "deal") {
+                NotificationCenter.default.post(name: NSNotification.Name("notificationDealRecieved"), object: ["deal_id":dealId as AnyObject])
+            }
         }
         return true
     }
     
-//    func application(application: UIApplication, continueUserActivity userActivity: NSUserActivity, restorationHandler: @escaping ([AnyObject]?) -> Void) -> Bool {
-//        if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
-//            _ = userActivity.webpageURL!
-//            //handle url
-//        }
-//        return true
-//    }
+    func getQueryStringParameter(url: String, param: String) -> String? {
+        guard let url = URLComponents(string: url) else { return nil }
+        return url.queryItems?.first(where: { $0.name == param })?.value
+    }
+
     
     func setSocialLoginTokens(application: UIApplication, launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
         GIDSignIn.sharedInstance().clientID = "575363958117-8tm13saonriclsrvmithkb3fhvrtk9s7.apps.googleusercontent.com"

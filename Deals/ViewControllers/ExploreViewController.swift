@@ -40,11 +40,6 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
         
         self.dealsListingTableView.contentInset = UIEdgeInsets(top: 5.0, left: 0, bottom: 0, right: 0)
 
-        if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String, filterCategories.count > 0 {
-            numberOfPages = 1
-            nextPageToLoad = 1
-            searchDealsFromServer(location: selectedLocation, _searchString: searchString)
-        }
         
         self.navigationController?.navigationBar.isHidden = true
         let dealListingCellNib = UINib(nibName: "DealsListingTableViewCell", bundle: nil)
@@ -55,11 +50,17 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
         self.filterContentView.layer.cornerRadius = 24.0
         self.filterNumberLabel.layer.cornerRadius = 8.0
         self.filterNumberLabel.clipsToBounds = true
-        self.filterNumberLabel.text = "\(self.filterCategories.count)"
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.filterNumberLabel.text = "\(self.filterCategories.count)"
+        if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String, filterCategories.count > 0 {
+            numberOfPages = 1
+            nextPageToLoad = 1
+            searchDealsFromServer(location: selectedLocation, _searchString: searchString)
+        }
     }
 
     override func didReceiveMemoryWarning() {

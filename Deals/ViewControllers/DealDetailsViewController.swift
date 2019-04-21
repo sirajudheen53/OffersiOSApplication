@@ -608,12 +608,14 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     }
     
     @IBAction func shareButtonClicked(_ sender: Any) {
-        let text = "Grab awesome deals from\n\n"
-        let myWebsite = URL(string:"https://www.dollordeals.com")
-        let shareAll = [text, myWebsite as Any] as [Any]
-        let activityViewController = UIActivityViewController(activityItems: shareAll, applicationActivities: nil)
-        activityViewController.popoverPresentationController?.sourceView = self.view
-        self.present(activityViewController, animated: true, completion: nil)
+        if let deal = deal {
+            let text = "Checkout an awesome deal from Dollor Deals\n\n"
+            let myWebsite = URL(string:"https://www.dollordeals.com?deal=\(deal.dealId)")
+            let shareAll = [text, myWebsite as Any] as [Any]
+            let activityViewController = UIActivityViewController(activityItems: shareAll, applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = self.view
+            self.present(activityViewController, animated: true, completion: nil)
+        }
     }
     
     func makeViewedAPI() {
@@ -802,15 +804,15 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10.0
+        return 0
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.size.width - 10, height: collectionView.frame.size.height)
+        return CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 5, 0, 5)
+        return UIEdgeInsetsMake(0, 0, 0, 0)
     }
 }
 

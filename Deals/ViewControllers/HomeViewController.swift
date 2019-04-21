@@ -21,7 +21,7 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     var hotDeals : [Deal]?
     
     var selectedTableViewCell : UITableViewCell!
-
+    var detailsViewController : DealDetailsViewController?
     @IBOutlet weak var locationNameLabel: UILabel!
     
     @IBOutlet weak var noDealsContentView: UIView!
@@ -77,14 +77,16 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     }
     
     func openDealDetailsViewForNotifiedDeal() {
-        if let deal_id = UserDefaults.standard.value(forKey: "notifiedDeal") {
-            self.performSegue(withIdentifier: "showDetailsView", sender: ["deal_id" : deal_id])
+        if let deal_id = UserDefaults.standard.value(forKey: "notifiedDeal"), let detailsViewController = detailsViewController {
+            detailsViewController.dismiss(animated: false) {
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "showDetailsView", sender: ["deal_id" : deal_id])
+                }
+            }
         }
         
         UserDefaults.standard.set(false, forKey: "isOpenedFromNotification")
         UserDefaults.standard.set(nil, forKey: "notifiedDeal")
-        
-        
     }
     
     func enableLocationBlock() -> (()->()) {
@@ -120,7 +122,13 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     // MARK: - Private Methods
     
     @objc func notificationDealRecieved(notification : Notification) {
-        self.performSegue(withIdentifier: "showDetailsView", sender: notification.object)
+        if let dealDetailsView = detailsViewController {
+            dealDetailsView.dismiss(animated: false) {
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "showDetailsView", sender: notification.object)
+                }
+            }
+        }
     }
     
     @objc func userLoggedIn(notification : Notification) {
@@ -224,6 +232,7 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetailsView" {
             if let detailsView = segue.destination as? DealDetailsViewController {
+                detailsViewController = detailsView;
                 detailsView.transitioningDelegate = self
                 if let sender = sender as? [String : Any], let deal = sender["deal"] as? Deal{
                     detailsView.deal = deal
@@ -433,11 +442,21 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 
 extension HomeViewController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        transition.originFrame = selectedTableViewCell!.superview!.convert(selectedTableViewCell!.frame, to: nil)
+        if let selectedTableViewCell = selectedTableViewCell {
+            transition.originFrame = selectedTableViewCell.superview!.convert(selectedTableViewCell.frame, to: nil)
+            
+            transition.presenting = true
+            
+            return transition
+        } else {
+            selectedTableViewCell = dealsListingTableView.cellForRow(at: IndexPath(row: 1, section: 0))
+            transition.originFrame = selectedTableViewCell.superview!.convert(selectedTableViewCell.frame, to: nil)
+            
+            transition.presenting = true
+            
+            return transition
+        }
         
-        transition.presenting = true
-        
-        return transition
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {

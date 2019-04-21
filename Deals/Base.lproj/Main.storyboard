@@ -319,7 +319,7 @@
                                 <subviews>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fNf-vG-pv8">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="350"/>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="veN-og-ckd">
                                             <size key="itemSize" width="500" height="300"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -334,8 +334,9 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="500" height="300"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dummy_deal" translatesAutoresizingMaskIntoConstraints="NO" id="bWz-3O-l7K">
+                                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_small" translatesAutoresizingMaskIntoConstraints="NO" id="bWz-3O-l7K">
                                                             <rect key="frame" x="0.0" y="0.0" width="500" height="300"/>
+                                                            <color key="backgroundColor" red="0.98431372549999996" green="1" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
                                                         </imageView>
                                                     </subviews>
                                                 </view>
@@ -362,7 +363,7 @@
                                         <color key="currentPageIndicatorTintColor" red="0.0" green="0.80784313730000001" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                                     </pageControl>
                                 </subviews>
-                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="fNf-vG-pv8" firstAttribute="leading" secondItem="PZa-8a-YOp" secondAttribute="leading" id="0JP-Wq-vsj"/>
                                     <constraint firstItem="fNf-vG-pv8" firstAttribute="top" secondItem="PZa-8a-YOp" secondAttribute="top" id="Bg5-WE-Cbl"/>
@@ -1259,7 +1260,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vol-WG-9wH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4847.826086956522" y="31.793478260869566"/>
+            <point key="canvasLocation" x="5299" y="20"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Rj4-uA-cK9">
@@ -2958,7 +2959,6 @@
         <image name="close" width="20" height="20"/>
         <image name="cochi_selected" width="335" height="104"/>
         <image name="cochi_unselected" width="335" height="104"/>
-        <image name="dummy_deal" width="378" height="450"/>
         <image name="entertainment" width="162" height="90"/>
         <image name="entertainment_unselect" width="162" height="90"/>
         <image name="explore_no_deal" width="170" height="71"/>
@@ -2975,6 +2975,7 @@
         <image name="login_with_fb_s" width="265" height="46"/>
         <image name="login_with_google" width="300" height="52"/>
         <image name="login_with_google_s" width="265" height="46"/>
+        <image name="logo_small" width="32" height="38"/>
         <image name="logout" width="22" height="24"/>
         <image name="makeFavouriteTransparent" width="22" height="20"/>
         <image name="make_favourite" width="20" height="18"/>
