@@ -70,6 +70,11 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         self.navigationController?.navigationBar.isHidden = true
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        detailsViewController = nil
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -77,13 +82,52 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     }
     
     func openDealDetailsViewForNotifiedDeal() {
-        if let deal_id = UserDefaults.standard.value(forKey: "notifiedDeal"), let detailsViewController = detailsViewController {
-            detailsViewController.dismiss(animated: false) {
+        if let deal_id = UserDefaults.standard.value(forKey: "notifiedDeal"){
+            if var topController = UIApplication.shared.keyWindow?.rootViewController {
+                while let presentedViewController = topController.presentedViewController {
+                    topController = presentedViewController
+                }
+                if topController is DealDetailsViewController {
+                    topController.dismiss(animated: false) {
+                        self.tabBarController!.selectedIndex = 0;
+                        DispatchQueue.main.async {
+                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                            let detailsVC = storyboard.instantiateViewController(withIdentifier: "DealDetailsView") as! DealDetailsViewController
+                            detailsVC.dealId = Int(deal_id as! String)
+                            self.present(detailsVC, animated: false, completion: nil);
+                        }
+                    }
+                }
+            } else {
+                self.tabBarController!.selectedIndex = 0;
                 DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: "showDetailsView", sender: ["deal_id" : deal_id])
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let detailsVC = storyboard.instantiateViewController(withIdentifier: "DealDetailsView") as! DealDetailsViewController
+                    detailsVC.dealId = Int(deal_id as! String)
+                    self.present(detailsVC, animated: false, completion: nil);
                 }
             }
         }
+//
+//
+//            if let detailsViewController = detailsViewController {
+//                detailsViewController.dismiss(animated: false) {
+//                    DispatchQueue.main.async {
+//                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                        let detailsVC = storyboard.instantiateViewController(withIdentifier: "DealDetailsView") as! DealDetailsViewController
+//                        detailsVC.dealId = Int(deal_id as! String)
+//
+//                        self.present(detailsVC, animated: false, completion: nil);                    }
+//                }
+//            } else {
+//                DispatchQueue.main.async {
+//                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                    let detailsVC = storyboard.instantiateViewController(withIdentifier: "DealDetailsView") as! DealDetailsViewController
+//                    detailsVC.dealId = Int(deal_id as! String)
+//                    self.present(detailsVC, animated: false, completion: nil);
+//                }
+//            }
+//        }
         
         UserDefaults.standard.set(false, forKey: "isOpenedFromNotification")
         UserDefaults.standard.set(nil, forKey: "notifiedDeal")
@@ -122,13 +166,56 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     // MARK: - Private Methods
     
     @objc func notificationDealRecieved(notification : Notification) {
-        if let dealDetailsView = detailsViewController {
-            dealDetailsView.dismiss(animated: false) {
+        if var topController = UIApplication.shared.keyWindow?.rootViewController {
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+            }
+            if topController is DealDetailsViewController {
+                topController.dismiss(animated: false) {
+                    self.tabBarController!.selectedIndex = 0;
+                    DispatchQueue.main.async {
+                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                        let detailsVC = storyboard.instantiateViewController(withIdentifier: "DealDetailsView") as! DealDetailsViewController
+                        if let object = notification.object as? [String : Any], let dealId = object["deal_id"] as? String {
+                            detailsVC.dealId = Int(dealId)
+                            self.present(detailsVC, animated: false, completion: nil);
+                        }
+                    }
+                }
+            } else {
+                self.tabBarController!.selectedIndex = 0;
                 DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: "showDetailsView", sender: notification.object)
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let detailsVC = storyboard.instantiateViewController(withIdentifier: "DealDetailsView") as! DealDetailsViewController
+                    if let object = notification.object as? [String : Any], let dealId = object["deal_id"] as? String {
+                        detailsVC.dealId = Int(dealId)
+                        self.present(detailsVC, animated: false, completion: nil);
+                    }
                 }
             }
         }
+                
+//        if let dealDetailsView = detailsViewController {
+//            dealDetailsView.dismiss(animated: false) {
+//                DispatchQueue.main.async {
+//                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                    let detailsVC = storyboard.instantiateViewController(withIdentifier: "DealDetailsView") as! DealDetailsViewController
+//                    if let object = notification.object as? [String : Any], let dealId = object["deal_id"] as? String {
+//                        detailsVC.dealId = Int(dealId)
+//                        self.present(detailsVC, animated: false, completion: nil);
+//                    }
+//                }
+//            }
+//        } else {
+//            DispatchQueue.main.async {
+//                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                let detailsVC = storyboard.instantiateViewController(withIdentifier: "DealDetailsView") as! DealDetailsViewController
+//                if let object = notification.object as? [String : Any], let dealId = object["deal_id"] as? String {
+//                    detailsVC.dealId = Int(dealId)
+//                    self.present(detailsVC, animated: false, completion: nil);
+//                }
+//            }
+//        }
     }
     
     @objc func userLoggedIn(notification : Notification) {
@@ -144,6 +231,7 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     }
     
     @objc func detailsViewDismissed(notification : Notification) {
+        detailsViewController = nil
         dealsListingTableView.reloadData()
     }
     

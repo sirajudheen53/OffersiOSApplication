@@ -56,7 +56,7 @@ class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollecti
         if let _ = User.getProfile() {
             self.profileContentView.isHidden = false
             self.loginViewContent.isHidden = true
-            self.fetchUserProfileAndUpdateView()
+            self.fetchUserProfileAndUpdateView(showLoading: true)
             analyticsScreenName = "Profile View"
 
             displayProfileData()
@@ -154,17 +154,21 @@ class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollecti
             self.userProfile = UserProfile.userProfileWithProperties(properties: userProfile)
             self.displayProfileData()
         } else {
-            self.fetchUserProfileAndUpdateView()
+            self.fetchUserProfileAndUpdateView(showLoading: true)
         }
     }
     
     @objc func userProfileUpdatedNotification(notification : Notification) {
-        self.fetchUserProfileAndUpdateView()
+        self.fetchUserProfileAndUpdateView(showLoading: false)
     }
     
-    func fetchUserProfileAndUpdateView() {
+    func fetchUserProfileAndUpdateView(showLoading : Bool) {
+        if (showLoading) {
+            SVProgressHUD.show()
+        }
         let userProfileFetchHeader = ["Authorization" : "Token \(User.getProfile()!.token!)"]
         BaseWebservice.performRequest(function: WebserviceFunction.fetchUserProfile, requestMethod: .get, params: nil, headers: userProfileFetchHeader) { (response, error) in
+            SVProgressHUD.dismiss()
             if let error = error {
                 UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
             } else if let response = response as? [String : Any] {

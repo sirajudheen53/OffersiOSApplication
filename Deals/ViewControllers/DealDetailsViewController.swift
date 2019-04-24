@@ -24,11 +24,9 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
 
     var animationInProgress = false
     var showingSheltonAnimation = false
-    
     @IBOutlet weak var imageSliderView : UIView!
     @IBOutlet weak var imageSlider : UIPageControl!
     @IBOutlet weak var imageSliderCollectionView : UICollectionView!
-
     @IBOutlet weak var addressIconImageView: UIImageView!
     @IBOutlet weak var boughtPeopelIconImageView: UIImageView!
     @IBOutlet weak var viewedPeopleIconImageView: UIImageView!
@@ -79,7 +77,8 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     var linesConvergingAnimation : UIViewPropertyAnimator = UIViewPropertyAnimator()
     override func viewDidLoad() {
         self.offerDetailsViewBottomConstraint.constant = -300
-       qpRequestParams =   QPRequestParameters(viewController: self)
+        imageSlider.isHidden = true;
+        qpRequestParams =   QPRequestParameters(viewController: self)
         qpRequestParams.delegate = self
         analyticsScreenName = "Deal Details View"
         super.viewDidLoad()
@@ -98,7 +97,6 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         couponInfoViewDragging = UIPanGestureRecognizer(target: self, action: #selector(self.infoViewDragged(panGesture:)))
         offerDetailsView.isUserInteractionEnabled = true
         offerDetailsView.addGestureRecognizer(dealInfoViewDragging)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -128,6 +126,8 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
                     offerDetailsViewBottomConstraint.constant = -300
                     if let images = deal?.images, images.count > 1 {
                         self.imageSlider.isHidden = false
+                    } else {
+                        self.imageSlider.isHidden = true
                     }
                     animationInProgress = true
                     UIView.animate(withDuration: 0.5, animations: {
@@ -439,7 +439,11 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
                 
                 if let images = deal.images {
                     imageSlider.numberOfPages = images.count
-                    imageSlider.hidesForSinglePage = true
+                    if images.count > 1 {
+                        imageSlider.isHidden = false;
+                    } else {
+                        imageSlider.isHidden = true;
+                    }
                 }
                 
                 if deal.numberOfPurchases == 0 {
