@@ -258,7 +258,7 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     }
     
     @IBAction func enableLoctionButtonClicked(_ sender: Any) {
-        let alertController = UIAlertController(title: "Dollor Deals", message: "Please go to Settings and turn on the permissions", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Dollar Deals", message: "Please go to Settings and turn on the permissions", preferredStyle: .alert)
         let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
             guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
                 return
@@ -575,18 +575,18 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     func initiatePayment() {
         qpRequestParams.gatewayId = "017824682"
         qpRequestParams.secretKey = "2-ZLCwqYdo+zE+hS"
-        qpRequestParams.name = "Dollor Deals"
-        qpRequestParams.address = "Dollor Deals - Qatar"
+        qpRequestParams.name = "Dollar Deals"
+        qpRequestParams.address = "Dollar Deals - Qatar"
         qpRequestParams.city = "Doha"
         qpRequestParams.state = "Doha"
         qpRequestParams.country  = "QA"
-        qpRequestParams.email = User.getProfile()?.email ?? "info@dollordeals.com"
+        qpRequestParams.email = User.getProfile()?.email ?? "info@godollardeals.com"
         qpRequestParams.currency = "QAR"
         qpRequestParams.referenceId = UUID().uuidString
         qpRequestParams.phone = "\(User.getProfile()?.phoneNumber ?? "")"
         qpRequestParams.amount = Double(deal?.dealPrice ?? 1) //any float value
         qpRequestParams.mode = "live"
-        qpRequestParams.productDescription = "A Deal from Dollor Deals"
+        qpRequestParams.productDescription = "A Deal from Dollar Deals"
         qpRequestParams.sendRequest()
     }
     
@@ -613,8 +613,8 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     
     @IBAction func shareButtonClicked(_ sender: Any) {
         if let deal = deal {
-            let text = "Checkout an awesome deal from Dollor Deals\n\n"
-            let myWebsite = URL(string:"https://www.dollordeals.com?deal=\(deal.dealId)")
+            let text = "Checkout an awesome deal from Dollar Deals\n\n"
+            let myWebsite = URL(string:"https://www.godollardeals.com?deal=\(deal.dealId)")
             let shareAll = [text, myWebsite as Any] as [Any]
             let activityViewController = UIActivityViewController(activityItems: shareAll, applicationActivities: nil)
             activityViewController.popoverPresentationController?.sourceView = self.view

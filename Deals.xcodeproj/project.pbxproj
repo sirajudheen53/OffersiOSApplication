@@ -22,10 +22,8 @@
 		0B9E123B20B3D44100C66129 /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9E123A20B3D44100C66129 /* ExploreViewController.swift */; };
 		0BB77F3121D1027C00BD925D /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB77F3021D1027C00BD925D /* PopupViewController.swift */; };
 		3F54C225E8FD3F0F3AF71CDF /* Pods_DealsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDC3F225C35034B28A04DD0C /* Pods_DealsTests.framework */; };
-		5D0E9126E06DC7828FEDEB22 /* Pods_TestTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EEC5E0EA7DDBCB203FB2943 /* Pods_TestTests.framework */; };
 		91F8362234765FC693A1FC50 /* Pods_DealsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08CFD44055D14123C98A65A8 /* Pods_DealsUITests.framework */; };
 		94CA4C3EE0A170AE49DBCD07 /* Pods_Deals.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D8FF93B8C5235AA444D6F /* Pods_Deals.framework */; };
-		A66597ED14843279AE23D75B /* Pods_TestUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02917333E0BB871C762B13F3 /* Pods_TestUITests.framework */; };
 		A717A32420EF42770036A32E /* DealsListingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A717A32220EF42770036A32E /* DealsListingTableViewCell.swift */; };
 		A717A32520EF42770036A32E /* DealsListingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A717A32320EF42770036A32E /* DealsListingTableViewCell.xib */; };
 		A72B2B2621FC4DC8005A4532 /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72B2B2521FC4DC8005A4532 /* FeedbackViewController.swift */; };
@@ -118,12 +116,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		02917333E0BB871C762B13F3 /* Pods_TestUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		08CFD44055D14123C98A65A8 /* Pods_DealsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DealsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B06479D20AC419100AE8496 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		0B1F18CE20DBA3630075C1FA /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		0B5504BE21D362D7003B8B23 /* MoreDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreDetailsViewController.swift; sourceTree = "<group>"; };
-		0B67D09B20AAA6D000FC39E5 /* Dollor Deals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dollor Deals.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0B67D09B20AAA6D000FC39E5 /* Dollar Deals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dollar Deals.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B67D09E20AAA6D000FC39E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0B67D0A020AAA6D000FC39E5 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		0B67D0A320AAA6D000FC39E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -144,7 +141,6 @@
 		1595C26B8A0DA6C9704FFE3F /* Pods-DealsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DealsUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DealsUITests/Pods-DealsUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		3F82ABA086AE586B62D4753B /* Pods-TestUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TestUITests/Pods-TestUITests.release.xcconfig"; sourceTree = "<group>"; };
 		417C4184F1DBE1B897A147E4 /* Pods-DealsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DealsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DealsTests/Pods-DealsTests.release.xcconfig"; sourceTree = "<group>"; };
-		6EEC5E0EA7DDBCB203FB2943 /* Pods_TestTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EBB38EF85E38997C062E4C2 /* Pods-Test.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Test.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Test/Pods-Test.debug.xcconfig"; sourceTree = "<group>"; };
 		8ECE966BD731DA7E255F80A9 /* Pods-Deals.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Deals.release.xcconfig"; path = "Pods/Target Support Files/Pods-Deals/Pods-Deals.release.xcconfig"; sourceTree = "<group>"; };
 		94A33E0AE98EFFB083A56FD9 /* Pods-TestUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TestUITests/Pods-TestUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -232,7 +228,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D0E9126E06DC7828FEDEB22 /* Pods_TestTests.framework in Frameworks */,
 				3F54C225E8FD3F0F3AF71CDF /* Pods_DealsTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -241,7 +236,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A66597ED14843279AE23D75B /* Pods_TestUITests.framework in Frameworks */,
 				91F8362234765FC693A1FC50 /* Pods_DealsUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -284,7 +278,7 @@
 		0B67D09C20AAA6D000FC39E5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0B67D09B20AAA6D000FC39E5 /* Dollor Deals.app */,
+				0B67D09B20AAA6D000FC39E5 /* Dollar Deals.app */,
 				0B67D0AF20AAA6D000FC39E5 /* DealsTests.xctest */,
 				0B67D0BA20AAA6D000FC39E5 /* DealsUITests.xctest */,
 			);
@@ -341,8 +335,6 @@
 			children = (
 				A786578D20DAC8A200649410 /* CoreLocation.framework */,
 				A117B12BE3DFE390A1A7FCB0 /* Pods_Test.framework */,
-				6EEC5E0EA7DDBCB203FB2943 /* Pods_TestTests.framework */,
-				02917333E0BB871C762B13F3 /* Pods_TestUITests.framework */,
 				CE7D8FF93B8C5235AA444D6F /* Pods_Deals.framework */,
 				BDC3F225C35034B28A04DD0C /* Pods_DealsTests.framework */,
 				08CFD44055D14123C98A65A8 /* Pods_DealsUITests.framework */,
@@ -462,7 +454,7 @@
 			);
 			name = Deals;
 			productName = Test;
-			productReference = 0B67D09B20AAA6D000FC39E5 /* Dollor Deals.app */;
+			productReference = 0B67D09B20AAA6D000FC39E5 /* Dollar Deals.app */;
 			productType = "com.apple.product-type.application";
 		};
 		0B67D0AE20AAA6D000FC39E5 /* DealsTests */ = {
@@ -630,7 +622,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Deals/Pods-Deals-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Deals/Pods-Deals-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AFDateHelper/AFDateHelper.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
@@ -677,7 +669,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Deals/Pods-Deals-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Deals/Pods-Deals-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		43221FDC777A89C37D21D557 /* [CP] Check Pods Manifest.lock */ = {
@@ -704,7 +696,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Deals/Pods-Deals-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Deals/Pods-Deals-resources.sh",
 				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
@@ -713,7 +705,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Deals/Pods-Deals-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Deals/Pods-Deals-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A76A56B3220224E900475B7D /* ShellScript */ = {
@@ -985,9 +977,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.firewheelstrading.dollordeals;
-				PRODUCT_NAME = "Dollor Deals";
+				PRODUCT_NAME = "Dollar Deals";
 				PROVISIONING_PROFILE_SPECIFIER = "Dollor Deals Development";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1011,9 +1003,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.firewheelstrading.dollordeals;
-				PRODUCT_NAME = "Dollor Deals";
+				PRODUCT_NAME = "Dollar Deals";
 				PROVISIONING_PROFILE_SPECIFIER = "Dollor Deals Development";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

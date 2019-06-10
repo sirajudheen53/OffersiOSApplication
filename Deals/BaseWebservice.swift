@@ -37,8 +37,8 @@ enum WebserviceMethod {
 //let image_service_url : String = "https://q-deals.herokuapp.com/"
 //let base_servive_url : String = "https://q-deals.herokuapp.com/"
 
-let image_service_url : String = "https://api.dollordeals.com/"
-let base_servive_url : String = "https://api.dollordeals.com/"
+let image_service_url : String = "https://api.godollardeals.com/"
+let base_servive_url : String = "https://api.godollardeals.com/"
 
 
 class BaseWebservice: NSObject {
