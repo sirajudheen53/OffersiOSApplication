@@ -27,7 +27,7 @@ class FavouritesListViewController: BaseViewController, UITableViewDataSource, U
         self.title = "Favourites"
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
-        self.favouritesListingTableView.contentInset = UIEdgeInsetsMake(20.0, 0, 0, 0)
+        self.favouritesListingTableView.contentInset = UIEdgeInsets(top: 20.0, left: 0, bottom: 0, right: 0)
 
         let dealListingCellNib = UINib(nibName: "DealsListingTableViewCell", bundle: nil)
         self.favouritesListingTableView.register(dealListingCellNib, forCellReuseIdentifier: "dealListingCell")
@@ -52,7 +52,7 @@ class FavouritesListViewController: BaseViewController, UITableViewDataSource, U
         return { // initialise a pop up for using later
             let alertController = UIAlertController(title: "Dollar Deals", message: "Please go to Settings and turn on the permissions", preferredStyle: .alert)
             let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
-                guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+                guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
                     return
                 }
                 if UIApplication.shared.canOpenURL(settingsUrl) {
@@ -92,7 +92,7 @@ class FavouritesListViewController: BaseViewController, UITableViewDataSource, U
         let cell = tableView.dequeueReusableCell(withIdentifier: "dealListingCell", for: indexPath) as! DealsListingTableViewCell
         cell.customizeCell(deal: favourites![indexPath.row])
         cell.enableLocationBlock = enableLocationBlock()
-        cell.selectionStyle = UITableViewCellSelectionStyle.none
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
 
         return cell
     }

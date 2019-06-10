@@ -54,10 +54,10 @@ class HotDealCollectionViewCell: UICollectionViewCell {
     }
     
     func originalPriceAttributedText(value : String) -> NSAttributedString {
-        let attributes = [NSAttributedStringKey.font : Constants.regularFontWithSize(size: 14),
-                          NSAttributedStringKey.foregroundColor : Constants.appliationGreyColor,
-                          NSAttributedStringKey.strikethroughColor : Constants.appliationGreyColor,
-                          NSAttributedStringKey.strikethroughStyle : 1] as [NSAttributedStringKey : Any]
+        let attributes = [NSAttributedString.Key.font : Constants.regularFontWithSize(size: 14),
+                          NSAttributedString.Key.foregroundColor : Constants.appliationGreyColor,
+                          NSAttributedString.Key.strikethroughColor : Constants.appliationGreyColor,
+                          NSAttributedString.Key.strikethroughStyle : 1] as [NSAttributedString.Key : Any]
         let requiredString = NSMutableAttributedString(string: value, attributes: attributes)
         return requiredString
     }
@@ -76,9 +76,9 @@ class HotDealCollectionViewCell: UICollectionViewCell {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 1.8
         
-        let attributes = [NSAttributedStringKey.font : Constants.compactTextRegulaFontWithSize(size: 12.0),
-                          NSAttributedStringKey.paragraphStyle : paragraphStyle,
-                          NSAttributedStringKey.foregroundColor : Constants.dimGrey]
+        let attributes = [NSAttributedString.Key.font : Constants.compactTextRegulaFontWithSize(size: 12.0),
+                          NSAttributedString.Key.paragraphStyle : paragraphStyle,
+                          NSAttributedString.Key.foregroundColor : Constants.dimGrey]
         let requiredString = NSAttributedString(string: title, attributes: attributes)
         return requiredString
     }
@@ -107,7 +107,7 @@ class HotDealCollectionViewCell: UICollectionViewCell {
         hideLoadingAnimation()
         self.deal = deal
         self.dealImageView.image = UIImage(named: "logo_small")
-        dealImageView.contentMode = UIViewContentMode.center
+        dealImageView.contentMode = UIView.ContentMode.center
         if let images = deal.images, images.count > 0 {
             self.dealImageView.af_setImage(withURL: URL(string: image_service_url + images.first!)!,
                                            placeholderImage: UIImage(named: "logo_small"),
@@ -117,7 +117,7 @@ class HotDealCollectionViewCell: UICollectionViewCell {
                                            imageTransition: UIImageView.ImageTransition.noTransition,
                                            runImageTransitionIfCached: false) { (data) in
                                             if let _ = data.result.value {
-                                                self.dealImageView?.contentMode = UIViewContentMode.scaleAspectFill
+                                                self.dealImageView?.contentMode = UIView.ContentMode.scaleAspectFill
                                             }
             }
         }
@@ -142,7 +142,7 @@ class HotDealCollectionViewCell: UICollectionViewCell {
         if deal.originalPrice > 0 {
             self.offerTagValueLabel.text = "\(Int((Float(deal.originalPrice - deal.dealPrice)/Float(deal.originalPrice))*100))% off"
         }
-            self.favouriteButton.setBackgroundImage(UIImage(named: deal.isFavourited ? "make_favourite" : "makeFavouriteTransparent"), for: UIControlState.normal)
+        self.favouriteButton.setBackgroundImage(UIImage(named: deal.isFavourited ? "make_favourite" : "makeFavouriteTransparent"), for: UIControl.State.normal)
 
         updateDistanceValue()
 
@@ -188,7 +188,7 @@ class HotDealCollectionViewCell: UICollectionViewCell {
         if let makeFavouriteActionBlock = makeFavouriteActionBlock {
             makeFavouriteActionBlock(deal!)
         }
-        self.favouriteButton.setBackgroundImage(UIImage(named: "make_favourite"), for: UIControlState.normal)
+        self.favouriteButton.setBackgroundImage(UIImage(named: "make_favourite"), for: UIControl.State.normal)
     }
 
 }

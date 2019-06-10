@@ -22,7 +22,7 @@ class PurchasesListViewController: BaseViewController, UITableViewDelegate, UITa
         self.title = "Purchases"
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
-        self.purchasesListTableView.contentInset = UIEdgeInsetsMake(20.0, 0, 0, 0)
+        self.purchasesListTableView.contentInset = UIEdgeInsets(top: 20.0, left: 0, bottom: 0, right: 0)
         let dealListingCellNib = UINib(nibName: "DealsListingTableViewCell", bundle: nil)
         self.purchasesListTableView.register(dealListingCellNib, forCellReuseIdentifier: "dealListingCell")    }
     
@@ -42,7 +42,7 @@ class PurchasesListViewController: BaseViewController, UITableViewDelegate, UITa
         return { // initialise a pop up for using later
             let alertController = UIAlertController(title: "Dollar Deals", message: "Please go to Settings and turn on the permissions", preferredStyle: .alert)
             let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
-                guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+                guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
                     return
                 }
                 if UIApplication.shared.canOpenURL(settingsUrl) {
@@ -81,7 +81,7 @@ class PurchasesListViewController: BaseViewController, UITableViewDelegate, UITa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "dealListingCell", for: indexPath) as! DealsListingTableViewCell
         cell.customizeCell(deal: purchasesList![indexPath.row].deal!)
-        cell.selectionStyle = UITableViewCellSelectionStyle.none
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
 
         return cell
     }

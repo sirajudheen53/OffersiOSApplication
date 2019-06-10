@@ -118,7 +118,7 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         }
         
         
-        if(panGesture.state == UIGestureRecognizerState.ended)
+        if(panGesture.state == UIGestureRecognizer.State.ended)
         {
             if velocity.y > 1000  {
                 //Full view
@@ -202,9 +202,9 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 1.7
         
-        let attributes = [NSAttributedStringKey.font : Constants.mediumFontWithSize(size: 14.0),
-                          NSAttributedStringKey.paragraphStyle : paragraphStyle,
-                          NSAttributedStringKey.foregroundColor : Constants.lightDarkColor]
+        let attributes = [NSAttributedString.Key.font : Constants.mediumFontWithSize(size: 14.0),
+                          NSAttributedString.Key.paragraphStyle : paragraphStyle,
+                          NSAttributedString.Key.foregroundColor : Constants.lightDarkColor]
         let requiredString = NSAttributedString(string: title, attributes: attributes)
         return requiredString
     }
@@ -215,9 +215,9 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 1.7
         
-        let attributes = [NSAttributedStringKey.font : Constants.compactTextRegulaFontWithSize(size: 14.0),
-                          NSAttributedStringKey.paragraphStyle : paragraphStyle,
-                          NSAttributedStringKey.foregroundColor : Constants.darkColor]
+        let attributes = [NSAttributedString.Key.font : Constants.compactTextRegulaFontWithSize(size: 14.0),
+                          NSAttributedString.Key.paragraphStyle : paragraphStyle,
+                          NSAttributedString.Key.foregroundColor : Constants.darkColor]
         let requiredString = NSAttributedString(string: title, attributes: attributes)
         return requiredString
     }
@@ -228,9 +228,9 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 1.7
         
-        let attributes = [NSAttributedStringKey.font : Constants.compactTextRegulaFontWithSize(size: 14.0),
-                          NSAttributedStringKey.paragraphStyle : paragraphStyle,
-                          NSAttributedStringKey.foregroundColor : Constants.lightDarkColor]
+        let attributes = [NSAttributedString.Key.font : Constants.compactTextRegulaFontWithSize(size: 14.0),
+                          NSAttributedString.Key.paragraphStyle : paragraphStyle,
+                          NSAttributedString.Key.foregroundColor : Constants.lightDarkColor]
         let requiredString = NSAttributedString(string: addressText, attributes: attributes)
         return requiredString
     }
@@ -260,7 +260,7 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     @IBAction func enableLoctionButtonClicked(_ sender: Any) {
         let alertController = UIAlertController(title: "Dollar Deals", message: "Please go to Settings and turn on the permissions", preferredStyle: .alert)
         let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
-            guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
                 return
             }
             if UIApplication.shared.canOpenURL(settingsUrl) {
@@ -287,10 +287,10 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     }
     
     func purchaseBoughtAttributedText(text : String) -> NSAttributedString {
-        let attributes = [NSAttributedStringKey.font : Constants.compactTextRegulaFontWithSize(size: 12.0),
-                          NSAttributedStringKey.foregroundColor : Constants.darkGrey]
+        let attributes = [NSAttributedString.Key.font : Constants.compactTextRegulaFontWithSize(size: 12.0),
+                          NSAttributedString.Key.foregroundColor : Constants.darkGrey]
         let requiredString = NSMutableAttributedString(string: text, attributes: attributes)
-        requiredString.addAttribute(NSAttributedStringKey.kern, value: 1.0, range: NSMakeRange(0, requiredString.length))
+        requiredString.addAttribute(NSAttributedString.Key.kern, value: 1.0, range: NSMakeRange(0, requiredString.length))
         return requiredString
     }
     
@@ -298,27 +298,27 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 1.7
         
-        let attributes = [NSAttributedStringKey.font : Constants.compactTextRegulaFontWithSize(size: 12.0),
-                          NSAttributedStringKey.paragraphStyle : paragraphStyle,
-                          NSAttributedStringKey.foregroundColor : Constants.extraGreyColor]
+        let attributes = [NSAttributedString.Key.font : Constants.compactTextRegulaFontWithSize(size: 12.0),
+                          NSAttributedString.Key.paragraphStyle : paragraphStyle,
+                          NSAttributedString.Key.foregroundColor : Constants.extraGreyColor]
         let requiredString = NSAttributedString(string: text, attributes: attributes)
         return requiredString
     }
     
     func validUptoAttributedText(validUptoDate : String) -> NSAttributedString {
         let requiredString = "Offer valid till " + validUptoDate
-        let attributes = [NSAttributedStringKey.font : Constants.regularFontWithSize(size: 12.0)]
+        let attributes = [NSAttributedString.Key.font : Constants.regularFontWithSize(size: 12.0)]
         let requiredAttributedString = NSMutableAttributedString(string: requiredString, attributes: attributes)
-        requiredAttributedString.addAttribute(NSAttributedStringKey.foregroundColor, value: Constants.extraGreyColor, range: NSMakeRange(0, "Offer valid till ".count))
-        requiredAttributedString.addAttribute(NSAttributedStringKey.foregroundColor, value: Constants.redColor, range: NSMakeRange("Offer valid till ".count, requiredString.count - "Offer valid till ".count))
+        requiredAttributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: Constants.extraGreyColor, range: NSMakeRange(0, "Offer valid till ".count))
+        requiredAttributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: Constants.redColor, range: NSMakeRange("Offer valid till ".count, requiredString.count - "Offer valid till ".count))
         return requiredAttributedString
     }
     
     func originalPriceAttributedText(value : String) -> NSAttributedString {
-        let attributes = [NSAttributedStringKey.font : Constants.lightFontWithSize(size: 18),
-                          NSAttributedStringKey.foregroundColor : Constants.lightDarkColor,
-                          NSAttributedStringKey.strikethroughColor : Constants.lightDarkColor,
-        NSAttributedStringKey.strikethroughStyle : 1] as [NSAttributedStringKey : Any]
+        let attributes = [NSAttributedString.Key.font : Constants.lightFontWithSize(size: 18),
+                          NSAttributedString.Key.foregroundColor : Constants.lightDarkColor,
+                          NSAttributedString.Key.strikethroughColor : Constants.lightDarkColor,
+                          NSAttributedString.Key.strikethroughStyle : 1] as [NSAttributedString.Key : Any]
         let requiredString = NSMutableAttributedString(string: value, attributes: attributes)
         return requiredString
     }
@@ -326,9 +326,9 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     func offerPercentageStripValueAttributedString(value : String) -> NSAttributedString {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 1.8
-        let attributes = [NSAttributedStringKey.font : Constants.mediumFontWithSize(size: 14),
-                          NSAttributedStringKey.paragraphStyle : paragraphStyle,
-                          NSAttributedStringKey.foregroundColor : UIColor.white]
+        let attributes = [NSAttributedString.Key.font : Constants.mediumFontWithSize(size: 14),
+                          NSAttributedString.Key.paragraphStyle : paragraphStyle,
+                          NSAttributedString.Key.foregroundColor : UIColor.white]
         let requiredString = NSMutableAttributedString(string: value, attributes: attributes)
         return requiredString
     }
@@ -470,10 +470,10 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         }
         self.numberOfPeoplePurchased.text = "\(self.deal!.numberOfPeopleBought)"
         self.offerTitleLabel.attributedText = self.titleAttributedText(title: self.deal!.dealDescription)
-        self.dealDetailsButton.setAttributedTitle(self.moreDetailsAttributedText(title: "More Details"), for: UIControlState.normal)
+        self.dealDetailsButton.setAttributedTitle(self.moreDetailsAttributedText(title: "More Details"), for: UIControl.State.normal)
         self.purchasesTitleLabel.attributedText = self.purchaseBoughtAttributedText(text: "PURCHASES")
         self.viewsTitleLabel.attributedText = self.purchaseBoughtAttributedText(text: "VIEWS")
-        self.phoneContactButton.setAttributedTitle(self.contactTitleAttributedText(text: "Contact"), for: UIControlState.normal)
+        self.phoneContactButton.setAttributedTitle(self.contactTitleAttributedText(text: "Contact"), for: UIControl.State.normal)
         self.validUptoValueLabel.attributedText = self.validUptoAttributedText(validUptoDate: deal!.endDate.defaultStringFormat())
         
         let offerPercent : Double = (Double(deal!.originalPrice - deal!.dealPrice)/Double(self.deal!.originalPrice)*100)
@@ -816,7 +816,7 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 0, 0, 0)
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
 }
 

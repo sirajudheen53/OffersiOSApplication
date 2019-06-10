@@ -17,7 +17,7 @@ class ImageSliderCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        dealImageView.contentMode = UIViewContentMode.center
+        dealImageView.contentMode = UIView.ContentMode.center
     }
     
     func loadImage() {
@@ -32,7 +32,7 @@ class ImageSliderCollectionViewCell: UICollectionViewCell {
                                        imageTransition: UIImageView.ImageTransition.noTransition,
                                        runImageTransitionIfCached: false) { (data) in
                                         if let _ = data.result.value {
-                                            self.dealImageView?.contentMode = UIViewContentMode.scaleAspectFill
+                                            self.dealImageView?.contentMode = UIView.ContentMode.scaleAspectFill
                                         }
         }
     }
