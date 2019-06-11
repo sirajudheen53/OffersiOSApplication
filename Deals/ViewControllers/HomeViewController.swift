@@ -220,12 +220,16 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     
     @objc func userLoggedIn(notification : Notification) {
         if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
+            currentPage = 1
+            numberOfPages = 1
             self.fetchAllDealsFromServerAndUpdateUI(location: selectedLocation)
         }
     }
     
     @objc func userLoggedOut(notification : Notification) {
         if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
+            currentPage = 1
+            numberOfPages = 1
             self.fetchAllDealsFromServerAndUpdateUI(location: selectedLocation)
         }
     }
@@ -470,8 +474,6 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             tokenHeader = ["Authorization" : "Token \(token)"]
         }
         BaseWebservice.performRequest(function: WebserviceFunction.fetchDealsList, requestMethod: .get, params: ["location" : location as AnyObject, "page" : currentPage as AnyObject], headers: tokenHeader) { (response, error) in
-            print("Completed.......................")
-
             self.isLoadingList = false
 
             if let error = error {
@@ -489,7 +491,11 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                                 self.hotDeals = Deal.dealObjectsFromProperties(properties: hotTodayProperties)
                             }
                             if let allDeals = allDealsProperties["deals"] as? [[String : Any]] {
-                                self.availableDeals.append(contentsOf: Deal.dealObjectsFromProperties(properties: allDeals))
+                                if self.currentPage == 1 {
+                                    self.availableDeals = Deal.dealObjectsFromProperties(properties: allDeals)
+                                } else {
+                                    self.availableDeals.append(contentsOf: Deal.dealObjectsFromProperties(properties: allDeals))
+                                }
                             }
                             self.noDealsContentView.isHidden = true
                             self.dealsListingTableView.isHidden = false

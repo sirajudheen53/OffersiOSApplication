@@ -124,12 +124,16 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
     
     @objc func userLoggedIn(notification : Notification) {
         if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
+            numberOfPages = 1
+            nextPageToLoad = 1
             self.searchDealsFromServer(location: selectedLocation, _searchString: searchString)
         }
     }
     
     @objc func userLoggedOut(notification : Notification) {
         if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
+            numberOfPages = 1
+            nextPageToLoad = 1
             self.searchDealsFromServer(location: selectedLocation, _searchString: searchString)
         }
     }
