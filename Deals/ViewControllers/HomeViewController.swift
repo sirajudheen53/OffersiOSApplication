@@ -457,7 +457,8 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     
     // MARK: - Private Methods
     
-    func fetchAllDealsFromServerAndUpdateUI(location : String) { 
+    func fetchAllDealsFromServerAndUpdateUI(location : String) {
+        print("Fetching.......................")
         guard !isLoadingList else {
             return
         }
@@ -469,6 +470,8 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             tokenHeader = ["Authorization" : "Token \(token)"]
         }
         BaseWebservice.performRequest(function: WebserviceFunction.fetchDealsList, requestMethod: .get, params: ["location" : location as AnyObject, "page" : currentPage as AnyObject], headers: tokenHeader) { (response, error) in
+            print("Completed.......................")
+
             self.isLoadingList = false
 
             if let error = error {
