@@ -28,17 +28,17 @@ enum WebserviceMethod {
     case get
 }
 
-//let base_servive_url : String = "http://127.0.0.1:8000/"
-//let image_service_url : String = "http://127.0.0.1:8000/"
+//let base_servive_url : String = "http://0.0.0.0:8000/"
+//let image_service_url : String = "http://0.0.0.0:8000/"
 
-//let base_servive_url : String = "http://192.168.43.54:8000/"
-//let image_service_url : String = "http://192.168.43.54:8000/"
+//let base_servive_url : String = "http://192.168.1.12:8000/"
+//let image_service_url : String = "http://192.168.1.124:8000/"
 
 //let image_service_url : String = "https://q-deals.herokuapp.com/"
 //let base_servive_url : String = "https://q-deals.herokuapp.com/"
 
-let image_service_url : String = "https://api.dollordeals.com/"
-let base_servive_url : String = "https://api.dollordeals.com/"
+let image_service_url : String = "https://api.godollardeals.com/"
+let base_servive_url : String = "https://api.godollardeals.com/"
 
 
 class BaseWebservice: NSObject {

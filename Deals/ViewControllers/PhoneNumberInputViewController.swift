@@ -201,9 +201,9 @@ class PhoneNumberInputViewController: UIViewController, UIGestureRecognizerDeleg
         }    }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
+        super.viewWillAppear(animated)        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
 
         
         let gestuerRecognizer = UITapGestureRecognizer(target: self, action: #selector(backgroundTapped))
@@ -223,7 +223,7 @@ class PhoneNumberInputViewController: UIViewController, UIGestureRecognizerDeleg
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             let keyboardHeight = keyboardSize.height
             
             self.view.removeConstraint(inputViewVerticalCenterConstraint)
@@ -238,7 +238,7 @@ class PhoneNumberInputViewController: UIViewController, UIGestureRecognizerDeleg
     }
     
     func addPrefixIconOnPhoneInputTextField() {
-        phoneNumberTextField.leftViewMode = UITextFieldViewMode.always
+        phoneNumberTextField.leftViewMode = UITextField.ViewMode.always
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 14, height: 20))
         let image = UIImage(named: "phone_number_input")
         imageView.image = image

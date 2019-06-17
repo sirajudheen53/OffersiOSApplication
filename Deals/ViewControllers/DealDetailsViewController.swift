@@ -24,11 +24,9 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
 
     var animationInProgress = false
     var showingSheltonAnimation = false
-    
     @IBOutlet weak var imageSliderView : UIView!
     @IBOutlet weak var imageSlider : UIPageControl!
     @IBOutlet weak var imageSliderCollectionView : UICollectionView!
-
     @IBOutlet weak var addressIconImageView: UIImageView!
     @IBOutlet weak var boughtPeopelIconImageView: UIImageView!
     @IBOutlet weak var viewedPeopleIconImageView: UIImageView!
@@ -79,7 +77,8 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     var linesConvergingAnimation : UIViewPropertyAnimator = UIViewPropertyAnimator()
     override func viewDidLoad() {
         self.offerDetailsViewBottomConstraint.constant = -300
-       qpRequestParams =   QPRequestParameters(viewController: self)
+        imageSlider.isHidden = true;
+        qpRequestParams =   QPRequestParameters(viewController: self)
         qpRequestParams.delegate = self
         analyticsScreenName = "Deal Details View"
         super.viewDidLoad()
@@ -98,7 +97,6 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         couponInfoViewDragging = UIPanGestureRecognizer(target: self, action: #selector(self.infoViewDragged(panGesture:)))
         offerDetailsView.isUserInteractionEnabled = true
         offerDetailsView.addGestureRecognizer(dealInfoViewDragging)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -120,7 +118,7 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         }
         
         
-        if(panGesture.state == UIGestureRecognizerState.ended)
+        if(panGesture.state == UIGestureRecognizer.State.ended)
         {
             if velocity.y > 1000  {
                 //Full view
@@ -128,6 +126,8 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
                     offerDetailsViewBottomConstraint.constant = -300
                     if let images = deal?.images, images.count > 1 {
                         self.imageSlider.isHidden = false
+                    } else {
+                        self.imageSlider.isHidden = true
                     }
                     animationInProgress = true
                     UIView.animate(withDuration: 0.5, animations: {
@@ -202,9 +202,9 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 1.7
         
-        let attributes = [NSAttributedStringKey.font : Constants.mediumFontWithSize(size: 14.0),
-                          NSAttributedStringKey.paragraphStyle : paragraphStyle,
-                          NSAttributedStringKey.foregroundColor : Constants.lightDarkColor]
+        let attributes = [NSAttributedString.Key.font : Constants.mediumFontWithSize(size: 14.0),
+                          NSAttributedString.Key.paragraphStyle : paragraphStyle,
+                          NSAttributedString.Key.foregroundColor : Constants.lightDarkColor]
         let requiredString = NSAttributedString(string: title, attributes: attributes)
         return requiredString
     }
@@ -215,9 +215,9 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 1.7
         
-        let attributes = [NSAttributedStringKey.font : Constants.compactTextRegulaFontWithSize(size: 14.0),
-                          NSAttributedStringKey.paragraphStyle : paragraphStyle,
-                          NSAttributedStringKey.foregroundColor : Constants.darkColor]
+        let attributes = [NSAttributedString.Key.font : Constants.compactTextRegulaFontWithSize(size: 14.0),
+                          NSAttributedString.Key.paragraphStyle : paragraphStyle,
+                          NSAttributedString.Key.foregroundColor : Constants.darkColor]
         let requiredString = NSAttributedString(string: title, attributes: attributes)
         return requiredString
     }
@@ -228,9 +228,9 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 1.7
         
-        let attributes = [NSAttributedStringKey.font : Constants.compactTextRegulaFontWithSize(size: 14.0),
-                          NSAttributedStringKey.paragraphStyle : paragraphStyle,
-                          NSAttributedStringKey.foregroundColor : Constants.lightDarkColor]
+        let attributes = [NSAttributedString.Key.font : Constants.compactTextRegulaFontWithSize(size: 14.0),
+                          NSAttributedString.Key.paragraphStyle : paragraphStyle,
+                          NSAttributedString.Key.foregroundColor : Constants.lightDarkColor]
         let requiredString = NSAttributedString(string: addressText, attributes: attributes)
         return requiredString
     }
@@ -258,9 +258,9 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     }
     
     @IBAction func enableLoctionButtonClicked(_ sender: Any) {
-        let alertController = UIAlertController(title: "Dollor Deals", message: "Please go to Settings and turn on the permissions", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Dollar Deals", message: "Please go to Settings and turn on the permissions", preferredStyle: .alert)
         let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
-            guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
                 return
             }
             if UIApplication.shared.canOpenURL(settingsUrl) {
@@ -287,10 +287,10 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     }
     
     func purchaseBoughtAttributedText(text : String) -> NSAttributedString {
-        let attributes = [NSAttributedStringKey.font : Constants.compactTextRegulaFontWithSize(size: 12.0),
-                          NSAttributedStringKey.foregroundColor : Constants.darkGrey]
+        let attributes = [NSAttributedString.Key.font : Constants.compactTextRegulaFontWithSize(size: 12.0),
+                          NSAttributedString.Key.foregroundColor : Constants.darkGrey]
         let requiredString = NSMutableAttributedString(string: text, attributes: attributes)
-        requiredString.addAttribute(NSAttributedStringKey.kern, value: 1.0, range: NSMakeRange(0, requiredString.length))
+        requiredString.addAttribute(NSAttributedString.Key.kern, value: 1.0, range: NSMakeRange(0, requiredString.length))
         return requiredString
     }
     
@@ -298,27 +298,27 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 1.7
         
-        let attributes = [NSAttributedStringKey.font : Constants.compactTextRegulaFontWithSize(size: 12.0),
-                          NSAttributedStringKey.paragraphStyle : paragraphStyle,
-                          NSAttributedStringKey.foregroundColor : Constants.extraGreyColor]
+        let attributes = [NSAttributedString.Key.font : Constants.compactTextRegulaFontWithSize(size: 12.0),
+                          NSAttributedString.Key.paragraphStyle : paragraphStyle,
+                          NSAttributedString.Key.foregroundColor : Constants.extraGreyColor]
         let requiredString = NSAttributedString(string: text, attributes: attributes)
         return requiredString
     }
     
     func validUptoAttributedText(validUptoDate : String) -> NSAttributedString {
         let requiredString = "Offer valid till " + validUptoDate
-        let attributes = [NSAttributedStringKey.font : Constants.regularFontWithSize(size: 12.0)]
+        let attributes = [NSAttributedString.Key.font : Constants.regularFontWithSize(size: 12.0)]
         let requiredAttributedString = NSMutableAttributedString(string: requiredString, attributes: attributes)
-        requiredAttributedString.addAttribute(NSAttributedStringKey.foregroundColor, value: Constants.extraGreyColor, range: NSMakeRange(0, "Offer valid till ".count))
-        requiredAttributedString.addAttribute(NSAttributedStringKey.foregroundColor, value: Constants.redColor, range: NSMakeRange("Offer valid till ".count, requiredString.count - "Offer valid till ".count))
+        requiredAttributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: Constants.extraGreyColor, range: NSMakeRange(0, "Offer valid till ".count))
+        requiredAttributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: Constants.redColor, range: NSMakeRange("Offer valid till ".count, requiredString.count - "Offer valid till ".count))
         return requiredAttributedString
     }
     
     func originalPriceAttributedText(value : String) -> NSAttributedString {
-        let attributes = [NSAttributedStringKey.font : Constants.lightFontWithSize(size: 18),
-                          NSAttributedStringKey.foregroundColor : Constants.lightDarkColor,
-                          NSAttributedStringKey.strikethroughColor : Constants.lightDarkColor,
-        NSAttributedStringKey.strikethroughStyle : 1] as [NSAttributedStringKey : Any]
+        let attributes = [NSAttributedString.Key.font : Constants.lightFontWithSize(size: 18),
+                          NSAttributedString.Key.foregroundColor : Constants.lightDarkColor,
+                          NSAttributedString.Key.strikethroughColor : Constants.lightDarkColor,
+                          NSAttributedString.Key.strikethroughStyle : 1] as [NSAttributedString.Key : Any]
         let requiredString = NSMutableAttributedString(string: value, attributes: attributes)
         return requiredString
     }
@@ -326,9 +326,9 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     func offerPercentageStripValueAttributedString(value : String) -> NSAttributedString {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 1.8
-        let attributes = [NSAttributedStringKey.font : Constants.mediumFontWithSize(size: 14),
-                          NSAttributedStringKey.paragraphStyle : paragraphStyle,
-                          NSAttributedStringKey.foregroundColor : UIColor.white]
+        let attributes = [NSAttributedString.Key.font : Constants.mediumFontWithSize(size: 14),
+                          NSAttributedString.Key.paragraphStyle : paragraphStyle,
+                          NSAttributedString.Key.foregroundColor : UIColor.white]
         let requiredString = NSMutableAttributedString(string: value, attributes: attributes)
         return requiredString
     }
@@ -405,7 +405,7 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     func configureUIElements() {
         makeViewedAPI()
         imageSliderCollectionView.reloadData()
-       if let deal = deal, deal.purchaseCode != "" && deal.endDate > Date() {
+       if let deal = deal, deal.purchaseCode != "" {
             showDealCodeView()
         } else {
             dealInfoView.isHidden = false
@@ -439,7 +439,11 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
                 
                 if let images = deal.images {
                     imageSlider.numberOfPages = images.count
-                    imageSlider.hidesForSinglePage = true
+                    if images.count > 1 {
+                        imageSlider.isHidden = false;
+                    } else {
+                        imageSlider.isHidden = true;
+                    }
                 }
                 
                 if deal.numberOfPurchases == 0 {
@@ -466,10 +470,10 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         }
         self.numberOfPeoplePurchased.text = "\(self.deal!.numberOfPeopleBought)"
         self.offerTitleLabel.attributedText = self.titleAttributedText(title: self.deal!.dealDescription)
-        self.dealDetailsButton.setAttributedTitle(self.moreDetailsAttributedText(title: "More Details"), for: UIControlState.normal)
+        self.dealDetailsButton.setAttributedTitle(self.moreDetailsAttributedText(title: "More Details"), for: UIControl.State.normal)
         self.purchasesTitleLabel.attributedText = self.purchaseBoughtAttributedText(text: "PURCHASES")
         self.viewsTitleLabel.attributedText = self.purchaseBoughtAttributedText(text: "VIEWS")
-        self.phoneContactButton.setAttributedTitle(self.contactTitleAttributedText(text: "Contact"), for: UIControlState.normal)
+        self.phoneContactButton.setAttributedTitle(self.contactTitleAttributedText(text: "Contact"), for: UIControl.State.normal)
         self.validUptoValueLabel.attributedText = self.validUptoAttributedText(validUptoDate: deal!.endDate.defaultStringFormat())
         
         let offerPercent : Double = (Double(deal!.originalPrice - deal!.dealPrice)/Double(self.deal!.originalPrice)*100)
@@ -557,8 +561,8 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
                 
                 let calender:Calendar = Calendar.current
                 let components: DateComponents = calender.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date2, to: expiryDate)
-                if let hour = components.hour, let minuites = components.minute {
-                    self.couponExpiresValueLabel.text = "Expires in \(hour) h \(minuites) m"
+                if let hour = components.hour, let minuites = components.minute, let days = components.day {
+                    self.couponExpiresValueLabel.text = "Expires in \(days) d \(hour) h \(minuites) m"
                 }
             }
         }
@@ -569,20 +573,20 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     // MARK: - IBAction Methods
     
     func initiatePayment() {
-        qpRequestParams.gatewayId = "017146316"
-        qpRequestParams.secretKey = "2-LHwxDLOVHC3pB5"
-        qpRequestParams.name = "Dollor Deals"
-        qpRequestParams.address = "Dollor Deals - Qatar"
+        qpRequestParams.gatewayId = "017824682"
+        qpRequestParams.secretKey = "2-ZLCwqYdo+zE+hS"
+        qpRequestParams.name = "Dollar Deals"
+        qpRequestParams.address = "Dollar Deals - Qatar"
         qpRequestParams.city = "Doha"
         qpRequestParams.state = "Doha"
         qpRequestParams.country  = "QA"
-        qpRequestParams.email = User.getProfile()?.email ?? "info@dollordeals.com"
+        qpRequestParams.email = User.getProfile()?.email ?? "info@godollardeals.com"
         qpRequestParams.currency = "QAR"
         qpRequestParams.referenceId = UUID().uuidString
         qpRequestParams.phone = "\(User.getProfile()?.phoneNumber ?? "")"
         qpRequestParams.amount = Double(deal?.dealPrice ?? 1) //any float value
-        qpRequestParams.mode = "TEST"
-        qpRequestParams.productDescription = "A Deal from Dollor Deals"
+        qpRequestParams.mode = "live"
+        qpRequestParams.productDescription = "A Deal from Dollar Deals"
         qpRequestParams.sendRequest()
     }
     
@@ -608,12 +612,14 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     }
     
     @IBAction func shareButtonClicked(_ sender: Any) {
-        let text = "Grab awesome deals from\n\n"
-        let myWebsite = URL(string:"https://www.dollordeals.com")
-        let shareAll = [text, myWebsite as Any] as [Any]
-        let activityViewController = UIActivityViewController(activityItems: shareAll, applicationActivities: nil)
-        activityViewController.popoverPresentationController?.sourceView = self.view
-        self.present(activityViewController, animated: true, completion: nil)
+        if let deal = deal {
+            let text = "Checkout an awesome deal from Dollar Deals\n\n"
+            let myWebsite = URL(string:"https://www.godollardeals.com?deal=\(deal.dealId)")
+            let shareAll = [text, myWebsite as Any] as [Any]
+            let activityViewController = UIActivityViewController(activityItems: shareAll, applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = self.view
+            self.present(activityViewController, animated: true, completion: nil)
+        }
     }
     
     func makeViewedAPI() {
@@ -802,15 +808,15 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 10.0
+        return 0
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.size.width - 10, height: collectionView.frame.size.height)
+        return CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(0, 5, 0, 5)
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
 }
 

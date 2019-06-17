@@ -9,6 +9,7 @@
 import UIKit
 import GoogleSignIn
 import FacebookCore
+import FBSDKLoginKit
 import FacebookLogin
 import SVProgressHUD
 class PopupViewController: BaseViewController, GIDSignInUIDelegate {
@@ -43,7 +44,7 @@ class PopupViewController: BaseViewController, GIDSignInUIDelegate {
     
     @IBAction func loginWithFBClicked(_ sender: Any) {
         let loginManager = LoginManager()
-        loginManager.logIn(readPermissions: [.publicProfile, .email], viewController: self, completion: {loginResult in
+        loginManager.logIn(permissions: [FacebookCore.Permission.publicProfile, FacebookCore.Permission.email], viewController: self, completion: {loginResult in
             switch loginResult {
             case .failed(let error):
                 UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
@@ -51,7 +52,7 @@ class PopupViewController: BaseViewController, GIDSignInUIDelegate {
                 print("User cancelled login.")
             case .success(_, _, let accessToken):
                 SVProgressHUD.show()
-                BaseWebservice.performRequest(function: WebserviceFunction.login, requestMethod: .post, params: ["id_token" : accessToken.authenticationToken as AnyObject, "provider" : "facebook" as AnyObject], headers: nil) { (response, error) in
+                BaseWebservice.performRequest(function: WebserviceFunction.login, requestMethod: .post, params: ["id_token" : accessToken.tokenString as AnyObject, "provider" : "facebook" as AnyObject], headers: nil) { (response, error) in
                     SVProgressHUD.dismiss()
                     if let error = error {
                         UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)

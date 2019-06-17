@@ -6,20 +6,20 @@ target 'Deals' do
   use_frameworks!
 
 pod 'GoogleSignIn'
-pod 'Alamofire', '~> 4.7'
-pod 'AlamofireImage', '~> 3.3'
+pod 'Alamofire'
+pod 'AlamofireImage'
 pod 'AFDateHelper'
 pod 'SVProgressHUD'
 pod 'FacebookCore'
 pod 'FacebookLogin'
 pod 'FacebookShare'
-pod "SkeletonView"
+pod 'SkeletonView'
 pod 'SwiftMessages'
 pod 'Firebase/Core'
 pod 'Firebase/Messaging'
-pod 'Fabric', '~> 1.9.0'
-pod 'Crashlytics', '~> 3.12.0'
-pod 'PhoneNumberKit', '~> 2.5'
+pod 'Fabric'
+pod 'Crashlytics'
+pod 'PhoneNumberKit'
 
   # Pods for Test
 

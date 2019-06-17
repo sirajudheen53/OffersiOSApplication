@@ -40,11 +40,6 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
         
         self.dealsListingTableView.contentInset = UIEdgeInsets(top: 5.0, left: 0, bottom: 0, right: 0)
 
-        if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String, filterCategories.count > 0 {
-            numberOfPages = 1
-            nextPageToLoad = 1
-            searchDealsFromServer(location: selectedLocation, _searchString: searchString)
-        }
         
         self.navigationController?.navigationBar.isHidden = true
         let dealListingCellNib = UINib(nibName: "DealsListingTableViewCell", bundle: nil)
@@ -55,11 +50,17 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
         self.filterContentView.layer.cornerRadius = 24.0
         self.filterNumberLabel.layer.cornerRadius = 8.0
         self.filterNumberLabel.clipsToBounds = true
-        self.filterNumberLabel.text = "\(self.filterCategories.count)"
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.filterNumberLabel.text = "\(self.filterCategories.count)"
+        if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String, filterCategories.count > 0 {
+            numberOfPages = 1
+            nextPageToLoad = 1
+            searchDealsFromServer(location: selectedLocation, _searchString: searchString)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -123,21 +124,25 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
     
     @objc func userLoggedIn(notification : Notification) {
         if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
+            numberOfPages = 1
+            nextPageToLoad = 1
             self.searchDealsFromServer(location: selectedLocation, _searchString: searchString)
         }
     }
     
     @objc func userLoggedOut(notification : Notification) {
         if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
+            numberOfPages = 1
+            nextPageToLoad = 1
             self.searchDealsFromServer(location: selectedLocation, _searchString: searchString)
         }
     }
     
     func enableLocationBlock() -> (()->()) {
         return { // initialise a pop up for using later
-            let alertController = UIAlertController(title: "Dollor Deals", message: "Please go to Settings and turn on the permissions", preferredStyle: .alert)
+            let alertController = UIAlertController(title: "Dollar Deals", message: "Please go to Settings and turn on the permissions", preferredStyle: .alert)
             let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
-                guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+                guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
                     return
                 }
                 if UIApplication.shared.canOpenURL(settingsUrl) {

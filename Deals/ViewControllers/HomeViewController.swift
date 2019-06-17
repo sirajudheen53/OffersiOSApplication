@@ -21,7 +21,7 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     var hotDeals : [Deal]?
     
     var selectedTableViewCell : UITableViewCell!
-
+    var detailsViewController : DealDetailsViewController?
     @IBOutlet weak var locationNameLabel: UILabel!
     
     @IBOutlet weak var noDealsContentView: UIView!
@@ -70,6 +70,11 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
         self.navigationController?.navigationBar.isHidden = true
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        detailsViewController = nil
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -77,21 +82,62 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     }
     
     func openDealDetailsViewForNotifiedDeal() {
-        if let deal_id = UserDefaults.standard.value(forKey: "notifiedDeal") {
-            self.performSegue(withIdentifier: "showDetailsView", sender: ["deal_id" : deal_id])
+        if let deal_id = UserDefaults.standard.value(forKey: "notifiedDeal"){
+            if var topController = UIApplication.shared.keyWindow?.rootViewController {
+                while let presentedViewController = topController.presentedViewController {
+                    topController = presentedViewController
+                }
+                if topController is DealDetailsViewController {
+                    topController.dismiss(animated: false) {
+                        self.tabBarController!.selectedIndex = 0;
+                        DispatchQueue.main.async {
+                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                            let detailsVC = storyboard.instantiateViewController(withIdentifier: "DealDetailsView") as! DealDetailsViewController
+                            detailsVC.dealId = Int(deal_id as! String)
+                            self.present(detailsVC, animated: false, completion: nil);
+                        }
+                    }
+                }
+            } else {
+                self.tabBarController!.selectedIndex = 0;
+                DispatchQueue.main.async {
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let detailsVC = storyboard.instantiateViewController(withIdentifier: "DealDetailsView") as! DealDetailsViewController
+                    detailsVC.dealId = Int(deal_id as! String)
+                    self.present(detailsVC, animated: false, completion: nil);
+                }
+            }
         }
+//
+//
+//            if let detailsViewController = detailsViewController {
+//                detailsViewController.dismiss(animated: false) {
+//                    DispatchQueue.main.async {
+//                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                        let detailsVC = storyboard.instantiateViewController(withIdentifier: "DealDetailsView") as! DealDetailsViewController
+//                        detailsVC.dealId = Int(deal_id as! String)
+//
+//                        self.present(detailsVC, animated: false, completion: nil);                    }
+//                }
+//            } else {
+//                DispatchQueue.main.async {
+//                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                    let detailsVC = storyboard.instantiateViewController(withIdentifier: "DealDetailsView") as! DealDetailsViewController
+//                    detailsVC.dealId = Int(deal_id as! String)
+//                    self.present(detailsVC, animated: false, completion: nil);
+//                }
+//            }
+//        }
         
         UserDefaults.standard.set(false, forKey: "isOpenedFromNotification")
         UserDefaults.standard.set(nil, forKey: "notifiedDeal")
-        
-        
     }
     
     func enableLocationBlock() -> (()->()) {
         return { // initialise a pop up for using later
-            let alertController = UIAlertController(title: "Dollor Deals", message: "Please go to Settings and turn on the permissions", preferredStyle: .alert)
+            let alertController = UIAlertController(title: "Dollar Deals", message: "Please go to Settings and turn on the permissions", preferredStyle: .alert)
             let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
-                guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+                guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
                     return
                 }
                 if UIApplication.shared.canOpenURL(settingsUrl) {
@@ -120,22 +166,76 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     // MARK: - Private Methods
     
     @objc func notificationDealRecieved(notification : Notification) {
-        self.performSegue(withIdentifier: "showDetailsView", sender: notification.object)
+        if var topController = UIApplication.shared.keyWindow?.rootViewController {
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+            }
+            if topController is DealDetailsViewController {
+                topController.dismiss(animated: false) {
+                    self.tabBarController!.selectedIndex = 0;
+                    DispatchQueue.main.async {
+                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                        let detailsVC = storyboard.instantiateViewController(withIdentifier: "DealDetailsView") as! DealDetailsViewController
+                        if let object = notification.object as? [String : Any], let dealId = object["deal_id"] as? String {
+                            detailsVC.dealId = Int(dealId)
+                            self.present(detailsVC, animated: false, completion: nil);
+                        }
+                    }
+                }
+            } else {
+                self.tabBarController!.selectedIndex = 0;
+                DispatchQueue.main.async {
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let detailsVC = storyboard.instantiateViewController(withIdentifier: "DealDetailsView") as! DealDetailsViewController
+                    if let object = notification.object as? [String : Any], let dealId = object["deal_id"] as? String {
+                        detailsVC.dealId = Int(dealId)
+                        self.present(detailsVC, animated: false, completion: nil);
+                    }
+                }
+            }
+        }
+                
+//        if let dealDetailsView = detailsViewController {
+//            dealDetailsView.dismiss(animated: false) {
+//                DispatchQueue.main.async {
+//                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                    let detailsVC = storyboard.instantiateViewController(withIdentifier: "DealDetailsView") as! DealDetailsViewController
+//                    if let object = notification.object as? [String : Any], let dealId = object["deal_id"] as? String {
+//                        detailsVC.dealId = Int(dealId)
+//                        self.present(detailsVC, animated: false, completion: nil);
+//                    }
+//                }
+//            }
+//        } else {
+//            DispatchQueue.main.async {
+//                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                let detailsVC = storyboard.instantiateViewController(withIdentifier: "DealDetailsView") as! DealDetailsViewController
+//                if let object = notification.object as? [String : Any], let dealId = object["deal_id"] as? String {
+//                    detailsVC.dealId = Int(dealId)
+//                    self.present(detailsVC, animated: false, completion: nil);
+//                }
+//            }
+//        }
     }
     
     @objc func userLoggedIn(notification : Notification) {
         if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
+            currentPage = 1
+            numberOfPages = 1
             self.fetchAllDealsFromServerAndUpdateUI(location: selectedLocation)
         }
     }
     
     @objc func userLoggedOut(notification : Notification) {
         if let selectedLocation = UserDefaults.standard.value(forKey: "SelectedLocation") as? String {
+            currentPage = 1
+            numberOfPages = 1
             self.fetchAllDealsFromServerAndUpdateUI(location: selectedLocation)
         }
     }
     
     @objc func detailsViewDismissed(notification : Notification) {
+        detailsViewController = nil
         dealsListingTableView.reloadData()
     }
     
@@ -224,6 +324,7 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetailsView" {
             if let detailsView = segue.destination as? DealDetailsViewController {
+                detailsViewController = detailsView;
                 detailsView.transitioningDelegate = self
                 if let sender = sender as? [String : Any], let deal = sender["deal"] as? Deal{
                     detailsView.deal = deal
@@ -314,7 +415,7 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             
         }
         
-        cell.selectionStyle = UITableViewCellSelectionStyle.none
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
         return cell
     }
     
@@ -360,7 +461,8 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     
     // MARK: - Private Methods
     
-    func fetchAllDealsFromServerAndUpdateUI(location : String) { 
+    func fetchAllDealsFromServerAndUpdateUI(location : String) {
+        print("Fetching.......................")
         guard !isLoadingList else {
             return
         }
@@ -389,7 +491,11 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                                 self.hotDeals = Deal.dealObjectsFromProperties(properties: hotTodayProperties)
                             }
                             if let allDeals = allDealsProperties["deals"] as? [[String : Any]] {
-                                self.availableDeals.append(contentsOf: Deal.dealObjectsFromProperties(properties: allDeals))
+                                if self.currentPage == 1 {
+                                    self.availableDeals = Deal.dealObjectsFromProperties(properties: allDeals)
+                                } else {
+                                    self.availableDeals.append(contentsOf: Deal.dealObjectsFromProperties(properties: allDeals))
+                                }
                             }
                             self.noDealsContentView.isHidden = true
                             self.dealsListingTableView.isHidden = false
@@ -433,11 +539,21 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 
 extension HomeViewController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        transition.originFrame = selectedTableViewCell!.superview!.convert(selectedTableViewCell!.frame, to: nil)
+        if let selectedTableViewCell = selectedTableViewCell {
+            transition.originFrame = selectedTableViewCell.superview!.convert(selectedTableViewCell.frame, to: nil)
+            
+            transition.presenting = true
+            
+            return transition
+        } else {
+            selectedTableViewCell = dealsListingTableView.cellForRow(at: IndexPath(row: 1, section: 0))
+            transition.originFrame = selectedTableViewCell.superview!.convert(selectedTableViewCell.frame, to: nil)
+            
+            transition.presenting = true
+            
+            return transition
+        }
         
-        transition.presenting = true
-        
-        return transition
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {

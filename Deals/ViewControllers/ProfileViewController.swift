@@ -8,8 +8,8 @@
 
 import UIKit
 import GoogleSignIn
-import FacebookCore
 import FacebookLogin
+import FBSDKLoginKit
 import AlamofireImage
 import SVProgressHUD
 
@@ -56,7 +56,7 @@ class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollecti
         if let _ = User.getProfile() {
             self.profileContentView.isHidden = false
             self.loginViewContent.isHidden = true
-            self.fetchUserProfileAndUpdateView()
+            self.fetchUserProfileAndUpdateView(showLoading: true)
             analyticsScreenName = "Profile View"
 
             displayProfileData()
@@ -93,7 +93,7 @@ class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollecti
     }
     
     @IBAction func logutButtonClicked(_ sender: Any) {
-        let logoutAction = UIAlertAction(title: "Logout", style: UIAlertActionStyle.destructive) { (action) in
+        let logoutAction = UIAlertAction(title: "Logout", style: UIAlertAction.Style.destructive) { (action) in
             UserProfile.deleteProfile()
             self.profileContentView.isHidden = true
             self.loginViewContent.isHidden = false
@@ -102,8 +102,8 @@ class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollecti
 
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: nil)
-        let logoutActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: nil)
+        let logoutActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertController.Style.actionSheet)
         logoutActionSheet.addAction(logoutAction)
         logoutActionSheet.addAction(cancelAction)
         
@@ -154,17 +154,21 @@ class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollecti
             self.userProfile = UserProfile.userProfileWithProperties(properties: userProfile)
             self.displayProfileData()
         } else {
-            self.fetchUserProfileAndUpdateView()
+            self.fetchUserProfileAndUpdateView(showLoading: true)
         }
     }
     
     @objc func userProfileUpdatedNotification(notification : Notification) {
-        self.fetchUserProfileAndUpdateView()
+        self.fetchUserProfileAndUpdateView(showLoading: false)
     }
     
-    func fetchUserProfileAndUpdateView() {
+    func fetchUserProfileAndUpdateView(showLoading : Bool) {
+        if (showLoading) {
+            SVProgressHUD.show()
+        }
         let userProfileFetchHeader = ["Authorization" : "Token \(User.getProfile()!.token!)"]
         BaseWebservice.performRequest(function: WebserviceFunction.fetchUserProfile, requestMethod: .get, params: nil, headers: userProfileFetchHeader) { (response, error) in
+            SVProgressHUD.dismiss()
             if let error = error {
                 UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
             } else if let response = response as? [String : Any] {
@@ -263,7 +267,7 @@ class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollecti
     
     @IBAction func loginWithFBButtonClicked(_ sender: Any) {
         let loginManager = LoginManager()
-        loginManager.logIn(readPermissions: [.publicProfile, .email], viewController: self, completion: {loginResult in
+        loginManager.logIn(permissions: [.publicProfile, .email], viewController: self, completion: {loginResult in
             switch loginResult {
             case .failed(let error):
                 UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
@@ -271,7 +275,7 @@ class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollecti
                 print("User cancelled login.")
             case .success(_, _, let accessToken):
                 SVProgressHUD.show()
-                BaseWebservice.performRequest(function: WebserviceFunction.login, requestMethod: .post, params: ["id_token" : accessToken.authenticationToken as AnyObject, "provider" : "facebook" as AnyObject], headers: nil) { (response, error) in
+                BaseWebservice.performRequest(function: WebserviceFunction.login, requestMethod: .post, params: ["id_token" : accessToken.tokenString as AnyObject, "provider" : "facebook" as AnyObject], headers: nil) { (response, error) in
                     SVProgressHUD.dismiss()
                     if let error = error {
                         UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)

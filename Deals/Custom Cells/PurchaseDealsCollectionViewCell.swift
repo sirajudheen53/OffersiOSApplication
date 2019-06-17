@@ -27,7 +27,7 @@ class PurchaseDealsCollectionViewCell: UICollectionViewCell {
     
     func customizeCell(deal : Deal) {
         self.dealImageView.image = UIImage(named: "logo_small")
-        dealImageView.contentMode = UIViewContentMode.center
+        dealImageView.contentMode = UIView.ContentMode.center
         
         if let vendorName = deal.vendor?.name {
             self.vendorNameLabel.text = vendorName
@@ -59,7 +59,7 @@ class PurchaseDealsCollectionViewCell: UICollectionViewCell {
                                            imageTransition: UIImageView.ImageTransition.noTransition,
                                            runImageTransitionIfCached: false) { (data) in
                                             if let _ = data.result.value {
-                                                self.dealImageView?.contentMode = UIViewContentMode.scaleAspectFill
+                                                self.dealImageView?.contentMode = UIView.ContentMode.scaleAspectFill
                                             }
             }
         }

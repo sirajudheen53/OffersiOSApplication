@@ -34,7 +34,7 @@ class FeedbackViewController: BaseViewController, MFMailComposeViewControllerDel
     }
     
     @IBAction func phoneButtonClicked(_ sender: Any) {
-        if let url = URL(string: "tel://+916238660381)"),
+        if let url = URL(string: "tel://+97444430780)"),
             UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
@@ -44,15 +44,15 @@ class FeedbackViewController: BaseViewController, MFMailComposeViewControllerDel
         let mailComposerVC = MFMailComposeViewController()
         mailComposerVC.mailComposeDelegate = self // Extremely important to set the --mailComposeDelegate-- property, NOT the --delegate-- property
         
-        mailComposerVC.setToRecipients(["info@dollordeals.com"])
+        mailComposerVC.setToRecipients(["info@godollardeals.com"])
         
         var version = "-"
         if let shortBundleVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String {
             version = shortBundleVersion
         }
 
-        mailComposerVC.setSubject("Feedback - Dollor Deals iOS - \(version)")
-        mailComposerVC.setMessageBody("Hi Dollor Deals,", isHTML: false)
+        mailComposerVC.setSubject("Feedback - Dollar Deals iOS - \(version)")
+        mailComposerVC.setMessageBody("Hi Dollar Deals,", isHTML: false)
         
         return mailComposerVC
     }

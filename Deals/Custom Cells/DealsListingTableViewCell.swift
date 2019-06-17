@@ -88,7 +88,7 @@ class DealsListingTableViewCell: UITableViewCell {
     }
     
     override func prepareForReuse() {
-        dealImageView.contentMode = UIViewContentMode.center
+        dealImageView.contentMode = UIView.ContentMode.center
         self.dealImageView.image = UIImage(named: "logo_small")
     }
     
@@ -125,11 +125,11 @@ class DealsListingTableViewCell: UITableViewCell {
                                            imageTransition: UIImageView.ImageTransition.noTransition,
                                            runImageTransitionIfCached: false) { (data) in
                                             if let _ = data.result.value {
-                                                self.dealImageView?.contentMode = UIViewContentMode.scaleAspectFill
+                                                self.dealImageView?.contentMode = UIView.ContentMode.scaleAspectFill
                                             }
             }
         }
-            self.favouriteButton.setBackgroundImage(UIImage(named: deal.isFavourited ? "make_favourite" : "makeFavouriteTransparent"), for: UIControlState.normal)
+        self.favouriteButton.setBackgroundImage(UIImage(named: deal.isFavourited ? "make_favourite" : "makeFavouriteTransparent"), for: UIControl.State.normal)
         updateDistanceValue()
         
     }
@@ -174,18 +174,18 @@ class DealsListingTableViewCell: UITableViewCell {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 1.6
         
-        let attributes = [NSAttributedStringKey.font : Constants.lightFontWithSize(size: 12.0),
-                          NSAttributedStringKey.paragraphStyle : paragraphStyle,
-                          NSAttributedStringKey.foregroundColor : Constants.blackDarkColor]
+        let attributes = [NSAttributedString.Key.font : Constants.lightFontWithSize(size: 12.0),
+                          NSAttributedString.Key.paragraphStyle : paragraphStyle,
+                          NSAttributedString.Key.foregroundColor : Constants.blackDarkColor]
         let requiredString = NSAttributedString(string: title, attributes: attributes)
         return requiredString
     }
     
     func originalPriceAttributedText(value : String) -> NSAttributedString {
-        let attributes = [NSAttributedStringKey.font : Constants.lightFontWithSize(size: 12.0),
-                          NSAttributedStringKey.foregroundColor : Constants.appliationGreyColor,
-                          NSAttributedStringKey.strikethroughColor : Constants.appliationGreyColor,
-                          NSAttributedStringKey.strikethroughStyle : 1] as [NSAttributedStringKey : Any]
+        let attributes = [NSAttributedString.Key.font : Constants.lightFontWithSize(size: 12.0),
+                          NSAttributedString.Key.foregroundColor : Constants.appliationGreyColor,
+                          NSAttributedString.Key.strikethroughColor : Constants.appliationGreyColor,
+                          NSAttributedString.Key.strikethroughStyle : 1] as [NSAttributedString.Key : Any]
         let requiredString = NSMutableAttributedString(string: value, attributes: attributes)
         return requiredString
     }
@@ -194,6 +194,6 @@ class DealsListingTableViewCell: UITableViewCell {
         if let makeFavouriteActionBlock = makeFavouriteActionBlock {
             makeFavouriteActionBlock(deal!)
         }
-        self.favouriteButton.setBackgroundImage(UIImage(named: "make_favourite"), for: UIControlState.normal)
+        self.favouriteButton.setBackgroundImage(UIImage(named: "make_favourite"), for: UIControl.State.normal)
     }
 }

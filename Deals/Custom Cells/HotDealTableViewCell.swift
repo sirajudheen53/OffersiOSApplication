@@ -42,10 +42,10 @@ class HotDealTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollect
     }
     
     func dealNumbersInfoAttributedText(showingDealNumber : Int) -> NSAttributedString {
-        let currentNumberAttributes = [NSAttributedStringKey.font : Constants.mediumFontWithSize(size: 20.0),
-                                       NSAttributedStringKey.foregroundColor : Constants.mountainMedow]
-        let totalDealNumbersAttributes = [NSAttributedStringKey.font : Constants.regularFontWithSize(size: 14.0),
-                                          NSAttributedStringKey.foregroundColor : Constants.taupeyGrey]
+        let currentNumberAttributes = [NSAttributedString.Key.font : Constants.mediumFontWithSize(size: 20.0),
+                                       NSAttributedString.Key.foregroundColor : Constants.mountainMedow]
+        let totalDealNumbersAttributes = [NSAttributedString.Key.font : Constants.regularFontWithSize(size: 14.0),
+                                          NSAttributedString.Key.foregroundColor : Constants.taupeyGrey]
         let currentNumberAttributedString = NSMutableAttributedString(string: "\(showingDealNumber)", attributes: currentNumberAttributes)
         let totalNumberAttributedString = NSAttributedString(string: "/\(self.hotDeals!.count)", attributes: totalDealNumbersAttributes)
         currentNumberAttributedString.append(totalNumberAttributedString)
@@ -101,9 +101,9 @@ class HotDealTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollect
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 1.7
         
-        let attributes = [NSAttributedStringKey.font : Constants.regularFontWithSize(size: 14.0),
-                          NSAttributedStringKey.paragraphStyle : paragraphStyle,
-                          NSAttributedStringKey.foregroundColor : Constants.darkGrey]
+        let attributes = [NSAttributedString.Key.font : Constants.regularFontWithSize(size: 14.0),
+                          NSAttributedString.Key.paragraphStyle : paragraphStyle,
+                          NSAttributedString.Key.foregroundColor : Constants.darkGrey]
         let requiredString = NSMutableAttributedString(string: text, attributes: attributes)
         return requiredString
     }

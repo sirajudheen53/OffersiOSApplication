@@ -22,7 +22,7 @@ extension UILabel {
                 
             }
             
-            attributedString.addAttribute(NSAttributedStringKey.kern,
+            attributedString.addAttribute(NSAttributedString.Key.kern,
                                           value: newValue,
                                           range: NSRange(location: 0, length: attributedString.length))
             self.attributedText = attributedString
@@ -30,7 +30,7 @@ extension UILabel {
         }
         
         get {
-            if let currentLetterSpace = attributedText?.attribute(NSAttributedStringKey.kern, at: 0, effectiveRange: .none) as? CGFloat {
+            if let currentLetterSpace = attributedText?.attribute(NSAttributedString.Key.kern, at: 0, effectiveRange: .none) as? CGFloat {
                 return currentLetterSpace
             }
             else {

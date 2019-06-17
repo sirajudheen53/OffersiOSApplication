@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLoca
     let locationManager = CLLocationManager()
     var currentLocation : CLLocation?
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         NSLog("appliction %@", "opened")
         // Check if launched from notification
         let notificationOption = launchOptions?[.remoteNotification]
@@ -53,11 +53,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLoca
         return true
     }
     
-    func setSocialLoginTokens(application: UIApplication, launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
+    func application(_ application: UIApplication, didFailToContinueUserActivityWithType userActivityType: String, error: Error) {
+        print(error.localizedDescription)
+    }
+    
+    func application(_ application: UIApplication, willContinueUserActivityWithType userActivityType: String) -> Bool {
+        return true
+    }
+    
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+        if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
+            if let url = userActivity.webpageURL, let dealId = getQueryStringParameter(url: url.absoluteString, param: "deal") {
+                NotificationCenter.default.post(name: NSNotification.Name("notificationDealRecieved"), object: ["deal_id":dealId as AnyObject])
+            }
+        }
+        return true
+    }
+    
+    func getQueryStringParameter(url: String, param: String) -> String? {
+        guard let url = URLComponents(string: url) else { return nil }
+        return url.queryItems?.first(where: { $0.name == param })?.value
+    }
+
+    
+    func setSocialLoginTokens(application: UIApplication, launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
         GIDSignIn.sharedInstance().clientID = "575363958117-8tm13saonriclsrvmithkb3fhvrtk9s7.apps.googleusercontent.com"
         GIDSignIn.sharedInstance().delegate = self
         
-        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     
     func setApplicationLocationSettings() {
@@ -80,20 +103,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLoca
         UINavigationBar.appearance().backgroundColor = UIColor.white
         UINavigationBar.appearance().isTranslucent = false
         UINavigationBar.appearance().largeTitleTextAttributes =
-            [NSAttributedStringKey.font: Constants.boldProDisplayWithSize(size: 32.0)]
+            [NSAttributedString.Key.font: Constants.boldProDisplayWithSize(size: 32.0)]
     }
     
     
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
-        let sourceApplication =  options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String
-        let annotation = options[UIApplicationOpenURLOptionsKey.annotation]
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
+        let sourceApplication =  options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String
+        let annotation = options[UIApplication.OpenURLOptionsKey.annotation]
         
         let googleHandler = GIDSignIn.sharedInstance().handle(
             url,
             sourceApplication: sourceApplication,
             annotation: annotation )
         
-        let facebookHandler = FBSDKApplicationDelegate.sharedInstance().application (
+        let facebookHandler = ApplicationDelegate.shared.application (
             app,
             open: url,
             sourceApplication: sourceApplication,
