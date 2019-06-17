@@ -477,7 +477,10 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         self.validUptoValueLabel.attributedText = self.validUptoAttributedText(validUptoDate: deal!.endDate.defaultStringFormat())
         
         let offerPercent : Double = (Double(deal!.originalPrice - deal!.dealPrice)/Double(self.deal!.originalPrice)*100)
-        self.offerPercentageStripLabel.attributedText = offerPercentageStripValueAttributedString(value: "\(Int(offerPercent)) % off")
+        
+        if (offerPercent > 0) {
+            self.offerPercentageStripLabel.attributedText = offerPercentageStripValueAttributedString(value: "\(Int(offerPercent)) % off")
+        }
         
         updateDistanceValue()
     }

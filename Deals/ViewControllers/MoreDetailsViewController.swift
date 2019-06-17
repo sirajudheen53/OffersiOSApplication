@@ -24,18 +24,23 @@ class MoreDetailsViewController: BaseViewController, UITableViewDelegate, UITabl
         // Dispose of any resources that can be recreated.
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2;
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return section == 0 ? "Deal Features" : "Terms And Conditions"
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let deal = deal {
-            return deal.conditons.count + deal.features.count
-        }
-        return  0
+        return section == 0 ? deal!.features.count : deal!.conditons.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell : UITableViewCell!
         
         if let deal = deal {
-            if indexPath.row < deal.features.count {
+            if indexPath.section == 0 {
                 let feature = deal.features[indexPath.row]
                 if feature.featureTitle == "" {
                     let listingCell = tableView.dequeueReusableCell(withIdentifier: "featureListingCell", for: indexPath) as! FeatureListingTableViewCell
