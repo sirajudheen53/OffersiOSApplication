@@ -862,6 +862,9 @@
                                             <constraint firstAttribute="height" constant="30" id="dJB-Fh-COd"/>
                                         </constraints>
                                         <state key="normal" title="Button" image="rightArrow"/>
+                                        <connections>
+                                            <segue destination="aaN-Wr-EjH" kind="presentation" identifier="showMoreDetailsView" animates="NO" modalPresentationStyle="overCurrentContext" id="t4F-Tb-AaY"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4OC-tr-7dr">
                                         <rect key="frame" x="294" y="160" width="96" height="25"/>
@@ -1474,7 +1477,7 @@
                                                     <constraint firstAttribute="height" constant="87" id="rcE-EH-3zp"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="15"/>
-                                                <state key="normal" title="Restaurent" backgroundImage="restaurent_unselect">
+                                                <state key="normal" title="Restaurant" backgroundImage="restaurent_unselect">
                                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <state key="selected" backgroundImage="restaurent"/>
@@ -3018,6 +3021,7 @@
         <segue reference="F0e-Pl-oRI"/>
         <segue reference="LFe-de-dCP"/>
         <segue reference="A3n-xN-iaX"/>
-        <segue reference="Ffb-Sb-1Uq"/>
+        <segue reference="t4F-Tb-AaY"/>
+        <segue reference="Ovg-CE-8Vh"/>
     </inferredMetricsTieBreakers>
 </document>
