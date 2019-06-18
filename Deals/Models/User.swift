@@ -80,7 +80,7 @@ class User: NSObject, NSCoding {
     
     class func getProfile() -> User?{
         if let data = NSData(contentsOfFile: NSHomeDirectory() + "/Documents/profile.bin" ){
-            let unarchiveProfile = NSKeyedUnarchiver.unarchiveObject(with: data as Data) as! User
+            let unarchivedProfile = NSKeyedUnarchiver.unarchivedObject(ofClass: "Deals.User", from: data)
             return unarchiveProfile
         } else{
             return nil
