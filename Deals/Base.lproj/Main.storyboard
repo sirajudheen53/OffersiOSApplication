@@ -862,9 +862,6 @@
                                             <constraint firstAttribute="height" constant="30" id="dJB-Fh-COd"/>
                                         </constraints>
                                         <state key="normal" title="Button" image="rightArrow"/>
-                                        <connections>
-                                            <action selector="moreDetailsButtonClicked:" destination="wsw-En-rJQ" eventType="touchUpInside" id="ekp-Jk-2cW"/>
-                                        </connections>
                                     </button>
                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4OC-tr-7dr">
                                         <rect key="frame" x="294" y="160" width="96" height="25"/>
@@ -3018,9 +3015,9 @@
         <image name="trivandrum_unselected" width="335" height="104"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="svC-vq-hQJ"/>
+        <segue reference="F0e-Pl-oRI"/>
         <segue reference="LFe-de-dCP"/>
-        <segue reference="0Vr-Db-7PL"/>
+        <segue reference="A3n-xN-iaX"/>
         <segue reference="Ffb-Sb-1Uq"/>
     </inferredMetricsTieBreakers>
 </document>
