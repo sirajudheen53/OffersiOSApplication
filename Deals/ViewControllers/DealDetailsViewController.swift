@@ -465,9 +465,13 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
                     offerDetailsHeightContstraint.constant = 385
                     validUptoValueLabel.isHidden = true
                 }
-                
+                if (deal.maximum_count <= deal.numberOfPeopleBought) {
+                    showOutOfStockView()
+                }
+
             }
         }
+        
         self.numberOfPeoplePurchased.text = "\(self.deal!.numberOfPeopleBought)"
         self.offerTitleLabel.attributedText = self.titleAttributedText(title: self.deal!.dealDescription)
         self.dealDetailsButton.setAttributedTitle(self.moreDetailsAttributedText(title: "More Details"), for: UIControl.State.normal)
@@ -483,6 +487,15 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         }
         
         updateDistanceValue()
+    }
+    
+    func showOutOfStockView() {
+        buyMoreButton.setTitle("Out of Stock", for: .normal)
+        buyNowButton.setTitle("Out of Stock", for: .normal)
+        buyNowButton.isEnabled = false
+        buyMoreButton.isEnabled = false
+        buyMoreButton.alpha = 0.5
+        buyNowButton.alpha = 0.5
     }
     
     func updateDistanceValue() {
@@ -593,13 +606,54 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         qpRequestParams.sendRequest()
     }
     
+    func checkStockAvailabilityWithServer() {
+        SVProgressHUD.show()
+        
+        
+        if let serverToken = User.getProfile()?.token {
+            let userProfileFetchHeader = ["Authorization" : "Token \(serverToken)"]
+            if let deal = deal {
+                let params = ["deal_id" : deal.dealId as AnyObject];
+
+        
+                BaseWebservice.performRequest(function: .checkInStock, requestMethod: .get, params: params, headers: userProfileFetchHeader) { (response, error) in
+                    SVProgressHUD.dismiss()
+
+                    if let error = error {
+                        UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
+                    } else if let response = response as? [String : Any?] {
+                        if response["status"] as? String == "success" {
+                            if response["can_purchase"] as? Bool == true {
+                                self.initiatePayment()
+                            } else {
+                                self.showOutOfStockView()
+                                if let message = response["message"] as? String {
+                                    UIView.showWarningMessage(title: "Oops !", message: message)
+                                }  else {
+                                    UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
+                                }
+
+                            }
+                            
+                        } else if let message = response["message"] as? String {
+                            UIView.showWarningMessage(title: "Oops !", message: message)
+                        }  else {
+                            UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
+                        }
+                    } else {
+                        UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
+                    }
+                }
+            }}
+    }
+    
     @IBAction func buyNowButtonClicked(_ sender: UIButton) {
         if let _ = User.getProfile()?.token {
             guard let userPhoneNumber = User.getProfile()?.phoneNumber, userPhoneNumber != "" else {
                 self.performSegue(withIdentifier: "showPhoneNumberInput", sender: nil)
                 return
             }
-            initiatePayment()
+            checkStockAvailabilityWithServer()
         }
         else {
                 self.performSegue(withIdentifier: "showLoginPopup", sender: nil)

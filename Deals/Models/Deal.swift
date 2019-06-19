@@ -30,6 +30,7 @@ class Deal: NSObject {
     var numberOfPurchases : Int = 0
     var isRedeemed : Bool = false
     var allowedSimultaneous : Int = 1
+    var maximum_count : Int = 0
     var conditons = [String]()
     var features = [DealFeature]()
     
@@ -40,6 +41,7 @@ class Deal: NSObject {
         requiredDeal.dealId = property["id"] as? Int ?? 0
         requiredDeal.dealPrice = property["deal_price"] as? Int ?? 0
         requiredDeal.originalPrice = property["original_price"] as? Int ?? 0
+        requiredDeal.maximum_count = property["maximum_count"] as? Int ?? 0
         if let purchasedDate = property["purchased_date"] as? String {
             requiredDeal.purchasedDate = Date(fromString: purchasedDate, format: DateFormatType.isoDateTime) ?? Date()
         }
