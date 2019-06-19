@@ -36,9 +36,12 @@ class PurchaseDealsCollectionViewCell: UICollectionViewCell {
             self.purchasedDateLabel.text = purchasedDate.toString(format: DateFormatType.custom("dd MMM yyy"))
         }
         
-        if deal.purchaseExpiry < Date() {
+        if deal.isRedeemed {
+            purchasedPriceLabel.text = "Coupon is redeemed"
+            purchasedPriceLabel.textColor = Constants.mountainMedow
+        } else if deal.purchaseExpiry < Date() {
             purchasedPriceLabel.text = "Coupon Expired"
-            purchasedPriceLabel.textColor = UIColor(red: 248.0/255.0, green: 37.0/255.0, blue: 74.0/255.0, alpha: 1.0)
+            purchasedPriceLabel.textColor = Constants.redColor
         } else {
             let date2: Date = Date() // Same you did before with timeNow variable
             

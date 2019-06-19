@@ -59,6 +59,7 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     @IBOutlet weak var couponQRCodeImageView: UIImageView!
     @IBOutlet weak var couponCodeLabelView: UILabel!
     @IBOutlet weak var couponExpiresValueLabel: UILabel!
+    @IBOutlet weak var couponExpiresValueLabelBgView: UIView!
     @IBOutlet weak var dealInfoView: UIView!
     @IBOutlet weak var offerDetailsHeightContstraint: NSLayoutConstraint!
     @IBOutlet weak var makeFavouriteButton: UIButton!
@@ -568,13 +569,16 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         }
         
         if let expiryDate = self.deal?.purchaseExpiry {
-            if expiryDate < Date() {
+            if let isRedeemed = self.deal?.isRedeemed, isRedeemed {
+                self.couponExpiresValueLabel.text = "Coupon is Redeemed"
+                self.couponExpiresValueLabelBgView.backgroundColor = Constants.mountainMedow
+            } else if expiryDate < Date() {
                 maskedView.isHidden = false
                 self.couponExpiresValueLabel.text = "Coupon Expired"
             } else {
+                couponExpiresValueLabelBgView.backgroundColor = Constants.redColor
                 maskedView.isHidden = true
                 let date2: Date = Date() // Same you did before with timeNow variable
-                
                 let calender:Calendar = Calendar.current
                 let components: DateComponents = calender.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date2, to: expiryDate)
                 if let hour = components.hour, let minuites = components.minute, let days = components.day {
@@ -623,7 +627,7 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
                         UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
                     } else if let response = response as? [String : Any?] {
                         if response["status"] as? String == "success" {
-                            if response["can_purchase"] as? Bool == true {
+                            if response["in_stock"] as? Bool == true {
                                 self.initiatePayment()
                             } else {
                                 self.showOutOfStockView()
