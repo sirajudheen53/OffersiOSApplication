@@ -70,22 +70,55 @@ class User: NSObject, NSCoding {
     
     func saveToUserDefaults() {
         let filename = NSHomeDirectory() + "/Documents/profile.bin"
-        let data = NSKeyedArchiver.archivedData(withRootObject: self)
         do {
+            let data = try NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false)
+
             try data.write(to: URL(fileURLWithPath: filename))
         } catch let error {
+            print("User is not saved-----------------");
+
             print(error.localizedDescription)
         }
     }
     
     class func getProfile() -> User?{
-        if let data = NSData(contentsOfFile: NSHomeDirectory() + "/Documents/profile.bin" ){
-            let unarchivedProfile = NSKeyedUnarchiver.unarchivedObject(ofClass: "Deals.User", from: data)
-            return unarchiveProfile
-        } else{
-            return nil
+        if let nsData = NSData(contentsOfFile: NSHomeDirectory() + "/Documents/profile.bin" ){
+            
+            do {
+                let data = Data(referencing:nsData)
+                let unarchivedProfile = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? User
+                return unarchivedProfile
+            }
+            catch {
+                return nil;
+
+            }
+            
+            
+//            do {
+//                if let unarchivedProfile = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? User {
+//                    return unarchivedProfile;
+//                }
+//            } catch let error {
+//                print(error.localizedDescription)
+//            }
         }
+        return nil;
+
     }
+//
+//
+//            guard let unarchivedProfile = try? NSKeyedUnarchiver.unarchivedObject(ofClasses: [User.self], from: data as Data) as! User else {
+//                print("User is null-----------------");
+//                return nil
+//            }
+   //         print("User is not null-----------------");
+//print("User is null-----------------");
+//            return unarchivedProfile
+//        } else{
+//            return nil
+//        }
+//    }
     
 //    class func saveAuthToken(token : String) {
 //        UserDefaults.standard.setValue(token, forKey: "AuthToken")

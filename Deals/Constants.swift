@@ -22,7 +22,8 @@ class Constants: NSObject {
     static let onyxColor = UIColor(displayP3Red: 20/255.0, green: 20/255.0, blue: 20/255.0, alpha: 1)
     static let mountainMedow = UIColor(displayP3Red: 41.0/255.0, green: 204.0/255.0, blue: 150.0/255.0, alpha: 1)
     static let taupeyGrey = UIColor(displayP3Red: 146.0/255.0, green: 146.0/255.0, blue: 146.0/255.0, alpha: 1)
-    
+    static let detailsHeader = UIColor(displayP3Red: 222.0/255.0, green: 223.0/255.0, blue:224.0/255.0, alpha: 1)
+
     class func mediumFontWithSize(size : CGFloat) -> UIFont {
         return UIFont(name: "SFProText-Medium", size: size)!
     }

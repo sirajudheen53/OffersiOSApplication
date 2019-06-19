@@ -28,8 +28,15 @@ class MoreDetailsViewController: BaseViewController, UITableViewDelegate, UITabl
         return 2;
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "Deal Features" : "Terms And Conditions"
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.size.width, height: 50))
+        headerView.backgroundColor = Constants.detailsHeader;
+        let headerLablel = UILabel(frame: CGRect.init(x: 5, y: 0, width: tableView.frame.size.width, height: 30))
+        headerLablel.font = Constants.boldProDisplayWithSize(size: 14)
+        headerLablel.textColor = Constants.taupeyGrey
+        headerLablel.text = section == 0 ? "Product Features" : "Terms And Conditions"
+        headerView.addSubview(headerLablel)
+        return headerView
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -54,8 +61,8 @@ class MoreDetailsViewController: BaseViewController, UITableViewDelegate, UITabl
                 }
             } else {
                 let conditionCell = tableView.dequeueReusableCell(withIdentifier: "condtionsCell", for: indexPath) as! ConditionsListingTableViewCell
-                    conditionCell.indexNumberLabel.text = "\(indexPath.row+1-deal.features.count)."
-                    conditionCell.conditionTextLabel.text = "\(deal.conditons[indexPath.row-deal.features.count])"
+                    conditionCell.indexNumberLabel.text = "\(indexPath.row+1)."
+                    conditionCell.conditionTextLabel.text = "\(deal.conditons[indexPath.row])"
                 cell = conditionCell
             }
         } else {
