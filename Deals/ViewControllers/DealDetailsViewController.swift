@@ -10,14 +10,12 @@ import UIKit
 import CoreGraphics
 import SVProgressHUD
 import CoreLocation
-import QpayPayment
 
-class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class DealDetailsViewController: BaseViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     var dealId : Int?
     var deal : Deal?
     var dealCode : String?
-    var qpRequestParams : QPRequestParameters!
 
     @IBOutlet weak var offerDetailsViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var dealImageViewBottomConstraint: NSLayoutConstraint!
@@ -79,8 +77,7 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
     override func viewDidLoad() {
         self.offerDetailsViewBottomConstraint.constant = -300
         imageSlider.isHidden = true;
-        qpRequestParams =   QPRequestParameters(viewController: self)
-        qpRequestParams.delegate = self
+
         analyticsScreenName = "Deal Details View"
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
@@ -590,66 +587,8 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         couponQRCodeImageView.image = UIView.createQRFromString(deal?.purchaseCode ?? "", size: couponQRCodeImageView.frame.size)
     }
     
-    // MARK: - IBAction Methods
     
-    func initiatePayment() {
-        qpRequestParams.gatewayId = "017824682"
-        qpRequestParams.secretKey = "2-ZLCwqYdo+zE+hS"
-        qpRequestParams.name = "Dollar Deals"
-        qpRequestParams.address = "Dollar Deals - Qatar"
-        qpRequestParams.city = "Doha"
-        qpRequestParams.state = "Doha"
-        qpRequestParams.country  = "QA"
-        qpRequestParams.email = User.getProfile()?.email ?? "info@godollardeals.com"
-        qpRequestParams.currency = "QAR"
-        qpRequestParams.referenceId = UUID().uuidString
-        qpRequestParams.phone = "\(User.getProfile()?.phoneNumber ?? "")"
-        qpRequestParams.amount = Double(deal?.dealPrice ?? 1) //any float value
-        qpRequestParams.mode = "live"
-        qpRequestParams.productDescription = "A Deal from Dollar Deals"
-        qpRequestParams.sendRequest()
-    }
-    
-    func checkStockAvailabilityWithServer() {
-        SVProgressHUD.show()
-        
-        
-        if let serverToken = User.getProfile()?.token {
-            let userProfileFetchHeader = ["Authorization" : "Token \(serverToken)"]
-            if let deal = deal {
-                let params = ["deal_id" : deal.dealId as AnyObject];
-
-        
-                BaseWebservice.performRequest(function: .checkInStock, requestMethod: .get, params: params, headers: userProfileFetchHeader) { (response, error) in
-                    SVProgressHUD.dismiss()
-
-                    if let error = error {
-                        UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
-                    } else if let response = response as? [String : Any?] {
-                        if response["status"] as? String == "success" {
-                            if response["in_stock"] as? Bool == true {
-                                self.initiatePayment()
-                            } else {
-                                self.showOutOfStockView()
-                                if let message = response["message"] as? String {
-                                    UIView.showWarningMessage(title: "Oops !", message: message)
-                                }  else {
-                                    UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
-                                }
-
-                            }
-                            
-                        } else if let message = response["message"] as? String {
-                            UIView.showWarningMessage(title: "Oops !", message: message)
-                        }  else {
-                            UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
-                        }
-                    } else {
-                        UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
-                    }
-                }
-            }}
-    }
+ 
     
     @IBAction func buyNowButtonClicked(_ sender: UIButton) {
         if let _ = User.getProfile()?.token {
@@ -657,7 +596,7 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
                 self.performSegue(withIdentifier: "showPhoneNumberInput", sender: nil)
                 return
             }
-            checkStockAvailabilityWithServer()
+            self.performSegue(withIdentifier: "showPaymentMethodsView", sender: nil)
         }
         else {
                 self.performSegue(withIdentifier: "showLoginPopup", sender: nil)
@@ -720,6 +659,38 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         }
     }
     
+    func dealPurchaseResponseHandler(response : Any?, error : Error?) {
+        if let error = error {
+            UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
+        } else if let response = response as? [String : Any?] {
+            if response["status"] as? String == "success" {
+                NotificationCenter.default.post(Notification.init(name: Notification.Name("userProfileUpdated")))
+                if let purchase = response["purchase"] as? [String : Any] {
+                    if let code = purchase["code"] as? String {
+                        self.deal?.purchaseCode = code
+                    }
+                    if let purchaseExpiry = purchase["expiry_date"] as? Double {
+                        self.deal?.purchaseExpiry = Date(timeIntervalSince1970: purchaseExpiry)
+                    }
+                    self.deal!.numberOfPurchases += 1
+                    if self.deal!.numberOfPurchases < self.deal!.allowedSimultaneous {
+                        self.buyMoreButton.isHidden = false
+                    } else {
+                        self.buyMoreButton.isHidden = true
+                    }
+                }
+                self.showDealCodeView()
+                
+            } else if let message = response["message"] as? String {
+                UIView.showWarningMessage(title: "Oops !", message: message)
+            } else {
+                UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
+            }
+        } else {
+            UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
+        }
+    }
+    
     
     @IBAction func closeButtonClicked(_ sender: Any) {
         self.dismiss(animated: false, completion: {
@@ -731,6 +702,16 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         if let destinationView = segue.destination as? MoreDetailsViewController, segue.identifier == "showMoreDetailsView" {
             if let deal = deal {
                 destinationView.deal = deal
+            }
+        } else if let destinationView = segue.destination as? PaymentMethodsViewController, segue.identifier == "showPaymentMethodsView" {
+            if let deal = deal {
+                destinationView.deal = deal
+            }
+            destinationView.dealNotInStockNotifier = {
+                self.showOutOfStockView()
+            }
+            destinationView.dealPurchaseNotifier = {(response : Any?, error : Error?) in
+                self.dealPurchaseResponseHandler(response: response, error: error)
             }
         }
     }
@@ -779,67 +760,7 @@ class DealDetailsViewController: BaseViewController, QPRequestProtocol, UICollec
         }
     }
     
-    func makePurchase(orderId : Any, transactionId : Any) {
-        if let serverToken = User.getProfile()?.token {
-            guard let userPhoneNumber = User.getProfile()?.phoneNumber, userPhoneNumber != "" else {
-                self.performSegue(withIdentifier: "showPhoneNumberInput", sender: nil)
-                return
-            }
-            SVProgressHUD.show()
-            let header = ["Authorization" : "Token \(serverToken)"]
-            
-            var params = ["deal_id" : deal!.dealId as AnyObject];
-            params["transaction_id"] = transactionId as AnyObject
-            params["order_id"] = orderId as AnyObject
-            
-            BaseWebservice.performRequest(function: .makePurchase, requestMethod: .post, params: params, headers: header, onCompletion: { (response, error) in
-                SVProgressHUD.dismiss()
-                if let error = error {
-                    UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
-                } else if let response = response as? [String : Any?] {
-                    if response["status"] as? String == "success" {
-                        NotificationCenter.default.post(Notification.init(name: Notification.Name("userProfileUpdated")))
-                        if let purchase = response["purchase"] as? [String : Any] {
-                            if let code = purchase["code"] as? String {
-                                self.deal?.purchaseCode = code
-                            }
-                            if let purchaseExpiry = purchase["expiry_date"] as? Double {
-                                self.deal?.purchaseExpiry = Date(timeIntervalSince1970: purchaseExpiry)
-                            }
-                            self.deal!.numberOfPurchases += 1
-                            if self.deal!.numberOfPurchases < self.deal!.allowedSimultaneous {
-                                self.buyMoreButton.isHidden = false
-                            } else {
-                                self.buyMoreButton.isHidden = true
-                            }
-                        }
-                        self.showDealCodeView()
-                        
-                    } else if let message = response["message"] as? String {
-                        UIView.showWarningMessage(title: "Oops !", message: message)
-                    } else {
-                        UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
-                    }
-                } else {
-                    UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
-                }
-            })
-        } else {
-            self.performSegue(withIdentifier: "showLoginPopup", sender: nil)
-        }
-    }
-    
-    func qpResponse(_ response: NSDictionary) {
-        if let response = response as? [String : Any] {
-            if let status = response["status"] as? String, let amount = response["amount"] as? Double, status == "success", amount == Double(deal!.dealPrice), let transactionId = response["transactionId"], let orderId = response["orderId"] {
-                makePurchase(orderId: orderId, transactionId: transactionId)
-            } else {
-                UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with your payment. Please contract our customer care.")
-            }
-        } else {
-            UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with your payment. Please contract our customer care.")
-        }
-    }
+  
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let dealImages = deal?.images {

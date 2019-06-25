@@ -82,6 +82,7 @@
 		A7F7502E20D971220012FE47 /* RoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F7502D20D971220012FE47 /* RoundedView.swift */; };
 		A7F9AD3822060021001BE5D2 /* PhoneNumberInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F9AD3722060021001BE5D2 /* PhoneNumberInputViewController.swift */; };
 		A7F9AD3A22061F12001BE5D2 /* country_code.json in Resources */ = {isa = PBXBuildFile; fileRef = A7F9AD3922061F12001BE5D2 /* country_code.json */; };
+		B2F86D7222C2690A00D052D2 /* PaymentMethodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F86D7122C2690A00D052D2 /* PaymentMethodsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -205,6 +206,7 @@
 		A7F7502D20D971220012FE47 /* RoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedView.swift; sourceTree = "<group>"; };
 		A7F9AD3722060021001BE5D2 /* PhoneNumberInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberInputViewController.swift; sourceTree = "<group>"; };
 		A7F9AD3922061F12001BE5D2 /* country_code.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = country_code.json; sourceTree = "<group>"; };
+		B2F86D7122C2690A00D052D2 /* PaymentMethodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentMethodsViewController.swift; sourceTree = "<group>"; };
 		BDC3F225C35034B28A04DD0C /* Pods_DealsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DealsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDF0751CA2A535F0D5512D1D /* Pods-TestTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TestTests/Pods-TestTests.release.xcconfig"; sourceTree = "<group>"; };
 		CE7D8FF93B8C5235AA444D6F /* Pods_Deals.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Deals.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -384,6 +386,7 @@
 				A72B2B2521FC4DC8005A4532 /* FeedbackViewController.swift */,
 				A72B2B2721FC4E08005A4532 /* TermsViewController.swift */,
 				A76788DE2201E613006F616C /* BaseViewController.swift */,
+				B2F86D7122C2690A00D052D2 /* PaymentMethodsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -763,6 +766,7 @@
 				0B9E123320B2900100C66129 /* ConditionsListingTableViewCell.swift in Sources */,
 				A7F7502C20D970FF0012FE47 /* UIView+RoundCorner.swift in Sources */,
 				A7B49427223DE3D600DAADA7 /* ImageSliderCollectionViewCell.swift in Sources */,
+				B2F86D7222C2690A00D052D2 /* PaymentMethodsViewController.swift in Sources */,
 				A7BD3282222118C000E9F6BD /* FeatureListingWithHeadingTableViewCell.swift in Sources */,
 				A7521A4C211DB66F00E870B8 /* Purchase.swift in Sources */,
 				A7DD00532215A95B0099284A /* PagingLoadingTableViewCell.swift in Sources */,
