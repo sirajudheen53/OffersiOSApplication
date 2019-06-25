@@ -17,6 +17,8 @@ class User: NSObject, NSCoding {
     var phoneNumber : String?
     var photo : String?
     var provider : String?
+    var missedCODCount : Int = 0
+    var remainingCODCount : Int = 5
     
     override init() {
         super.init()
@@ -30,6 +32,12 @@ class User: NSObject, NSCoding {
         self.phoneNumber = aDecoder.decodeObject(forKey: "phoneNumber") as? String
         self.photo = aDecoder.decodeObject(forKey: "photo") as? String
         self.provider = aDecoder.decodeObject(forKey: "provider") as? String
+        if let missedCODCount = aDecoder.decodeObject(forKey: "missedCodCount") as? Int {
+            self.missedCODCount = missedCODCount
+        }
+        if let remainingCODCount = aDecoder.decodeObject(forKey: "remainingCodCount") as? Int {
+            self.remainingCODCount = remainingCODCount
+        }
     }
     
     func encode(with aCoder: NSCoder) {
@@ -40,6 +48,8 @@ class User: NSObject, NSCoding {
         aCoder.encode(self.phoneNumber, forKey: "phoneNumber")
         aCoder.encode(self.photo, forKey: "photo")
         aCoder.encode(self.provider, forKey: "provider")
+        aCoder.encode(self.missedCODCount, forKey: "missedCodCount")
+        aCoder.encode(self.remainingCODCount, forKey: "remainingCodCount")
     }
     
     class func userObjectWithProperties(properties : [String : Any]) -> User {
@@ -64,6 +74,12 @@ class User: NSObject, NSCoding {
         }
         if let phoneNumber = properties["phone_number"] as? String  {
             requiredUser.phoneNumber = phoneNumber
+        }
+        if let missedCodCount = properties["missed_cod_count"] as? Int {
+            requiredUser.missedCODCount = missedCodCount
+        }
+        if let remainingCodCount = properties["remaining_cod_count"] as? Int {
+            requiredUser.remainingCODCount = remainingCodCount
         }
         return requiredUser
     }

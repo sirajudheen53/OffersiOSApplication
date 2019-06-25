@@ -11,7 +11,11 @@ import SVProgressHUD
 import QpayPayment
 
 class PaymentMethodsViewController: UIViewController, QPRequestProtocol {
-
+    
+    enum PaymentType {
+        case cash
+        case online
+    }
 
     @IBOutlet weak var discalimerLabel: UILabel!
     @IBOutlet weak var payInCashButton: UIButton!
@@ -30,6 +34,26 @@ class PaymentMethodsViewController: UIViewController, QPRequestProtocol {
         
         qpRequestParams =   QPRequestParameters(viewController: self)
         qpRequestParams.delegate = self
+        
+        if let user = User.getProfile() {
+            if user.remainingCODCount == 0 {
+                payInCashButton.isEnabled = false
+                discalimerLabel.text = "You are temporarily banned from using ‘Pay In Cash’ option as \(user.missedCODCount) of the previously purchased pay at outlet coupons got expired. Please contact support for help."
+            } else if user.missedCODCount > 0 {
+                payInCashButton.isEnabled = true
+                discalimerLabel.text = "You may avail ‘Pay In Cash’ option \(user.remainingCODCount) more times only, as \(user.missedCODCount) previously purchased pay at outlet coupons got expired."
+                discalimerLabel.font = Constants.mediumFontWithSize(size: 14)
+                discalimerLabel.textColor = Constants.redColor
+            }
+        }
+        
+        if let deal = deal {
+            if !deal.isCodAvailable {
+                discalimerLabel.isHidden = true
+                payInCashButton.isEnabled = false
+                payInCashButton.setTitle("Pay In Cash is not available", for: .normal)
+            }
+        }
     }
     
     /*
@@ -62,14 +86,13 @@ class PaymentMethodsViewController: UIViewController, QPRequestProtocol {
         qpRequestParams.sendRequest()
     }
     
-    func checkStockAvailabilityWithServer() {
+    func checkStockAvailabilityWithServer(paymentType : PaymentType) {
         SVProgressHUD.show()
         
         if let serverToken = User.getProfile()?.token {
             let userProfileFetchHeader = ["Authorization" : "Token \(serverToken)"]
             if let deal = deal {
                 let params = ["deal_id" : deal.dealId as AnyObject];
-                
                 
                 BaseWebservice.performRequest(function: .checkInStock, requestMethod: .get, params: params, headers: userProfileFetchHeader) { (response, error) in
                     SVProgressHUD.dismiss()
@@ -79,7 +102,11 @@ class PaymentMethodsViewController: UIViewController, QPRequestProtocol {
                     } else if let response = response as? [String : Any?] {
                         if response["status"] as? String == "success" {
                             if response["in_stock"] as? Bool == true {
-                                self.initiatePayment()
+                                if paymentType == .cash {
+                                    self.makePurchase(orderId: UUID().uuidString, transactionId: nil)
+                                } else {
+                                    self.initiatePayment()
+                                }
                             } else {
                                 if let dealNotInStockNotifier = self.dealNotInStockNotifier {
                                     dealNotInStockNotifier()
@@ -99,11 +126,11 @@ class PaymentMethodsViewController: UIViewController, QPRequestProtocol {
     }
 
     @IBAction func payInCashButtonClicked(_ sender: Any) {
-        makePurchase(orderId: UUID().uuidString, transactionId: nil)
+        checkStockAvailabilityWithServer(paymentType: .cash)
     }
    
     @IBAction func payOnlineButtonClicked(_ sender: Any) {
-        initiatePayment()
+        checkStockAvailabilityWithServer(paymentType: .online)
     }
     
     func makePurchase(orderId : Any, transactionId : Any?) {

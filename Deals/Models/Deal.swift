@@ -33,6 +33,7 @@ class Deal: NSObject {
     var maximum_count : Int = 0
     var conditons = [String]()
     var features = [DealFeature]()
+    var isCodAvailable : Bool = false
     
     static func dealObjectFromProperty(property : [String : Any]) -> Deal {
         print(property);
@@ -93,6 +94,9 @@ class Deal: NSObject {
             if let purchasesCount = recentPurchases["purchase_count"] as? Int {
                 requiredDeal.numberOfPurchases = purchasesCount
             }
+        }
+        if let isCodAvailable = property["is_cod_available"] as? Bool {
+            requiredDeal.isCodAvailable = isCodAvailable
         }
         return requiredDeal
     }
