@@ -30,8 +30,8 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var dealsListingTableView: UITableView!
     
     let numberOfExtraCells = 5
-    let numberOfItemsInAPage = 10
-
+    var totalItemsCount = 0
+    
     var currentPage : Int = 1
     var numberOfPages : Int = 1
     var isLoadingList : Bool = false
@@ -346,7 +346,7 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if availableDeals.count > 0 {
             let numberOfCells = availableDeals.count + numberOfExtraCells
-            if availableDeals.count == (numberOfPages-1) * numberOfItemsInAPage {
+            if availableDeals.count < totalItemsCount {
                 return numberOfCells + 1
             } else {
                 return numberOfCells
@@ -486,6 +486,9 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                         if let allDealsProperties = response["data"] as? [String : Any] {
                             if let totalPages = allDealsProperties["total_pages"] as? Int {
                                 self.numberOfPages = totalPages
+                            }
+                            if let totalItemsCount = allDealsProperties["total_count"] as? Int {
+                                self.totalItemsCount = totalItemsCount
                             }
                             if let hotTodayProperties = allDealsProperties["hot_today"] as? [[String : Any]] {
                                 self.hotDeals = Deal.dealObjectsFromProperties(properties: hotTodayProperties)

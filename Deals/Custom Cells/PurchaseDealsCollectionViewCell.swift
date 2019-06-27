@@ -47,8 +47,8 @@ class PurchaseDealsCollectionViewCell: UICollectionViewCell {
             
             let calender:Calendar = Calendar.current
             let components: DateComponents = calender.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date2, to: deal.purchaseExpiry)
-            if let hour = components.hour, let minuites = components.minute {
-                self.purchasedPriceLabel.text = "Expires in \(hour) h \(minuites) m"
+            if let hour = components.hour, let minuites = components.minute, let days = components.day {
+                self.purchasedPriceLabel.text = "Expires in \(days) d \(hour) h \(minuites) m"
                 purchasedPriceLabel.textColor = UIColor(red: 248.0/255.0, green: 37.0/255.0, blue: 74.0/255.0, alpha: 1.0)
             }
         }

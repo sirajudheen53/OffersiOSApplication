@@ -13,8 +13,7 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
 
     var availableDeals = [Deal]()
     var filterCategories = [FilterCategories]()
-    let numberOfItemsInAPage = 10
-
+    var totalItemsCount = 0
     var nextPageToLoad : Int = 1
     var numberOfPages : Int = 1
     var isLoadingList : Bool = false
@@ -173,7 +172,7 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let numberOfCells = availableDeals.count
-        if availableDeals.count == (numberOfPages-1) * numberOfItemsInAPage && lastLoadedSearchString == searchString && availableDeals.count > 0 {
+        if availableDeals.count < totalItemsCount && lastLoadedSearchString == searchString && availableDeals.count > 0 {
             return isLoadingList ? numberOfCells + 2 : numberOfCells + 1
         } else {
             return isLoadingList ? numberOfCells + 1 : numberOfCells
@@ -272,6 +271,9 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
                         if let allDealsProperties = response["data"] as? [String : Any] {
                             if let totalPages = allDealsProperties["total_pages"] as? Int {
                                 self.numberOfPages = totalPages
+                            }
+                            if let totalItemsCount = allDealsProperties["total_count"] as? Int {
+                                self.totalItemsCount = totalItemsCount
                             }
                             if let allDeals = allDealsProperties["deals"] as? [[String : Any]] {
                                 if self.nextPageToLoad == 1 && self.searchString == _searchString {
