@@ -95,9 +95,10 @@ class PaymentMethodsViewController: UIViewController, QPRequestProtocol {
                 let params = ["deal_id" : deal.dealId as AnyObject];
                 
                 BaseWebservice.performRequest(function: .checkInStock, requestMethod: .get, params: params, headers: userProfileFetchHeader) { (response, error) in
-                    SVProgressHUD.dismiss()
                     
                     if let error = error {
+                        SVProgressHUD.dismiss()
+
                         UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
                     } else if let response = response as? [String : Any?] {
                         if response["status"] as? String == "success" {
@@ -105,28 +106,45 @@ class PaymentMethodsViewController: UIViewController, QPRequestProtocol {
                                 if paymentType == .cash {
                                     self.makePurchase(orderId: UUID().uuidString, transactionId: nil)
                                 } else {
+                                    SVProgressHUD.dismiss()
+
                                     self.initiatePayment()
                                 }
                             } else {
+                                SVProgressHUD.dismiss()
+
                                 if let dealNotInStockNotifier = self.dealNotInStockNotifier {
                                     dealNotInStockNotifier()
                                 }
                             }
                             
                         } else if let message = response["message"] as? String {
+                            SVProgressHUD.dismiss()
+
                             UIView.showWarningMessage(title: "Oops !", message: message)
                         }  else {
+                            SVProgressHUD.dismiss()
+
                             UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                         }
                     } else {
+                        SVProgressHUD.dismiss()
+
                         UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
                     }
                 }
             }}
     }
 
+    @IBAction func closeButtonClicked(_ sender: Any) {
+        self.dismiss(animated: false, completion: nil)
+    }
     @IBAction func payInCashButtonClicked(_ sender: Any) {
-        checkStockAvailabilityWithServer(paymentType: .cash)
+        if let deal = deal, deal.isCodAvailed {
+            UIView.showWarningMessage(title: "Sorry", message: "You can only use one Pay In Cash for a deal. Please try with online payment")
+        } else {
+            checkStockAvailabilityWithServer(paymentType: .cash)
+        }
     }
    
     @IBAction func payOnlineButtonClicked(_ sender: Any) {
@@ -150,12 +168,31 @@ class PaymentMethodsViewController: UIViewController, QPRequestProtocol {
             
             BaseWebservice.performRequest(function: .makePurchase, requestMethod: .post, params: params, headers: header, onCompletion: { (response, error) in
                 SVProgressHUD.dismiss()
-                if let purchaseNotifier = self.dealPurchaseNotifier {
-                    purchaseNotifier(response, error)
-                }
+                self.handlePurchaseResponse(response: response, error: error)
+
+                
             })
         } else {
             self.performSegue(withIdentifier: "showLoginPopup", sender: nil)
+        }
+    }
+    
+    func handlePurchaseResponse(response : Any?, error : Error?) {
+        if let error = error {
+            UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
+        } else if let response = response as? [String : Any?] {
+            if response["status"] as? String == "success" {
+                if let purchaseNotifier = self.dealPurchaseNotifier {
+                    purchaseNotifier(response, error)
+                    self.dismiss(animated: false, completion: nil);
+                }
+            } else if let message = response["message"] as? String {
+                UIView.showWarningMessage(title: "Oops !", message: message)
+            } else {
+                UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
+            }
+        } else {
+            UIView.showWarningMessage(title: "Sorry !!!", message: "Something went wrong with server. Please try after sometime")
         }
     }
     

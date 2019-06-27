@@ -168,6 +168,7 @@ class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollecti
         }
         let userProfileFetchHeader = ["Authorization" : "Token \(User.getProfile()!.token!)"]
         BaseWebservice.performRequest(function: WebserviceFunction.fetchUserProfile, requestMethod: .get, params: nil, headers: userProfileFetchHeader) { (response, error) in
+            print(response)
             SVProgressHUD.dismiss()
             if let error = error {
                 UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
@@ -246,7 +247,7 @@ class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollecti
             webView.itemFileName = "dollor_deals_privacy"
         } else if segue.identifier == "showPhoneInput" {
             let phoneInputView = segue.destination as! PhoneNumberInputViewController
-            if let profileData = self.userProfile {
+            if self.userProfile != nil {
                 phoneInputView.phoneNumberChangeActionBlock = {
                     if let user = User.getProfile() {
                         if let phoneNumber = user.phoneNumber {
@@ -277,6 +278,7 @@ class ProfileViewController: BaseViewController, GIDSignInUIDelegate, UICollecti
                 SVProgressHUD.show()
                 BaseWebservice.performRequest(function: WebserviceFunction.login, requestMethod: .post, params: ["id_token" : accessToken.tokenString as AnyObject, "provider" : "facebook" as AnyObject], headers: nil) { (response, error) in
                     SVProgressHUD.dismiss()
+                    print(response)
                     if let error = error {
                         UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
 

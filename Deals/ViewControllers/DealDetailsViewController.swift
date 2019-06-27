@@ -658,7 +658,7 @@ class DealDetailsViewController: BaseViewController, UICollectionViewDelegate, U
             }
         }
     }
-    
+        
     func dealPurchaseResponseHandler(response : Any?, error : Error?) {
         if let error = error {
             UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
@@ -671,6 +671,11 @@ class DealDetailsViewController: BaseViewController, UICollectionViewDelegate, U
                     }
                     if let purchaseExpiry = purchase["expiry_date"] as? Double {
                         self.deal?.purchaseExpiry = Date(timeIntervalSince1970: purchaseExpiry)
+                    }
+                    if let _ = purchase["transaction_id"] as? String {
+
+                    } else {
+                        self.deal?.isCodAvailed = true
                     }
                     self.deal!.numberOfPurchases += 1
                     if self.deal!.numberOfPurchases < self.deal!.allowedSimultaneous {
