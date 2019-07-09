@@ -37,11 +37,12 @@ class PaymentMethodsViewController: UIViewController, QPRequestProtocol {
         
         if let user = User.getProfile() {
             if user.remainingCODCount == 0 {
-                payInCashButton.isEnabled = false
-                discalimerLabel.text = "You are temporarily banned from using ‘Pay In Cash’ option as \(user.missedCODCount) of the previously purchased pay at outlet coupons got expired. Please contact support for help."
+                disablePayInCashButton()
+                discalimerLabel.text = "You are temporarily banned from using ‘Pay In Cash’ option as \(user.missedCODCount) of the previously purchased pay at outlet coupons got expired or not redeemed yet. Please contact support for help."
+                discalimerLabel.textColor = Constants.redColor
             } else if user.missedCODCount > 0 {
                 payInCashButton.isEnabled = true
-                discalimerLabel.text = "You may avail ‘Pay In Cash’ option \(user.remainingCODCount) more times only, as \(user.missedCODCount) previously purchased pay at outlet coupons got expired."
+                discalimerLabel.text = "You may avail ‘Pay In Cash’ option \(user.remainingCODCount) more times only, as \(user.missedCODCount) previously purchased pay at outlet coupons got expired or not redeemed yet."
                 discalimerLabel.font = Constants.mediumFontWithSize(size: 14)
                 discalimerLabel.textColor = Constants.redColor
             }
@@ -50,10 +51,15 @@ class PaymentMethodsViewController: UIViewController, QPRequestProtocol {
         if let deal = deal {
             if !deal.isCodAvailable {
                 discalimerLabel.isHidden = true
-                payInCashButton.isEnabled = false
+                disablePayInCashButton()
                 payInCashButton.setTitle("Pay In Cash is not available", for: .normal)
             }
         }
+    }
+    
+    func disablePayInCashButton() {
+        payInCashButton.alpha = 0.3
+        payInCashButton.isEnabled = false
     }
     
     /*

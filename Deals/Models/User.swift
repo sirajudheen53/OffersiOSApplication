@@ -32,12 +32,9 @@ class User: NSObject, NSCoding {
         self.phoneNumber = aDecoder.decodeObject(forKey: "phoneNumber") as? String
         self.photo = aDecoder.decodeObject(forKey: "photo") as? String
         self.provider = aDecoder.decodeObject(forKey: "provider") as? String
-        if let missedCODCount = aDecoder.decodeObject(forKey: "missedCodCount") as? Int {
-            self.missedCODCount = missedCODCount
-        }
-        if let remainingCODCount = aDecoder.decodeObject(forKey: "remainingCodCount") as? Int {
-            self.remainingCODCount = remainingCODCount
-        }
+        print(aDecoder.decodeInteger(forKey: "missedCodCount"))
+        self.missedCODCount = aDecoder.decodeInteger(forKey: "missedCodCount")
+        self.remainingCODCount = aDecoder.decodeInteger(forKey: "remainingCodCount")
     }
     
     func encode(with aCoder: NSCoder) {
@@ -53,6 +50,7 @@ class User: NSObject, NSCoding {
     }
     
     class func userObjectWithProperties(properties : [String : Any]) -> User {
+        print(properties);
         let requiredUser = User()
         if let token = properties["token"] as? String {
             requiredUser.token = token
@@ -109,40 +107,9 @@ class User: NSObject, NSCoding {
                 return nil;
 
             }
-            
-            
-//            do {
-//                if let unarchivedProfile = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? User {
-//                    return unarchivedProfile;
-//                }
-//            } catch let error {
-//                print(error.localizedDescription)
-//            }
         }
         return nil;
-
     }
-//
-//
-//            guard let unarchivedProfile = try? NSKeyedUnarchiver.unarchivedObject(ofClasses: [User.self], from: data as Data) as! User else {
-//                print("User is null-----------------");
-//                return nil
-//            }
-   //         print("User is not null-----------------");
-//print("User is null-----------------");
-//            return unarchivedProfile
-//        } else{
-//            return nil
-//        }
-//    }
-    
-//    class func saveAuthToken(token : String) {
-//        UserDefaults.standard.setValue(token, forKey: "AuthToken")
-//    }
-//    
-//    class func authToken() -> String? {
-//        return UserDefaults.standard.value(forKey: "AuthToken") as? String
-//    }
     
     class func deleteProfile() {
         do {

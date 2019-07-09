@@ -41,6 +41,12 @@ class UserProfile: User {
         if let purchaseItemsProperties = properties["purchases"] as? [[String : Any]] {
             requiredUserProfile.purchases = Purchase.purchaseObjectsFromProperties(properties: purchaseItemsProperties)
         }
+        if let missedCodCount = properties["missed_cod_count"] as? Int {
+            requiredUserProfile.missedCODCount = missedCodCount
+        }
+        if let remainingCodCount = properties["remaining_cod_count"] as? Int {
+            requiredUserProfile.remainingCODCount = remainingCodCount
+        }
         return requiredUserProfile
     }
 }
