@@ -18,7 +18,7 @@ import FirebaseMessaging
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLocationManagerDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
-
+    
     var window: UIWindow?
     let locationManager = CLLocationManager()
     var currentLocation : CLLocation?
@@ -39,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLoca
         }
         
         setApplicationLocationSettings()
-       
+        
         setSocialLoginTokens(application: application, launchOptions: launchOptions)
         
         FirebaseApp.configure()
@@ -47,9 +47,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLoca
         registerForPushNotifications()
         
         UserDefaults.standard.set("Qatar", forKey: "SelectedLocation")
-
-        setApplicationTheme()
         
+        setApplicationTheme()
+        checkForAppUpdate()
+        fetchUserProfileAndSaveToUserDefaults()
         return true
     }
     
@@ -61,7 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLoca
         return true
     }
     
-    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
             if let url = userActivity.webpageURL, let dealId = getQueryStringParameter(url: url.absoluteString, param: "deal") {
                 NotificationCenter.default.post(name: NSNotification.Name("notificationDealRecieved"), object: ["deal_id":dealId as AnyObject])
@@ -74,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLoca
         guard let url = URLComponents(string: url) else { return nil }
         return url.queryItems?.first(where: { $0.name == param })?.value
     }
-
+    
     
     func setSocialLoginTokens(application: UIApplication, launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
         GIDSignIn.sharedInstance().clientID = "575363958117-8tm13saonriclsrvmithkb3fhvrtk9s7.apps.googleusercontent.com"
@@ -124,12 +125,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLoca
         
         return googleHandler || facebookHandler
     }
-
+    
     func registerForPushNotifications() {
         UNUserNotificationCenter.current().delegate = self
-
+        
         Messaging.messaging().delegate = self
-
+        
         UNUserNotificationCenter.current() // 1
             .requestAuthorization(options: [.alert, .sound, .badge]) { // 2
                 granted, error in
@@ -146,8 +147,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLoca
             //Handle Error
             print("\(error.localizedDescription)")
         } else {
-            print(user.authentication.idToken)
-            
             BaseWebservice.performRequest(function: WebserviceFunction.login, requestMethod: .post, params: ["id_token" : user.authentication.idToken as AnyObject, "provider" : "google" as AnyObject], headers: nil) { (response, error) in
                 if let response = response as? [String : Any] {
                     if let status = response["status"] as? String {
@@ -171,32 +170,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLoca
             }
         }
     }
-
+    
     
     func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!,
               withError error: Error!) {
         // Perform any operations when the user disconnects from app here.
         // ...
     }
-
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
     }
-
+    
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
-
+    
     func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        
     }
-
+    
     func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        showForceUpdateAlertIfNeeded()
     }
-
+    
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
@@ -206,7 +205,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLoca
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         manager.stopUpdatingLocation()
         UserDefaults.standard.set(true, forKey: "UserAuthorizationForLocation")
-
+        
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         DispatchQueue.main.async {
             self.currentLocation = CLLocation(latitude: locValue.latitude, longitude: locValue.longitude)
@@ -218,7 +217,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLoca
         UserDefaults.standard.set(false, forKey: "UserAuthorizationForLocation")
         NotificationCenter.default.post(name: NSNotification.Name("locationUpdated"), object: nil)
         
-
+        
     }
     
     func sendFCMTokenToServer(fcmToken : String) {
@@ -250,7 +249,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLoca
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
         Messaging.messaging().appDidReceiveMessage(userInfo)
-
+        
         if let aps = userInfo["aps"] as? [String : Any] {
             if let category = aps["category"] as? String, category == "DEAL_NOTIFICATION", let deal_id = userInfo["deal_id"] as? Int {
                 NotificationCenter.default.post(name: NSNotification.Name("notificationDealRecieved"), object: ["deal_id":deal_id as AnyObject])
@@ -265,16 +264,90 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, CLLoca
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any],
                      fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-         Messaging.messaging().appDidReceiveMessage(userInfo)
+        Messaging.messaging().appDidReceiveMessage(userInfo)
         
         if let aps = userInfo["aps"] as? [String : Any] {
             if let category = aps["category"] as? String, category == "DEAL_NOTIFICATION", let deal_id = userInfo["deal_id"] {
                 NotificationCenter.default.post(name: NSNotification.Name("notificationDealRecieved"), object: ["deal_id":deal_id as AnyObject])
             }
-
+            
         }
         
         completionHandler(UIBackgroundFetchResult.newData)
+    }
+    
+    func checkForAppUpdate() {
+        let versionNumber = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+        
+        BaseWebservice.performRequest(function: .checkAppUpdate,
+                                      requestMethod: .get,
+                                      params: ["platform" : "iOS" as AnyObject, "current_version" : versionNumber as AnyObject], headers: nil, onCompletion: { (response, error) in
+                                        if let response = response as? [String : Any?] {
+                                            if response["status"] as? String == "success" {
+                                                if let data = response["data"] as? [String : Any] {
+                                                    let forceUpdateNeeded = data["force_update_needed"] as? Bool ?? false
+                                                    let storeURL = data["store_url"] as? String ?? "https://apps.apple.com/us/app/dollor-deals/id1449695904?ls=1"
+                                                    let latestBuild = data["latest_build"] as? String ?? "1.0.0"
+                                                    UserDefaults.standard.set(forceUpdateNeeded, forKey: "forceUpdateNeeded")
+                                                    UserDefaults.standard.set(storeURL, forKey: "storeURL")
+                                                    UserDefaults.standard.set(latestBuild, forKey: "latestBuild")
+                                                }
+                                            }
+                                        }
+        })
+    }
+    
+    func showForceUpdateAlertIfNeeded() {
+        let latestBuild = UserDefaults.standard.value(forKey: "latestBuild")
+        let forceUpdateNeeded = UserDefaults.standard.value(forKey: "forceUpdateNeeded")
+        let currentBuild = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString")
+        
+        if let forceUpdateNeeded = forceUpdateNeeded as? Bool, forceUpdateNeeded, let latestBuild = latestBuild as? String, let currentBuild = currentBuild  as? String {
+            if latestBuild.compare(currentBuild, options: .numeric) == .orderedDescending {
+                let storeURL = UserDefaults.standard.value(forKey: "storeURL") as? String
+                if let storeURLUnWrapped = storeURL, let url = URL(string: storeURLUnWrapped) {
+                    showForceUpdateNotification(storeURL: url)
+                }
+            }     
+        }
+    }
+    
+    func showForceUpdateNotification(storeURL : URL?) {
+        let alertController = UIAlertController (title: "Dollar Deals", message: "A new version of the Dollar Deals is avaialble. Please update to the latest version now.", preferredStyle: .alert)
+        
+        let firstAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { (action) in
+            if let storeURL = storeURL {
+                UIApplication.shared.open(storeURL, options: [:], completionHandler: nil)
+            }
+        }
+        alertController.addAction(firstAction)
+        
+        let alertWindow = UIWindow(frame: UIScreen.main.bounds)
+        
+        alertWindow.rootViewController = UIViewController()
+        alertWindow.windowLevel = UIWindow.Level.alert + 1;
+        alertWindow.makeKeyAndVisible()
+        
+        alertWindow.rootViewController?.present(alertController, animated: true, completion: nil)
+    }
+    
+    func fetchUserProfileAndSaveToUserDefaults() {
+        if let user  = User.getProfile(), let token = user.token {
+            let userProfileFetchHeader = ["Authorization" : "Token \(token)"]
+            BaseWebservice.performRequest(function: WebserviceFunction.fetchUserProfile, requestMethod: .get, params: nil, headers: userProfileFetchHeader) { (response, error) in
+                if let error = error {
+                    UIView.showWarningMessage(title: "Sorry !!!", message: error.localizedDescription)
+                } else if let response = response as? [String : Any] {
+                    if response["status"] as? String == "success" {
+                        if let userProfileProperties = response["user"] as? [String : Any] {
+                            let userProfile = UserProfile.userProfileWithProperties(properties: userProfileProperties)
+                            userProfile.token = User.getProfile()!.token!
+                            userProfile.saveToUserDefaults()
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
