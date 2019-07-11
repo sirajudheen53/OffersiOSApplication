@@ -75,8 +75,8 @@ class PaymentMethodsViewController: UIViewController, QPRequestProtocol {
     // MARK: - IBAction Methods
     
     func initiatePayment() {
-        qpRequestParams.gatewayId = "012913411"
-        qpRequestParams.secretKey = "2-OMxg/fA1sR42Pe"
+        qpRequestParams.gatewayId = "017824682"
+        qpRequestParams.secretKey = "2-ZLCwqYdo+zE+hS"
         qpRequestParams.name = "Dollar Deals"
         qpRequestParams.address = "Dollar Deals - Qatar"
         qpRequestParams.city = "Doha"
@@ -87,7 +87,7 @@ class PaymentMethodsViewController: UIViewController, QPRequestProtocol {
         qpRequestParams.referenceId = UUID().uuidString
         qpRequestParams.phone = "\(User.getProfile()?.phoneNumber ?? "")"
         qpRequestParams.amount = Double(deal?.dealPrice ?? 1) //any float value
-        qpRequestParams.mode = "TEST"
+        qpRequestParams.mode = "Live"
         qpRequestParams.productDescription = "A Deal from Dollar Deals"
         qpRequestParams.sendRequest()
     }
