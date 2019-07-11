@@ -36,11 +36,11 @@ enum WebserviceMethod {
 //let base_servive_url : String = "http://192.168.1.12:8000/"
 //let image_service_url : String = "http://192.168.1.124:8000/"
 
-let image_service_url : String = "https://api-staging.godollardeals.com/"
-let base_servive_url : String = "https://api-staging.godollardeals.com/"
+//let image_service_url : String = "https://api-staging.godollardeals.com/"
+//let base_servive_url : String = "https://api-staging.godollardeals.com/"
 
-//let image_service_url : String = "https://api.godollardeals.com/"
-//let base_servive_url : String = "https://api.godollardeals.com/"
+let image_service_url : String = "https://api.godollardeals.com/"
+let base_servive_url : String = "https://api.godollardeals.com/"
 
 
 class BaseWebservice: NSObject {
