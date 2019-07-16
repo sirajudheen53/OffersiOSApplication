@@ -87,7 +87,7 @@ class PaymentMethodsViewController: UIViewController, QPRequestProtocol {
         qpRequestParams.referenceId = UUID().uuidString
         qpRequestParams.phone = "\(User.getProfile()?.phoneNumber ?? "")"
         qpRequestParams.amount = Double(deal?.dealPrice ?? 1) //any float value
-        qpRequestParams.mode = "Live"
+        qpRequestParams.mode = "live"
         qpRequestParams.productDescription = "A Deal from Dollar Deals"
         qpRequestParams.sendRequest()
     }
