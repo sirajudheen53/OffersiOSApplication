@@ -83,7 +83,7 @@ class PaymentMethodsViewController: UIViewController, QPRequestProtocol {
         qpRequestParams.state = "Doha"
         qpRequestParams.country  = "QA"
         qpRequestParams.email = User.getProfile()?.email ?? "info@godollardeals.com"
-        qpRequestParams.currency = "QR"
+        qpRequestParams.currency = "QAR"
         qpRequestParams.referenceId = UUID().uuidString
         qpRequestParams.phone = "\(User.getProfile()?.phoneNumber ?? "")"
         qpRequestParams.amount = Double(deal?.dealPrice ?? 1) //any float value
