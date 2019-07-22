@@ -97,6 +97,7 @@ PODS:
   - GoogleUtilities/UserDefaults (6.2.0):
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.2.2)
+  - Hero (1.4.0)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
     - nanopb/encode (= 0.3.901)
@@ -127,6 +128,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Messaging
   - GoogleSignIn
+  - Hero
   - PhoneNumberKit
   - SkeletonView
   - SVProgressHUD
@@ -156,6 +158,7 @@ SPEC REPOS:
     - GoogleToolboxForMac
     - GoogleUtilities
     - GTMSessionFetcher
+    - Hero
     - nanopb
     - PhoneNumberKit
     - Protobuf
@@ -186,6 +189,7 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: b3553629623a3b1bff17f555e736cd5a6d95ad55
   GoogleUtilities: 996e0db07153674fd1b54b220fda3a3dc3547cba
   GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
+  Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   PhoneNumberKit: 167ee1f0bbb6efce7c62559e620eae745595532f
   Protobuf: 3f617b9a6e73605565086864c9bc26b2bf2dd5a3
@@ -193,6 +197,6 @@ SPEC CHECKSUMS:
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftMessages: a952f7a9103d9aeab93730a2861d2d8fcdd8758f
 
-PODFILE CHECKSUM: a770204fe6f2bc793f788e7de41eb71b36f3cfb5
+PODFILE CHECKSUM: d23d9c08fac459c83d249b928b89e53f1939ab50
 
 COCOAPODS: 1.7.4

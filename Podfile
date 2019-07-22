@@ -20,6 +20,7 @@ pod 'Firebase/Messaging'
 pod 'Fabric'
 pod 'Crashlytics'
 pod 'PhoneNumberKit'
+pod 'Hero'
 
   # Pods for Test
 

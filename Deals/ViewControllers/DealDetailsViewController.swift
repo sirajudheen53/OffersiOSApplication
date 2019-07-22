@@ -698,7 +698,7 @@ class DealDetailsViewController: BaseViewController, UICollectionViewDelegate, U
     
     
     @IBAction func closeButtonClicked(_ sender: Any) {
-        self.dismiss(animated: false, completion: {
+        self.dismiss(animated: true, completion: {
             NotificationCenter.default.post(name: NSNotification.Name("detailsViewDismissed"), object: nil)
         })
     }
