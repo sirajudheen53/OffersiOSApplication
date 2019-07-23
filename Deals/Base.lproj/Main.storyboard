@@ -47,7 +47,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="300" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ye5-09-RqE" customClass="PagingTableView" customModule="PagingTableView">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="300" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ye5-09-RqE" customClass="PagingTableView" customModule="PagingTableView">
                                 <rect key="frame" x="0.0" y="80" width="414" height="607"/>
                                 <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
@@ -3142,8 +3142,8 @@
     <inferredMetricsTieBreakers>
         <segue reference="F0e-Pl-oRI"/>
         <segue reference="LFe-de-dCP"/>
-        <segue reference="A3n-xN-iaX"/>
+        <segue reference="uwF-og-KTp"/>
         <segue reference="t4F-Tb-AaY"/>
-        <segue reference="OD9-Gk-d3K"/>
+        <segue reference="Kwg-01-gCJ"/>
     </inferredMetricsTieBreakers>
 </document>

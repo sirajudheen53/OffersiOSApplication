@@ -236,7 +236,19 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     
     @objc func detailsViewDismissed(notification : Notification) {
         detailsViewController = nil
+
+     //   reload(tableView: dealsListingTableView)
+        
         dealsListingTableView.reloadData()
+    }
+    
+    func reload(tableView: UITableView) {
+        
+        let contentOffset = tableView.contentOffset
+        tableView.reloadData()
+        tableView.layoutIfNeeded()
+        tableView.setContentOffset(contentOffset, animated: false)
+        
     }
     
     
@@ -372,15 +384,15 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             
            cell = hotDealTableViewCell
         } else if indexPath.row == 2 {
-            let dealNearbyTitleCell = tableView.dequeueReusableCell(withIdentifier: "dealsNearbyTitleCell", for: indexPath)
-            cell = dealNearbyTitleCell
-        } else if indexPath.row == 7 {
             let exploreTitleCell = tableView.dequeueReusableCell(withIdentifier: "expoloreTitleCell", for: indexPath)
             cell = exploreTitleCell
-        } else if indexPath.row == 8 {
+        } else if indexPath.row == 3 {
             let exploreCell = tableView.dequeueReusableCell(withIdentifier: "exploreTableViewCell", for: indexPath) as! HomeExploreTableViewCell
             exploreCell.exploreCategorySelectionBlock = self.exploreCategorySelectionBlock()
             cell = exploreCell
+        }  else if indexPath.row == 4 {
+            let dealNearbyTitleCell = tableView.dequeueReusableCell(withIdentifier: "dealsNearbyTitleCell", for: indexPath)
+            cell = dealNearbyTitleCell
         } else if (availableDeals.count > 0) && (indexPath.row == (availableDeals.count + numberOfExtraCells)) {
             let pagingLoadingCell = tableView.dequeueReusableCell(withIdentifier: "pagingLoadingCell", for: indexPath) as! PagingLoadingTableViewCell
             pagingLoadingCell.activityIndicator.startAnimating()
@@ -393,12 +405,8 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                 }
             }
         } else {
-            var index = 0
-            if indexPath.row < 7 {
-                index = indexPath.row - 3
-            } else {
-                index = indexPath.row - numberOfExtraCells
-            }
+            let index = indexPath.row - numberOfExtraCells
+            
             let dealListingCell = tableView.dequeueReusableCell(withIdentifier: "dealListingCell", for: indexPath) as! DealsListingTableViewCell;
             if availableDeals.count > 0 {
                     dealListingCell.customizeCell(deal: availableDeals[index])
@@ -425,16 +433,21 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             height = 358
         } else if indexPath.row == 2 {
             height = 60
-        } else if indexPath.row == 7{
+        } else if indexPath.row == 3 {
+            height = 130
+        } else if indexPath.row == 4 {
             height = 60
-        } else if indexPath.row == 8{
-            height = 130.0
-        } else if indexPath.row == availableDeals.count + numberOfExtraCells {
-            height = 44.0
+        } else if availableDeals.count > 0 && indexPath.row == availableDeals.count + numberOfExtraCells {
+            height = 60.0
         } else  {
             height = 144.0
         }
         return height
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -442,16 +455,11 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             return
         }
         if indexPath.row == 0 || indexPath.row == 1 || indexPath.row == 2
-            || indexPath.row == 7 || indexPath.row == availableDeals.count + numberOfExtraCells{
+            || indexPath.row == 3 || indexPath.row == 4 || indexPath.row == availableDeals.count + numberOfExtraCells{
             return
         }
         DispatchQueue.main.async {
-            var index = 0
-            if indexPath.row < 7 {
-                index = indexPath.row - 3
-            } else {
-                index = indexPath.row - self.numberOfExtraCells
-            }
+            let index = indexPath.row - self.numberOfExtraCells
             self.performSegue(withIdentifier: "showDetailsView", sender: ["deal" : self.availableDeals[index]])
         }
     }
@@ -499,6 +507,7 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
                             }
                             self.noDealsContentView.isHidden = true
                             self.dealsListingTableView.isHidden = false
+                            
                             self.dealsListingTableView.reloadData()
                         } else {
                             self.noDealsContentView.isHidden = false

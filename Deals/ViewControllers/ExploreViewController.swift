@@ -214,9 +214,9 @@ class ExploreViewController: BaseViewController, UITableViewDataSource, UITableV
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if isLoadingList && indexPath.row == 0 && availableDeals.count > 0 {
-            return 44.0
+            return 40.0
         } else if indexPath.row == availableDeals.count && availableDeals.count > 0 {
-            return 44.0
+            return 60.0
         }
         return 144.0
     }
