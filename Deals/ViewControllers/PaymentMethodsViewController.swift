@@ -141,16 +141,27 @@ class PaymentMethodsViewController: UIViewController, QPRequestProtocol {
                 }
             }}
     }
+    
+    func showCODConfirmationAlert() {
+        let alertController = UIAlertController(title: "Dollar Deals", message: "Pay in Cash option agrees that you need to pay \(deal?.dealPrice ?? 0) QAR with \(deal?.vendor?.name ?? "-") in their location. Do you need to continue ?", preferredStyle: .alert)
+        let settingsAction = UIAlertAction(title: "Continue", style: .default) { (_) -> Void in
+            if let deal = self.deal, deal.isCodAvailed {
+                UIView.showWarningMessage(title: "Sorry", message: "You can only use one Pay In Cash for a deal. Please try with online payment")
+            } else {
+                self.checkStockAvailabilityWithServer(paymentType: .cash)
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        alertController.addAction(cancelAction)
+        alertController.addAction(settingsAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
 
     @IBAction func closeButtonClicked(_ sender: Any) {
         self.dismiss(animated: false, completion: nil)
     }
     @IBAction func payInCashButtonClicked(_ sender: Any) {
-        if let deal = deal, deal.isCodAvailed {
-            UIView.showWarningMessage(title: "Sorry", message: "You can only use one Pay In Cash for a deal. Please try with online payment")
-        } else {
-            checkStockAvailabilityWithServer(paymentType: .cash)
-        }
+        showCODConfirmationAlert()
     }
    
     @IBAction func payOnlineButtonClicked(_ sender: Any) {
